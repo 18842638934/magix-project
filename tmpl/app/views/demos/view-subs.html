@@ -1,0 +1,18 @@
+<div class="wrapper">
+    <div class="form-item">
+        <div class="title">创意标题</div>
+        <div class="content"><input class="input" /></div>
+    </div>
+    <div class="form-item">
+        <div class="title">创意类型</div>
+        <div class="content" mx-view="coms/dropdown/index" mx-change="cTypes()">
+            <script type="magix/config">
+                <%=JSON.stringify({list:list,width:width,selected:selected})%>
+            </script>
+        </div>
+    </div>
+    <div id="type_vf_<%=id%>" mx-view>
+        <snippet-loading />
+    </div>
+    <button class="btn" mx-click="save();">保存</button>
+</div>

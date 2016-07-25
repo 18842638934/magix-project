@@ -1,0 +1,14 @@
+{
+  "name": "magix-project",
+  "description": "magix project",
+  "version": "1.0.0",
+  "author": "xinglie <xinglie.lkf@taobao.com>",
+  "dependencies": {
+    "gulp": "",
+    "gulp-watch": "",
+    "gulp-uglify": "",
+    "gulp-cssnano": "",
+    "magix-combine": "",
+    "del": ""
+  }
+}
