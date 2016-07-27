@@ -22,11 +22,14 @@ var DragMove = function(event) {
         DragObject.move(event);
     }
 };
+var DragMoveEvent = 'mousemove touchmove';
+var DragEndEvent = 'mouseup touchend';
+var DragPreventEvent = 'keydown mousewheel DOMMouseScroll';
 var DragStop = function(e) {
     if (DragObject) {
-        Doc.off('mousemove', DragMove)
-            .off('mouseup', DragStop)
-            .off('keydown mousewheel DOMMouseScroll', DragPrevent);
+        Doc.off(DragMoveEvent, DragMove)
+            .off(DragEndEvent, DragStop)
+            .off(DragPreventEvent, DragPrevent);
         Win.off('blur', DragStop);
         var node = DragObject.node;
         $(node).off('losecapture', DragStop);
@@ -53,9 +56,9 @@ module.exports = {
                 iMove: $.isFunction(moveCallback),
                 iStop: $.isFunction(endCallback)
             };
-            Doc.on('mousemove', DragMove)
-                .on('mouseup', DragStop)
-                .on('keydown mousewheel DOMMouseScroll', DragPrevent);
+            Doc.on(DragMoveEvent, DragMove)
+                .on(DragEndEvent, DragStop)
+                .on(DragPreventEvent, DragPrevent);
             Win.on('blur', DragStop);
             $(node).on('losecapture', DragStop);
         }

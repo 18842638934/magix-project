@@ -4,7 +4,7 @@
 var Magix = require('magix');
 var $ = require('$');
 var tmpl = require('../tmpl/index');
-var ListToTree = require('../generic/tree');
+var ListToTree = require('../generic/treeable');
 Magix.applyStyle('@index.css');
 module.exports = Magix.View.extend({
     tmpl: '@index.html',

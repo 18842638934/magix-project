@@ -1,0 +1,19 @@
+.dragdrop{
+    margin:50px;
+    overflow: auto;
+    width:105px;
+    float: left;
+    background: #aaa;
+    min-height: 100px;
+    max-height: 200px;
+}
+.dragdrop li{
+    width:100px;
+    height:100px;
+    background:#eee;
+    line-height:100px;
+    text-align: center;
+    margin: 1px;
+    float: left;
+    cursor: default;
+}

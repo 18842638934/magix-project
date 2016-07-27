@@ -5,7 +5,7 @@ var Magix = require('magix');
 var $ = require('$');
 var Updater = require('../updater/index');
 var tmpl = require('../tmpl/index');
-var ListToTree = require('../generic/tree');
+var ListToTree = require('../generic/treeable');
 var Vframe = Magix.Vframe;
 Magix.applyStyle('@index.css');
 var CSSNames = 'names@index.css[over,toleft,toright]';

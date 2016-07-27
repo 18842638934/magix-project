@@ -58,6 +58,10 @@ var Menus = [{
         url: '/coms/inputmask',
         text: 'Inputmask',
         icon: '&#xe600;'
+    }, {
+        url: '/coms/dragdrop',
+        text: '拖动操作',
+        icon: '&#xe600;'
     }]
 }, {
     url: '/demos/index',

@@ -10,16 +10,19 @@ var Top = 1,
     Bottom = 4,
     Left = 8;
 module.exports = Magix.Base.extend({
-    ctor: function(zone) {
+    ctor: function(zone, threshold) {
         var me = this;
         me.$zone = $(zone);
-        me.$threshold = 10;
+        me.$threshold = threshold || 10;
         me.$scrollStep = 4;
     },
     start: function() {
         var me = this;
         var zone = me.$zone;
-        me.$offset = zone.offset();
+        me.$offset = zone.offset() || {
+            left: 0,
+            top: 0
+        };
         me.$size = {
             width: zone.outerWidth(),
             height: zone.outerHeight()
