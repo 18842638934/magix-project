@@ -60,6 +60,10 @@ var Menus = [{
         url: '/coms/dragdrop',
         text: '拖动操作',
         icon: '&#xe600;'
+    }, {
+        url: '/coms/roll',
+        text: '滚动',
+        icon: '&#xe600;'
     }]
 }, {
     url: '/demos/index',

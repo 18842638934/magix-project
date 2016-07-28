@@ -1,0 +1,13 @@
+.roll{
+    height:40px;
+    overflow:hidden;
+    background:#eee;
+    width:400px;
+    margin: 100px;
+}
+.roll li{
+    height:40px;
+    width:400px;
+    line-height: 40px;
+    text-align: center;
+}

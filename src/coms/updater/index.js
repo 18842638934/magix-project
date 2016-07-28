@@ -1,5 +1,5 @@
-define('coms/updater/index',['magix'],function(require,exports,module){
-/*Magix */
+define('coms/updater/index',['magix','$'],function(require,exports,module){
+/*Magix ,$ */
 /*
     author:xinglie.lkf@taobao.com
  */
@@ -7,6 +7,7 @@ var Magix = require('magix');
 var HolderReg = /\u001f/g;
 var ContentReg = /@(\d+)\-\u001f/g;
 var Stringify = JSON.stringify;
+var $ = require('$');
 var Update = function(host, changed, updateFlags, renderData) {
     var view = host.$v;
     var info = host.$i;
@@ -22,7 +23,7 @@ var Update = function(host, changed, updateFlags, renderData) {
             var updatedNodes = {},
                 keys;
             var one, updateTmpl, updateAttrs;
-            var updateNode = function(node) {
+            var updateNode = function(idx, node) {
                 var id = node.id || (node.id = Magix.guid('n'));
                 if (!updatedNodes[id]) {
                     //console.time('update:' + id);
@@ -87,11 +88,7 @@ var Update = function(host, changed, updateFlags, renderData) {
                     }
                     if (update) {
                         update = '#' + selfId + ' ' + one.selector.replace(HolderReg, selfId);
-                        var nodes = document.querySelectorAll(update);
-                        q = 0;
-                        while (q < nodes.length) {
-                            updateNode(nodes[q++]);
-                        }
+                        $(update).each(updateNode);
                     }
                 }
             }
