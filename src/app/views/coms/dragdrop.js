@@ -4,10 +4,10 @@ define('app/views/coms/dragdrop',['magix','../../../coms/dragdrop/izone'],functi
     author:xinglie.lkf@taobao.com
  */
 var Magix = require('magix');
-Magix.applyStyle('mp-b74',".mp-b74-dragdrop{margin:50px;overflow:auto;width:105px;float:left;background:#aaa;min-height:100px;max-height:200px}.mp-b74-dragdrop li{width:100px;height:100px;background:#eee;line-height:100px;text-align:center;margin:1px;float:left;cursor:default}");
+Magix.applyStyle('mx-b74',".mx-b74-dragdrop{margin:50px;overflow:auto;width:105px;float:left;background:#aaa;min-height:100px;max-height:200px}.mx-b74-dragdrop li{width:100px;height:100px;background:#eee;line-height:100px;text-align:center;margin:1px;float:left;cursor:default}");
 var Zone = require('../../../coms/dragdrop/izone');
 module.exports = Magix.View.extend({
-    tmpl: "<ul class=\"mp-b74-dragdrop clearfix\" id=\"dd_<%=id%>\"><li>a</li><li>b</li><li>c</li><li>d</li></ul><ul class=\"mp-b74-dragdrop clearfix dd2\" id=\"dd2_<%=id%>\"><li>1</li><li>2</li><li>3</li><li>4</li></ul><ul class=\"mp-b74-dragdrop dd3 clearfix\" id=\"dd3_<%=id%>\"></ul>",
+    tmpl: {"html":"<ul class=\"mx-b74-dragdrop clearfix\" id=\"dd_<%=id%>\"><li>a</li><li>b</li><li>c</li><li>d</li></ul><ul class=\"mx-b74-dragdrop clearfix dd2\" id=\"dd2_<%=id%>\"><li>1</li><li>2</li><li>3</li><li>4</li></ul><ul class=\"mx-b74-dragdrop dd3 clearfix\" id=\"dd3_<%=id%>\"></ul>","subs":[]},
     tmplData: [],
     render: function() {
         var me = this;

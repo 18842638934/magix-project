@@ -4,21 +4,13 @@
 'ref@./tree.css';
 var Magix = require('magix');
 var $ = require('$');
-var Updater = require('../updater/index');
-var tmpl = require('../tmpl/index');
-var html = '@branch.html';
-var htmlData = '@branch.html:data';
 module.exports = Magix.View.extend({
+    tmpl: '@branch.html',
     ctor: function(extra) {
         var me = this;
         me.$info = me.owner.parent().invoke('getInfo', extra.index);
         me.$textKey = extra.text;
         me.$dataId = extra.id;
-        me.$updater = new Updater(me, {
-            tmpl: html,
-            data: htmlData,
-            build: tmpl
-        });
     },
     render: function() {
         var me = this;

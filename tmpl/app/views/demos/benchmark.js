@@ -12,14 +12,21 @@ if (!Date.now) {
 }
 module.exports = FormView.extend({
     tmpl: '@benchmark.html',
-    tmplData:'@benchmark.html:data',
+    tmplData: '@benchmark.html:data',
     render: function() {
         var me = this;
         me.$updater.set({
             rows: 50,
             cols: 20,
             id: me.id,
-            list: []
+            list: [],
+            dropdown: [{
+                "id": 1,
+                "text": "abc"
+            }, {
+                "id": 2,
+                "text": "def"
+            }]
         }).digest();
     },
     'render<click>': function() {

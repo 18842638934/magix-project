@@ -3,7 +3,6 @@
  */
 var Magix = require('magix');
 var $ = require('$');
-var tmpl = require('../tmpl/index');
 Magix.applyStyle('@index.css');
 var CSSNames = 'names@index.css[left,top,right,bottom]';
 var ArrowBorder = 8;
@@ -65,8 +64,7 @@ module.exports = Magix.View.extend({
     },
     render: function() {
         var me = this;
-        var html = tmpl(me.tmpl, me.$extra);
-        me.setHTML(me.id, html);
+        me.$updater.set(me.$extra).digest();
     },
     hide: function() {
         var me = this;

@@ -5,7 +5,7 @@ define('coms/dragdrop/izone',['magix','$','./zone'],function(require,exports,mod
  */
 var Magix = require('magix');
 var $ = require('$');
-Magix.applyStyle('mp-830',".mp-830-enable{background-color:green}.mp-830-disable{background-color:red}.mp-830-pointer{height:14px;line-height:14px;padding:1px 2px;border:2px solid #ccc;color:#fff;z-index:99999}.mp-830-bar,.mp-830-pointer{position:absolute;overflow:hidden;display:none}.mp-830-bar{border-width:3px;z-index:99998}.mp-830-bar div{overflow:hidden;background-color:#000}.mp-830-hbar{border-color:transparent #000;border-style:dashed solid}.mp-830-hbar div{height:2px}.mp-830-vbar{border-color:#000 transparent;border-style:solid dashed}.mp-830-vbar div{width:2px;height:100%}");
+Magix.applyStyle('mx-830',".mx-830-enable{background-color:green}.mx-830-disable{background-color:red}.mx-830-pointer{height:14px;line-height:14px;padding:1px 2px;border:2px solid #ccc;color:#fff;z-index:99999}.mx-830-bar,.mx-830-pointer{position:absolute;overflow:hidden;display:none}.mx-830-bar{border-width:3px;z-index:99998}.mx-830-bar div{overflow:hidden;background-color:#000}.mx-830-hbar{border-color:transparent #000;border-style:dashed solid}.mx-830-hbar div{height:2px}.mx-830-vbar{border-color:#000 transparent;border-style:solid dashed}.mx-830-vbar div{width:2px;height:100%}");
 var ENABLE = 1,
     DISABLE = 2;
 var DragdropZone = require('./zone');
@@ -14,7 +14,7 @@ var Bar = {
     create: function() {
         var node = $('#' + barId);
         if (!node.length) {
-            $(document.body).append('<div id="' + barId + '" class="mp-830-bar"><div/></div>');
+            $(document.body).append('<div id="' + barId + '" class="mx-830-bar"><div/></div>');
         }
     },
     hide: function() {
@@ -23,7 +23,7 @@ var Bar = {
     update: function(anchor, bound, side) {
         var bar = $('#' + barId);
         if (anchor & IDragdropZone.ANCHOR_HORIZONTAL) {
-            bar.removeClass('mp-830-vbar').addClass('mp-830-hbar');
+            bar.removeClass('mx-830-vbar').addClass('mx-830-hbar');
             bar.css({
                 width: bound.width - 6,
                 height: 2,
@@ -42,7 +42,7 @@ var Bar = {
             }
         }
         if (anchor & IDragdropZone.ANCHOR_VERTICAL) {
-            bar.removeClass('mp-830-hbar').addClass('mp-830-vbar');
+            bar.removeClass('mx-830-hbar').addClass('mx-830-vbar');
             bar.css({
                 height: bound.height - 6,
                 width: 2,
@@ -82,7 +82,7 @@ var Pointer = {
     create: function() {
         var node = $('#' + pointerId);
         if (!node.length) {
-            $(document.body).append('<div id="' + pointerId + '" class="mp-830-pointer"/>');
+            $(document.body).append('<div id="' + pointerId + '" class="mx-830-pointer"/>');
         }
     },
     hide: function() {
@@ -97,8 +97,8 @@ var Pointer = {
         });
     },
     update: function(f, cfg) {
-        var green = 'mp-830-enable',
-            red = 'mp-830-disable';
+        var green = 'mx-830-enable',
+            red = 'mx-830-disable';
         var me = this;
         if (me.$f != f) {
             me.$f = f;

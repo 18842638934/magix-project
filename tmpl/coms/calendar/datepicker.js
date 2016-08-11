@@ -4,7 +4,6 @@
 var Magix = require('magix');
 var $ = require('$');
 var Picker = require('../picker/index');
-var tmpl = require('../tmpl/index');
 var Base = Picker.prototype;
 var Vframe = Magix.Vframe;
 module.exports = Picker.extend({
@@ -23,10 +22,9 @@ module.exports = Picker.extend({
     },
     render: function() {
         var me = this;
-        var html = tmpl(me.tmpl, {
+        me.$updater.set({
             id: me.id
-        });
-        me.setHTML(me.id, html);
+        }).digest();
     },
     update: function(ops) {
         var me = this;

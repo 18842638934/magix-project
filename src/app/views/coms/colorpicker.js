@@ -6,8 +6,7 @@ define('app/views/coms/colorpicker',['magix','../../../coms/colorpicker/index'],
 var Magix = require('magix');
 var Colorpicker = require('../../../coms/colorpicker/index');
 module.exports = Magix.View.extend({
-    tmpl: "<div style=\"margin:20px\"><button class=\"btn\" mx-click=\"showPicker({dock:'left'})\">测试</button> <button class=\"btn\" style=\"float:right\" mx-click=\"showPicker({dock:'right'})\">测试2</button></div>",
-    tmplData: [],
+    tmpl: {"html":"<div style=\"margin:20px\"><button class=\"btn\" mx-click=\"showPicker({dock:'left'})\">测试</button> <button class=\"btn\" style=\"float:right\" mx-click=\"showPicker({dock:'right'})\">测试2</button></div>","subs":[]},
     render: function() {
         var me = this;
         me.$updater.digest();

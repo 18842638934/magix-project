@@ -4,7 +4,7 @@
     <li>
         <a href="#!<%=menu.url%>"<%if(menu.url==url){%> class="on"<%}%>>
         <%if(menu.icon){%>
-            <i class="iconfont"><%=menu.icon%></i>
+            <i class="iconfont"><%!menu.icon%></i>
         <%}%>
             <%=menu.text%>
         </a>

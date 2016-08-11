@@ -7,7 +7,6 @@ var Form = require('@coms/form/index');
 var $ = require('$');
 module.exports = Form.extend({
     tmpl: '@view-subs-popup.html',
-    tmplData: '@view-subs-popup.html:data',
     ctor: function(extra) {
         var me = this;
         var creative = extra.creative;

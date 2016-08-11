@@ -1,26 +1,16 @@
-define('coms/pagination/index',['magix','$','../updater/index','../tmpl/index'],function(require,exports,module){
-/*Magix ,$ ,Updater ,tmpl */
+define('coms/pagination/index',['magix','$'],function(require,exports,module){
+/*Magix ,$ */
 /*
     author:xinglie.lkf@taobao.com
  */
 var Magix = require('magix');
-var $ = require('$');
-var Updater = require('../updater/index');
-var tmpl = require('../tmpl/index');
 var Router = Magix.Router;
-Magix.applyStyle('mp-886',".mp-886-page-list{text-align:center;float:left}.mp-886-page-item,.mp-886-page-list{height:25px;line-height:25px}.mp-886-page-item{color:#999;font-size:14px;display:inline-block;width:25px;margin-left:2px;vertical-align:text-bottom}.mp-886-page-active{color:#fff;background:#98aedd;border-radius:3px}.mp-886-page-disabled{cursor:not-allowed}");
-var html = "<div class=\"mp-886-page-list\" mx-guid=\"x2511-\u001f\">@1-\u001f</div>";
-var htmlData = [{"guid":1,"keys":["start","end","index","path","pages"],"tmpl":"<a href=\"#!<%=path%>\" <%if(index==1){%> class=\"mp-886-page-disabled mp-886-page-item\" <%}else{%> mx-click=\"toPrev()\" class=\"mp-886-page-item\" <%}%>>⇦</a><%if(start>1){%><a class=\"mp-886-page-item\" href=\"#!<%=path%>\" mx-click=\"toPage({page:1})\">1</a><%}if(start>2){%><a class=\"mp-886-page-item\">...</a><%}for(var i=start;i<=end;i++){%><a class=\"mp-886-page-item<%if(i==index){%> mp-886-page-active<%}%>\" href=\"#!<%=path%>\" mx-click=\"toPage({page:<%=i%>})\"><%=i%></a><%}if(end+2<=pages){%><a class=\"mp-886-page-item\">...</a><%}if(end<pages){%><a class=\"mp-886-page-item\" href=\"#!<%=path%>\" mx-click=\"toPage({page:<%=pages%>})\"><%=pages%></a><%}%><a href=\"#!<%=path%>\" <%if(index==pages){%> class=\"mp-886-page-disabled mp-886-page-item\" <%}else{%> mx-click=\"toNext()\" class=\"mp-886-page-item\" <%}%>>⇨</a>","selector":"div[mx-guid=\"x2511-\u001f\"]"}];
+var $ = require('$');
+Magix.applyStyle('mx-886',".mx-886-page-list{text-align:center;float:left}.mx-886-page-item,.mx-886-page-list{height:25px;line-height:25px}.mx-886-page-item{color:#999;font-size:14px;display:inline-block;width:25px;margin-left:2px;vertical-align:text-bottom}.mx-886-page-active{color:#fff;background:#98aedd;border-radius:3px}.mx-886-page-disabled{cursor:not-allowed}");
 module.exports = Magix.View.extend({
-    ctor: function() {
+    tmpl: {"html":"<div class=\"mx-886-page-list\" mx-guid=\"x2511-\u001f\">@1-\u001f</div>","subs":[{"guid":1,"keys":["start","end","index","path","pages"],"tmpl":"<a href=\"#!<%=path%>\" <%if(index==1){%> class=\"mx-886-page-disabled mx-886-page-item\" <%}else{%> mx-click=\"toPrev()\" class=\"mx-886-page-item\" <%}%>>⇦</a><%if(start>1){%><a class=\"mx-886-page-item\" href=\"#!<%=path%>\" mx-click=\"toPage({page:1})\">1</a><%}if(start>2){%><a class=\"mx-886-page-item\">...</a><%}for(var i=start;i<=end;i++){%><a class=\"mx-886-page-item<%if(i==index){%> mx-886-page-active<%}%>\" href=\"#!<%=path%>\" mx-click=\"toPage({page:<%=i%>})\"><%=i%></a><%}if(end+2<=pages){%><a class=\"mx-886-page-item\">...</a><%}if(end<pages){%><a class=\"mx-886-page-item\" href=\"#!<%=path%>\" mx-click=\"toPage({page:<%=pages%>})\"><%=pages%></a><%}%><a href=\"#!<%=path%>\" <%if(index==pages){%> class=\"mx-886-page-disabled mx-886-page-item\" <%}else{%> mx-click=\"toNext()\" class=\"mx-886-page-item\" <%}%>>⇨</a>","selector":"div[mx-guid=\"x2511-\u001f\"]"}]},
+    ctor: function(extra) {
         var me = this;
-
-        me.$updater = new Updater(me, {
-            tmpl: html,
-            data: htmlData,
-            build: tmpl
-        });
-
         me.$updater.onchanged = function(e) {
             if (e.keys.index) {
                 $('#' + me.id).trigger({
@@ -29,20 +19,19 @@ module.exports = Magix.View.extend({
                 });
             }
         };
+        me.$extra = extra;
     },
     render: function() {
         var me = this;
-        var html = $.trim($('#' + me.id + ' script').html());
-        var info = JSON.parse(html);
-        me.update(info);
+        me.update(me.$extra);
     },
     cal: function() {
         var me = this;
         var data = me.$updater;
-        var index = data.get('index');
-        var pages = data.get('pages');
+        var index = data.get('index') | 0;
+        var pages = data.get('pages') | 0;
         if (index > pages) index = pages;
-        var step = data.get('step');
+        var step = data.get('step') | 0;
         var middle = step / 2 | 0;
         var start = Math.max(1, index - middle);
         var end = Math.min(pages, start + step - 1);

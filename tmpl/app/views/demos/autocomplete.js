@@ -8,7 +8,6 @@ Magix.applyStyle('@autocomplete.css');
 var CSSNames = 'names@autocomplete.css';
 module.exports = Magix.View.extend({
     tmpl: '@autocomplete.html',
-    tmplData: '@autocomplete.html:data',
     ctor: function() {
         Monitor.setup();
         var me = this;

@@ -6,22 +6,14 @@ Magix.applyStyle('@index.css');
 var CSSNames = 'names@index.css';
 var $ = require('$');
 var Monitor = require('../monitor/index');
-var Updater = require('../updater/index');
-var tmpl = require('../tmpl/index');
-var html = '@index.html';
-var htmlData = '@index.html:data';
 module.exports = Magix.View.extend({
+    tmpl: '@index.html',
     ctor: function(extra) {
         Monitor.setup();
         var me = this;
         me.on('destroy', Monitor.teardown);
         me.$list = extra.list;
         me.$selected = extra.selected;
-        me.$updater = new Updater(me, {
-            tmpl: html,
-            data: htmlData,
-            build: tmpl
-        });
     },
     inside: function(node) {
         var me = this;

@@ -6,7 +6,6 @@ var Service = require('../../services/service');
 Magix.applyStyle('@api-monitor.css');
 module.exports = Magix.View.extend({
     tmpl: '@api-monitor.html',
-    tmplData: '@api-monitor.html:data',
     render: function() {
         var me = this;
         me.$updater.digest();

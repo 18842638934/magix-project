@@ -105,6 +105,7 @@ module.exports = Magix.View.extend({
             temp = ps.shift();
             object = object[temp];
         }
+        console.log(e,object);
         var value = $(e.current).val();
         if (object) {
             object[key] = value;

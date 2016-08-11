@@ -3,27 +3,20 @@
  */
 var Magix = require('magix');
 var $ = require('$');
-var Updater = require('../updater/index');
-var tmpl = require('../tmpl/index');
 Magix.applyStyle('@index.css');
 var Monitor = require('../monitor/index');
 var EnhanceMax = 100;
 var EnhanceItemHeight = 25;
 var EnhanceOffsetItems = 20;
-var html = '@index.html';
-var htmlData = '@index.html:data';
 var TOP = 1,
     BOTTOM = 2;
 module.exports = Magix.View.extend({
-    ctor: function() {
+    tmpl: '@index.html',
+    ctor: function(extra) {
         var me = this;
         Monitor.setup();
         me.on('destroy', Monitor.teardown);
-        me.$updater = new Updater(me, {
-            tmpl: html,
-            data: htmlData,
-            build: tmpl
-        });
+        me.$extra = extra;
     },
     inside: function(node) {
         var me = this;
@@ -45,8 +38,8 @@ module.exports = Magix.View.extend({
             before: 0,
             after: 0,
             search: ops.search,
-            width: ops.width || 150,
-            height: ops.height || 0,
+            width: (ops.width | 0) || 150,
+            height: (ops.height | 0) || 0,
             map: map,
             id: me.id,
             titleText: map[ops.selected].text,
@@ -115,9 +108,7 @@ module.exports = Magix.View.extend({
     },
     render: function() {
         var me = this;
-        var html = $.trim($('#' + me.id + ' script').html());
-        var info = JSON.parse(html);
-        me.update(info);
+        me.update(me.$extra);
     },
     hide: function(items) {
         var me = this;
@@ -210,7 +201,7 @@ module.exports = Magix.View.extend({
                 selected: id,
                 titleText: map[id].text
             }).digest();
-            $('#' + me.id).trigger({
+            $('#' + me.id).val(id).trigger({
                 type: 'change',
                 value: id,
                 text: data.get('titleText')

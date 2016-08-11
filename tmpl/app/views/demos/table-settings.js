@@ -49,7 +49,6 @@ var Fields = [{
 }];
 module.exports = Magix.View.extend({
     tmpl: '@table-settings.html',
-    tmplData:'@table-settings.html:data',
     ctor: function() {
         var me = this;
         me.$checkedFields = ['ctr', 'uv', 'ic1', 'pv1'];

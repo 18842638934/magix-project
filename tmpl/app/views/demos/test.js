@@ -4,7 +4,6 @@
 var Magix = require('magix');
 module.exports = Magix.View.extend({
     tmpl: '@test.html',
-    tmplData: '@test.html:data',
     render: function() {
         var me = this;
         me.$updater.set({
@@ -16,7 +15,11 @@ module.exports = Magix.View.extend({
                 c: 1
             },
             height: 10 + me.$updater.get('height') || 0,
-            permissions: ['a', 'b', 'c', 'd']
+            permissions: ['a', 'b', 'c', 'd'],
+            list: [{
+                id: Magix.guid(),
+                text: Magix.guid()
+            }]
         }).digest();
     },
     'change<click>': function() {

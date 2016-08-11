@@ -2,8 +2,6 @@
     author:xinglie.lkf@taobao.com
  */
 var Magix = require('magix');
-var Updater = require('@coms/updater/index');
-var tmpl = require('@coms/tmpl/index');
 var Service = require('./services/service');
 Magix.applyStyle('global@../css/cube.scss');
 Magix.applyStyle('global@exts-iconfont.css');
@@ -14,11 +12,6 @@ Magix.View.merge({
         me.$locker = {};
         me.on('rendercall', function() {
             me.$locker = {};
-        });
-        me.$updater = new Updater(me, {
-            tmpl: me.tmpl,
-            data: me.tmplData,
-            build: tmpl
         });
     },
     request: function(key) {

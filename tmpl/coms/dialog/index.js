@@ -3,12 +3,8 @@
  */
 var Magix = require('magix');
 var $ = require('$');
-var Updater = require('../updater/index');
-var tmpl = require('../tmpl/index');
 Magix.applyStyle('@index.css');
 var CSSNames = 'names@index.css[left,top,right,bottom]';
-var html = '@index.html';
-var htmlData = '@index.html:data';
 module.exports = Magix.View.extend({
     tmpl: '@index.html',
     ctor: function(extra) {
@@ -17,11 +13,6 @@ module.exports = Magix.View.extend({
         me.on('destroy', function() {
             $('#mask_' + me.id).remove();
             $('#' + me.id).remove();
-        });
-        me.$updater = new Updater(me, {
-            tmpl: html,
-            data: htmlData,
-            build: tmpl
         });
     },
     render: function() {

@@ -10,7 +10,6 @@ Magix.applyStyle('@table-settings-fields.css');
 var CSSNames = 'names@table-settings-fields.css';
 module.exports = Picker.extend({
     tmpl: '@table-settings-fields.html',
-    tmplData:'@table-settings-fields.html:data',
     ctor: function() {
         var me = this;
         me.on('destroy', function() {

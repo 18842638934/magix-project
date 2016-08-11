@@ -4,7 +4,6 @@
 'ref@./index.css';
 var Magix = require('magix');
 var $ = require('$');
-var tmpl = require('../tmpl/index');
 module.exports = Magix.View.extend({
     tmpl: '@branch.html',
     ctor: function(extra) {
@@ -15,12 +14,12 @@ module.exports = Magix.View.extend({
     },
     render: function() {
         var me = this;
-        me.setHTML(me.id, tmpl(me.tmpl, {
+        me.$updater.set({
             textKey: me.$textKey,
             id: me.id,
             dataId: me.$dataId,
             list: me.$list
-        }));
+        }).digest();
     },
     getList: function(idx) {
         return this.$list[idx].children;

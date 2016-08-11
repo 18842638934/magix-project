@@ -6,7 +6,7 @@ define('app/views/coms/dialog',['magix','../../../coms/dialog/index'],function(r
 var Magix = require('magix');
 var Dialog = require('../../../coms/dialog/index');
 module.exports = Magix.View.extend({
-    tmpl: "<div style=\"margin:50px\"><button mx-click=\"alert()\" class=\"btn btn-size30\" style=\"margin-left:20px\">alert</button> <button mx-click=\"confirm()\" class=\"btn btn-size30\" style=\"margin-left:20px\">confirm</button> <button mx-click=\"view()\" class=\"btn btn-size30\" style=\"margin-left:20px\">view</button></div>",
+    tmpl: {"html":"<div style=\"margin:50px\"><button mx-click=\"alert()\" class=\"btn btn-size30\" style=\"margin-left:20px\">alert</button> <button mx-click=\"confirm()\" class=\"btn btn-size30\" style=\"margin-left:20px\">confirm</button> <button mx-click=\"view()\" class=\"btn btn-size30\" style=\"margin-left:20px\">view</button></div>","subs":[]},
     tmplData: [],
     render: function() {
         var me = this;

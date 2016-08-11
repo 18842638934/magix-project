@@ -5,9 +5,9 @@ define('coms/range/index',['magix','jquery','../dragdrop/index'],function(requir
  */
 var Magix = require('magix');
 var $ = require('jquery');
-Magix.applyStyle('mp-ec8',".mp-ec8-tracker{width:300px;height:4px;background:#aaa;position:relative;margin:60px}.mp-ec8-indicator{border-radius:8px;width:16px;height:16px;position:absolute;left:-6px;top:-6px;cursor:move;background:#aaa}");
+Magix.applyStyle('mx-ec8',".mx-ec8-tracker{width:300px;height:4px;background:#aaa;position:relative;margin:60px}.mx-ec8-indicator{border-radius:8px;width:16px;height:16px;position:absolute;left:-6px;top:-6px;cursor:move;background:#aaa}");
 var DD = require('../dragdrop/index');
-var tmpl = "<div class=\"mp-ec8-tracker\"><div class=\"mp-ec8-indicator\" mx-mousedown=\"drag()\"></div></div>";
+var tmpl = "<div class=\"mx-ec8-tracker\"><div class=\"mx-ec8-indicator\" mx-mousedown=\"drag()\"></div></div>";
 module.exports = Magix.View.extend({
     render: function() {
         var me = this;

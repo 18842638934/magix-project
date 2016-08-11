@@ -1,26 +1,18 @@
-define('coms/inputag/branch',['magix','$','../updater/index','../tmpl/index'],function(require,exports,module){
-/*Magix ,$ ,Updater ,tmpl */
+define('coms/inputag/branch',['magix','$'],function(require,exports,module){
+/*Magix ,$ */
 /*
     author:xinglie.lkf@taobao.com
  */
 
 var Magix = require('magix');
 var $ = require('$');
-var Updater = require('../updater/index');
-var tmpl = require('../tmpl/index');
-var html = "<ul><%for(var i=0,br;i<list.length;i++){br=list[i]%><li class=\"mp-9ad-li\"><div class=\"mp-9ad-icon<%if(br.children){%> mp-9ad-cp<%}%>\" <%if(br.children){%> mx-click=\"toggle({id:'<%=br[dataId]%>'})\" <%}%>><%if(br.children){%>+<%}%></div><div class=\"ellipsis\" title=\"<%=br[textKey]%>\"><label mx-click=\"fill({text:'<%=br[textKey]%>'})\" mx-mouseout=\"hover()\" mx-mouseover=\"hover()\" class=\"mp-9ad-tree-name\"><%=br[textKey]%></label></div><%if(br.children){%><div mx-view=\"coms/inputag/branch?index=<%=i%>&text=<%=textKey%>&id=<%=dataId%>\" id=\"<%=id%>_<%=br[dataId]%>\" class=\"mp-9ad-indent mp-9ad-none\"></div><%}%></li><%}%></ul>";
-var htmlData = [];
 module.exports = Magix.View.extend({
+    tmpl: {"html":"<ul><%for(var i=0,br;i<list.length;i++){br=list[i]%><li class=\"mx-9ad-li\"><div class=\"mx-9ad-icon<%if(br.children){%> mx-9ad-cp<%}%>\" <%if(br.children){%> mx-click=\"toggle({id:'<%=br[dataId]%>'})\" <%}%>><%if(br.children){%>+<%}%></div><div class=\"ellipsis\" title=\"<%=br[textKey]%>\"><label mx-click=\"fill({text:'<%=br[textKey]%>'})\" mx-mouseout=\"hover()\" mx-mouseover=\"hover()\" class=\"mx-9ad-tree-name\"><%=br[textKey]%></label></div><%if(br.children){%><div mx-view=\"coms/inputag/branch?index=<%=i%>&text=<%=textKey%>&id=<%=dataId%>\" id=\"<%=id%>_<%=br[dataId]%>\" class=\"mx-9ad-indent mx-9ad-none\"></div><%}%></li><%}%></ul>","subs":[]},
     ctor: function(extra) {
         var me = this;
         me.$info = me.owner.parent().invoke('getInfo', extra.index);
         me.$textKey = extra.text;
         me.$dataId = extra.id;
-        me.$updater = new Updater(me, {
-            tmpl: html,
-            data: htmlData,
-            build: tmpl
-        });
     },
     render: function() {
         var me = this;
@@ -38,7 +30,7 @@ module.exports = Magix.View.extend({
         };
     },
     'hover<mouseover,mouseout>': function(e) {
-        $(e.current)[e.type == 'mouseout' ? 'removeClass' : 'addClass']('mp-9ad-over');
+        $(e.current)[e.type == 'mouseout' ? 'removeClass' : 'addClass']('mx-9ad-over');
     },
     'toggle<click>': function(e) {
         var node = $('#' + this.id + '_' + e.params.id);

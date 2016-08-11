@@ -3,29 +3,21 @@
  */
 var Magix = require('magix');
 var $ = require('$');
-var Updater = require('../updater/index');
-var tmpl = require('../tmpl/index');
 var ListToTree = require('../generic/treeable');
 var Vframe = Magix.Vframe;
 Magix.applyStyle('@index.css');
 var CSSNames = 'names@index.css[over,toleft,toright]';
 var Instance;
-var html = '@index.html';
-var htmlData = '@index.html:data';
 var Menu = Magix.View.extend({
     tmpl: '@index.html',
-    ctor: function() {
+    ctor: function(extra) {
         var me = this;
-        me.$updater = new Updater(me, {
-            tmpl: html,
-            data: htmlData,
-            build: tmpl
-        });
         me.on('destroy', function() {
             if (me.$updater.get('isChild')) {
                 $('#' + me.id).remove();
             }
         });
+        me.$extra = extra;
     },
     inside: function(node) {
         var me = this;
@@ -82,10 +74,8 @@ var Menu = Magix.View.extend({
     },
     render: function() {
         var me = this;
-        var html = $.trim($('#' + me.id + ' script').html());
-        if (html) {
-            var info = JSON.parse(html);
-            me.update(info);
+        if (me.$extra.list) {
+            me.update(me.$extra);
         } else {
             me.endUpdate();
         }

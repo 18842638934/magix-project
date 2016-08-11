@@ -40,7 +40,6 @@ var ItemsMap = Magix.toMap(Items, 'id');
 
 module.exports = Magix.View.extend({
     tmpl: '@sdk.html',
-    tmplData:'@sdk.html:data',
     ctor: function() {
         var me = this;
         me.on('destroy', function() {

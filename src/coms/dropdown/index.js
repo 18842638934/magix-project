@@ -1,31 +1,24 @@
-define('coms/dropdown/index',['magix','$','../updater/index','../tmpl/index','../monitor/index'],function(require,exports,module){
-/*Magix ,$ ,Updater ,tmpl ,Monitor */
+define('coms/dropdown/index',['magix','$','../monitor/index'],function(require,exports,module){
+/*Magix ,$ ,Monitor */
 /*
     author:xinglie.lkf@taobao.com
  */
 var Magix = require('magix');
 var $ = require('$');
-var Updater = require('../updater/index');
-var tmpl = require('../tmpl/index');
-Magix.applyStyle('mp-740',".mp-740-li{height:21px;line-height:21px;padding:2px 8px;border-radius:2px;user-select:none;-webkit-user-select:none;-moz-user-select:none;cursor:default}.mp-740-over{background-color:#6363e6;background-image:-webkit-linear-gradient(top,#1b87e3 2%,#6363e6 98%);background-image:linear-gradient(180deg,#1b87e3 2%,#6363e6 98%);color:#ecf2f8;text-shadow:0 -1px 0 rgba(0,0,0,.05)}.mp-740-selected{color:#ccc}.mp-740-header{position:relative;height:18px;line-height:18px;border:1px solid #ccc;border-radius:2px;padding:2px 8px 3px;user-select:none;-webkit-user-select:none;-moz-user-select:none;cursor:default}.mp-740-icon{position:absolute;right:5px;top:2px}.mp-740-ib{display:inline-block}.mp-740-header-active{color:#eee}.mp-740-list{max-height:200px;overflow:auto}.mp-740-items{position:absolute;z-index:50;padding:4px;border-radius:2px;background-color:#fff;color:#474747;box-shadow:0 4px 10px 0 rgba(0,0,0,.1),0 3px 5px 0 rgba(0,0,0,.05),0 0 0 1px rgba(0,0,0,.09098)}.mp-740-none{display:none}.mp-740-ipt{border-radius:10px;margin-bottom:10px}.mp-740-tip{position:absolute;right:13px;top:10px;color:#999}");
+Magix.applyStyle('mx-740',".mx-740-li{height:21px;line-height:21px;padding:2px 8px;border-radius:2px;user-select:none;-webkit-user-select:none;-moz-user-select:none;cursor:default}.mx-740-over{background-color:#6363e6;background-image:-webkit-linear-gradient(top,#1b87e3 2%,#6363e6 98%);background-image:linear-gradient(180deg,#1b87e3 2%,#6363e6 98%);color:#ecf2f8;text-shadow:0 -1px 0 rgba(0,0,0,.05)}.mx-740-selected{color:#ccc}.mx-740-header{position:relative;height:18px;line-height:18px;border:1px solid #ccc;border-radius:2px;padding:2px 8px 3px;user-select:none;-webkit-user-select:none;-moz-user-select:none;cursor:default}.mx-740-icon{position:absolute;right:5px;top:2px}.mx-740-ib{display:inline-block}.mx-740-header-active{color:#eee}.mx-740-list{max-height:200px;overflow:auto}.mx-740-items{position:absolute;z-index:50;padding:4px;border-radius:2px;background-color:#fff;color:#474747;box-shadow:0 4px 10px 0 rgba(0,0,0,.1),0 3px 5px 0 rgba(0,0,0,.05),0 0 0 1px rgba(0,0,0,.09098)}.mx-740-none{display:none}.mx-740-ipt{border-radius:10px;margin-bottom:10px}.mx-740-tip{position:absolute;right:13px;top:10px;color:#999}");
 var Monitor = require('../monitor/index');
 var EnhanceMax = 100;
 var EnhanceItemHeight = 25;
 var EnhanceOffsetItems = 20;
-var html = "<div mx-click=\"toggle();\" class=\"mp-740-header\" id=\"header_<%=id%>\" style=\"width:<%=width%>px\" mx-guid=\"x1eb1-\u001f\">@1-\u001f</div><div id=\"list_<%=id%>\" class=\"mp-740-items mp-740-none\"><%if(search){%><input class=\"input mp-740-ipt\" mx-guid=\"x1eb2-\u001f\" mx-keyup=\"search()\" mx-paste=\"search()\" style=\"width:<%=width-10%>px\"/> <span class=\"mp-740-tip\" mx-guid=\"x1eb3-\u001f\">@2-\u001f</span><%}%><ul id=\"scroll_<%=id%>\" class=\"mp-740-list\" mx-guid=\"x1eb4-\u001f\" style=\"width:<%=width+9%>px;<%if(height){%>max-height:<%=height%>px;overflow:auto<%}%>\">@3-\u001f</ul></div>";
-var htmlData = [{"guid":1,"keys":["titleText","width"],"tmpl":"<span class=\"ellipsis mp-740-ib\" style=\"width:<%=width-15%>px\" id=\"title_<%=id%>\" title=\"<%=titleText%>\"><%=titleText%></span><span class=\"mp-740-icon\" id=\"icon_<%=id%>\">⇩</span>","selector":"div[mx-guid=\"x1eb1-\u001f\"]","attrs":[{"n":"style","v":"width:<%=width%>px"}],"mask":"13"},{"guid":2,"keys":["tip"],"tmpl":"<%=tip%>","selector":"span[mx-guid=\"x1eb3-\u001f\"]"},{"guid":3,"keys":["list","selected","width","height"],"tmpl":"<%if(before){%><li style=\"height:<%=before%>px\"></li><%}for(var i=0,one;i<list.length;i++){one=list[i]%><li mx-mouseover=\"hover()\" mx-mouseout=\"hover();\" mx-click=\"select({id:'<%=one.id%>'})\" class=\"mp-740-li ellipsis<%if(selected==one.id){%> mp-740-selected<%}%>\" title=\"<%=one.text%>\"><%=one.text%></li><%}if(after){%><li style=\"height:<%=after%>px\"></li><%}%>","selector":"ul[mx-guid=\"x1eb4-\u001f\"]","attrs":[{"n":"style","v":"width:<%=width+9%>px;<%if(height){%>max-height:<%=height%>px;overflow:auto<%}%>"}],"mask":"1122"},{"keys":["width"],"selector":"input[mx-guid=\"x1eb2-\u001f\"]","attrs":[{"n":"style","v":"width:<%=width-10%>px"}]}];
 var TOP = 1,
     BOTTOM = 2;
 module.exports = Magix.View.extend({
-    ctor: function() {
+    tmpl: {"html":"<div mx-click=\"toggle();\" class=\"mx-740-header\" id=\"header_<%=id%>\" style=\"width:<%=width%>px\" mx-guid=\"x1eb1-\u001f\">@1-\u001f</div><div id=\"list_<%=id%>\" class=\"mx-740-items mx-740-none\"><%if(search){%><input class=\"input mx-740-ipt\" mx-guid=\"x1eb2-\u001f\" mx-keyup=\"search()\" mx-paste=\"search()\" style=\"width:<%=width-10%>px\"/> <span class=\"mx-740-tip\" mx-guid=\"x1eb3-\u001f\">@2-\u001f</span><%}%><ul id=\"scroll_<%=id%>\" class=\"mx-740-list\" mx-guid=\"x1eb4-\u001f\" style=\"width:<%=width+9%>px;<%if(height){%>max-height:<%=height%>px;overflow:auto<%}%>\">@3-\u001f</ul></div>","subs":[{"guid":1,"keys":["titleText","width"],"tmpl":"<span class=\"ellipsis mx-740-ib\" style=\"width:<%=width-15%>px\" id=\"title_<%=id%>\" title=\"<%=titleText%>\"><%=titleText%></span><span class=\"mx-740-icon\" id=\"icon_<%=id%>\">⇩</span>","selector":"div[mx-guid=\"x1eb1-\u001f\"]","attrs":[{"n":"style","v":"width:<%=width%>px"}],"mask":"13"},{"guid":2,"keys":["tip"],"tmpl":"<%=tip%>","selector":"span[mx-guid=\"x1eb3-\u001f\"]"},{"guid":3,"keys":["list","selected","width","height"],"tmpl":"<%if(before){%><li style=\"height:<%=before%>px\"></li><%}for(var i=0,one;i<list.length;i++){one=list[i]%><li mx-mouseover=\"hover()\" mx-mouseout=\"hover();\" mx-click=\"select({id:'<%=one.id%>'})\" class=\"mx-740-li ellipsis<%if(selected==one.id){%> mx-740-selected<%}%>\" title=\"<%=one.text%>\"><%=one.text%></li><%}if(after){%><li style=\"height:<%=after%>px\"></li><%}%>","selector":"ul[mx-guid=\"x1eb4-\u001f\"]","attrs":[{"n":"style","v":"width:<%=width+9%>px;<%if(height){%>max-height:<%=height%>px;overflow:auto<%}%>"}],"mask":"1122"},{"keys":["width"],"selector":"input[mx-guid=\"x1eb2-\u001f\"]","attrs":[{"n":"style","v":"width:<%=width-10%>px"}]}]},
+    ctor: function(extra) {
         var me = this;
         Monitor.setup();
         me.on('destroy', Monitor.teardown);
-        me.$updater = new Updater(me, {
-            tmpl: html,
-            data: htmlData,
-            build: tmpl
-        });
+        me.$extra = extra;
     },
     inside: function(node) {
         var me = this;
@@ -47,8 +40,8 @@ module.exports = Magix.View.extend({
             before: 0,
             after: 0,
             search: ops.search,
-            width: ops.width || 150,
-            height: ops.height || 0,
+            width: (ops.width | 0) || 150,
+            height: (ops.height | 0) || 0,
             map: map,
             id: me.id,
             titleText: map[ops.selected].text,
@@ -117,9 +110,7 @@ module.exports = Magix.View.extend({
     },
     render: function() {
         var me = this;
-        var html = $.trim($('#' + me.id + ' script').html());
-        var info = JSON.parse(html);
-        me.update(info);
+        me.update(me.$extra);
     },
     hide: function(items) {
         var me = this;
@@ -127,9 +118,9 @@ module.exports = Magix.View.extend({
             me.$shown = false;
             Monitor.remove(me);
             items = items || $('#list_' + me.id);
-            items.addClass('mp-740-none');
+            items.addClass('mx-740-none');
             var header = $('#header_' + me.id);
-            header.removeClass('mp-740-header-active'); //'';
+            header.removeClass('mx-740-header-active'); //'';
             var icon = $('#icon_' + me.id);
             icon.html('⇩');
         }
@@ -142,9 +133,9 @@ module.exports = Magix.View.extend({
             var doc = $(document);
             var docHeight = doc.height();
             items = items || $('#list_' + me.id);
-            items.removeClass('mp-740-none');
+            items.removeClass('mx-740-none');
             var header = $('#header_' + me.id);
-            header.addClass('mp-740-header-active');
+            header.addClass('mx-740-header-active');
             var icon = $('#icon_' + me.id);
             icon.html('⇧');
             var itemsHeight = items.outerHeight();
@@ -190,12 +181,12 @@ module.exports = Magix.View.extend({
     },
     'hover<mouseout,mouseover>': function(e) {
         var node = $(e.current);
-        node[e.type == 'mouseout' ? 'removeClass' : 'addClass']('mp-740-over');
+        node[e.type == 'mouseout' ? 'removeClass' : 'addClass']('mx-740-over');
     },
     'toggle<click>': function() {
         var me = this;
         var items = $('#list_' + me.id);
-        if (items.hasClass('mp-740-none')) {
+        if (items.hasClass('mx-740-none')) {
             me.show(items);
         } else {
             me.hide(items);
@@ -212,7 +203,7 @@ module.exports = Magix.View.extend({
                 selected: id,
                 titleText: map[id].text
             }).digest();
-            $('#' + me.id).trigger({
+            $('#' + me.id).val(id).trigger({
                 type: 'change',
                 value: id,
                 text: data.get('titleText')

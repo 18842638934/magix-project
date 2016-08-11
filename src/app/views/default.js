@@ -6,18 +6,19 @@ define('app/views/default',['magix','$'],function(require,exports,module){
 var Magix = require('magix');
 var $ = require('$');
 var Router = Magix.Router;
-var ShrinkCSS = 'mp-286-shrink';
+var ShrinkCSS = 'mx-286-shrink';
 module.exports = Magix.View.extend({
-    tmpl: "<div mx-view=\"app/views/partials/header\" mx-togglesidebar=\"resizeMain()\"></div><div class=\"inmain\" id=\"inmain\"><div mx-guid=\"x05a1-\u001f\" mx-view=\"<%=mainView%>\"><div class=\"loading\"><span></span></div></div></div>",
-    tmplData: [{"keys":["mainView"],"selector":"div[mx-guid=\"x05a1-\u001f\"]","view":"<%=mainView%>"}],
+    tmpl: {"html":"<div mx-view=\"app/views/partials/header\" mx-togglesidebar=\"resizeMain()\"></div><div class=\"inmain\" id=\"inmain\"><div mx-guid=\"x05a1-\u001f\" mx-view=\"<%=mainView%>\"><div class=\"loading\"><span></span></div></div></div>","subs":[{"keys":["mainView"],"selector":"div[mx-guid=\"x05a1-\u001f\"]","view":"<%=mainView%>"}]},
     ctor: function() {
         var me = this;
         me.observe(null, true);
+        $(window).on('resize', function() {
+            me.resize();
+        });
     },
     render: function() {
         var me = this;
         var loc = Router.parse();
-        console.log('xx');
         me.$updater.set({
             mainView: 'app/views' + loc.path
         }).digest();
@@ -30,9 +31,6 @@ module.exports = Magix.View.extend({
         });
     },
     'resizeMain<toggleSidebar>': function(e) {
-        this.resize();
-    },
-    '$win<resize>': function() {
         this.resize();
     }
 });

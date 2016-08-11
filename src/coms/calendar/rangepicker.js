@@ -1,5 +1,5 @@
-define('coms/calendar/rangepicker',['magix','$','./index','../picker/index','../updater/index','./datepicker','../tmpl/index'],function(require,exports,module){
-/*Magix ,$ ,Calendar ,Picker ,Updater ,Datepicker ,tmpl */
+define('coms/calendar/rangepicker',['magix','$','./index','../picker/index','./datepicker'],function(require,exports,module){
+/*Magix ,$ ,Calendar ,Picker ,Datepicker */
 /*
     author:xinglie.lkf@taobao.com
  */
@@ -7,12 +7,10 @@ var Magix = require('magix');
 var $ = require('$');
 var Calendar = require('./index');
 var Picker = require('../picker/index');
-var Updater = require('../updater/index');
 var Datepicker = require('./datepicker');
-var tmpl = require('../tmpl/index');
 var DateParse = Calendar.parse;
 var DateFormat = Calendar.format;
-Magix.applyStyle('mp-bd5',".mp-bd5-shortcuts{width:220px;padding:4px}.mp-bd5-shortcuts-header{height:22px;line-height:22px;margin:4px 10px}.mp-bd5-shortcuts a{padding:4px;float:left;width:65px;height:20px;line-height:20px;text-align:center}.mp-bd5-shortcuts a:hover{background:#eee;cursor:pointer;border-radius:4px}.mp-bd5-clearfix:after{content:\" \";display:block;clear:both;height:0}.mp-bd5-clearfix{zoom:1}.mp-bd5-datepicker{margin:4px;text-align:center}.mp-bd5-datepicker input{width:80px}.mp-bd5-buttons{margin:15px 4px 10px 14px}.mp-bd5-buttons button{height:25px;margin-right:5px;width:50px}.mp-bd5-shortcuts a.mp-bd5-selected,.mp-bd5-shortcuts a.mp-bd5-selected:hover{cursor:pointer;background-color:#197de1;background-image:-webkit-linear-gradient(top,#1b87e3 2%,#166ed5 98%);background-image:linear-gradient(180deg,#1b87e3 2%,#166ed5 98%);color:#ecf2f8;text-shadow:0 -1px 0 rgba(0,0,0,.05);border-radius:2px}");
+Magix.applyStyle('mx-bd5',".mx-bd5-shortcuts{width:220px;padding:4px}.mx-bd5-shortcuts-header{height:22px;line-height:22px;margin:4px 10px}.mx-bd5-shortcuts a{padding:4px;float:left;width:65px;height:20px;line-height:20px;text-align:center}.mx-bd5-shortcuts a:hover{background:#eee;cursor:pointer;border-radius:4px}.mx-bd5-clearfix:after{content:\" \";display:block;clear:both;height:0}.mx-bd5-clearfix{zoom:1}.mx-bd5-datepicker{margin:4px;text-align:center}.mx-bd5-datepicker input{width:80px}.mx-bd5-buttons{margin:15px 4px 10px 14px}.mx-bd5-buttons button{height:25px;margin-right:5px;width:50px}.mx-bd5-shortcuts a.mx-bd5-selected,.mx-bd5-shortcuts a.mx-bd5-selected:hover{cursor:pointer;background-color:#197de1;background-image:-webkit-linear-gradient(top,#1b87e3 2%,#166ed5 98%);background-image:linear-gradient(180deg,#1b87e3 2%,#166ed5 98%);color:#ecf2f8;text-shadow:0 -1px 0 rgba(0,0,0,.05);border-radius:2px}");
 var DayMillisecond = 86400000,
     GetOffsetDate = function(offset, date) {
         if (!date) {
@@ -95,19 +93,13 @@ var QueryQuickDateKeys = [
     'passedThisMonth',
     'lastestThisMonth'
 ];
-var html = "<%if(quickDates.length){%><div class=\"mp-bd5-shortcuts-header\">快捷日期</div><div class=\"mp-bd5-shortcuts mp-bd5-clearfix\" mx-guid=\"x9481-\u001f\">@1-\u001f</div><%}%><div class=\"mp-bd5-shortcuts-header\">日期范围</div><div class=\"mp-bd5-datepicker mp-bd5-clearfix\" mx-guid=\"x9482-\u001f\">@2-\u001f</div><div class=\"mp-bd5-buttons mp-bd5-clearfix\"><button mx-click=\"picked()\" class=\"btn\">确定</button> <button mx-click=\"hide()\" class=\"btn\">取消</button></div>";
-var htmlData = [{"guid":1,"keys":["dates"],"tmpl":"<%for(var i=0;i<quickDates.length;i++){var key=quickDates[i],info=quickDatesMap[key]%><a <%if(dates.quickDateKey==key){%> class=\"mp-bd5-selected\" <%}%> mx-click=\"picked({quick:true,key:'<%=key%>'})\"><%=info?info.text:key%></a><%}%>","selector":"div[mx-guid=\"x9481-\u001f\"]"},{"guid":2,"keys":["dates"],"tmpl":"<input class=\"input\" value=\"<%=dates.startStr%>\" readonly=\"readonly\" mx-click=\"showDatepicker({first:true})\" id=\"start_<%=id%>\"/>-<input class=\"input\" value=\"<%=dates.endStr%>\" readonly=\"readonly\" mx-click=\"showDatepicker()\" id=\"end_<%=id%>\"/>","selector":"div[mx-guid=\"x9482-\u001f\"]"}];
 var Rangepicker = Picker.extend({
+    tmpl: {"html":"<%if(quickDates.length){%><div class=\"mx-bd5-shortcuts-header\">快捷日期</div><div class=\"mx-bd5-shortcuts mx-bd5-clearfix\" mx-guid=\"x9481-\u001f\">@1-\u001f</div><%}%><div class=\"mx-bd5-shortcuts-header\">日期范围</div><div class=\"mx-bd5-datepicker mx-bd5-clearfix\" mx-guid=\"x9482-\u001f\">@2-\u001f</div><div class=\"mx-bd5-buttons mx-bd5-clearfix\"><button mx-click=\"picked()\" class=\"btn\">确定</button> <button mx-click=\"hide()\" class=\"btn\">取消</button></div>","subs":[{"guid":1,"keys":["dates"],"tmpl":"<%for(var i=0;i<quickDates.length;i++){var key=quickDates[i],info=quickDatesMap[key]%><a <%if(dates.quickDateKey==key){%> class=\"mx-bd5-selected\" <%}%> mx-click=\"picked({quick:true,key:'<%=key%>'})\"><%=info?info.text:key%></a><%}%>","selector":"div[mx-guid=\"x9481-\u001f\"]"},{"guid":2,"keys":["dates"],"tmpl":"<input class=\"input\" value=\"<%=dates.startStr%>\" readonly=\"readonly\" mx-click=\"showDatepicker({first:true})\" id=\"start_<%=id%>\"/>-<input class=\"input\" value=\"<%=dates.endStr%>\" readonly=\"readonly\" mx-click=\"showDatepicker()\" id=\"end_<%=id%>\"/>","selector":"div[mx-guid=\"x9482-\u001f\"]"}]},
     ctor: function(ops) {
         var me = this;
         me.$dates = ops.dates;
         me.$quickDates = ops.quickDates || [];
         me.$picked = ops.picked;
-        me.$updater = new Updater(me, {
-            tmpl: html,
-            data: htmlData,
-            build: tmpl
-        });
     },
     inside: function(node) {
         var me = this;

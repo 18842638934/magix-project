@@ -5,9 +5,7 @@ var Magix = require('magix');
 var $ = require('$');
 var Calendar = require('./index');
 var Picker = require('../picker/index');
-var Updater = require('../updater/index');
 var Datepicker = require('./datepicker');
-var tmpl = require('../tmpl/index');
 var DateParse = Calendar.parse;
 var DateFormat = Calendar.format;
 Magix.applyStyle('@rangepicker.css');
@@ -93,19 +91,13 @@ var QueryQuickDateKeys = [
     'passedThisMonth',
     'lastestThisMonth'
 ];
-var html = '@rangepicker.html';
-var htmlData = '@rangepicker.html:data';
 var Rangepicker = Picker.extend({
+    tmpl: '@rangepicker.html',
     ctor: function(ops) {
         var me = this;
         me.$dates = ops.dates;
         me.$quickDates = ops.quickDates || [];
         me.$picked = ops.picked;
-        me.$updater = new Updater(me, {
-            tmpl: html,
-            data: htmlData,
-            build: tmpl
-        });
     },
     inside: function(node) {
         var me = this;

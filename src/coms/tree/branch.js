@@ -1,14 +1,13 @@
-define('coms/tree/branch',['magix','$','../tmpl/index'],function(require,exports,module){
-/*Magix ,$ ,tmpl */
+define('coms/tree/branch',['magix','$'],function(require,exports,module){
+/*Magix ,$ */
 /*
     author:xinglie.lkf@taobao.com
  */
 
 var Magix = require('magix');
 var $ = require('$');
-var tmpl = require('../tmpl/index');
 module.exports = Magix.View.extend({
-    tmpl: "<ul><%for(var i=0,br;i<list.length;i++){br=list[i]%><li class=\"mp-582-li\"><div class=\"mp-582-icon<%if(br.children){%> mp-582-cp<%}%>\" <%if(br.children){%> mx-click=\"toggle({id:'<%=br[dataId]%>'})\" <%}%>><%if(br.children){%>+<%}%></div><div><label><input type=\"checkbox\" mx-change=\"check()\" value=\"<%=br[dataId]%>\"/><%=br[textKey]%></label></div><%if(br.children){%><div mx-view=\"coms/tree/branch?index=<%=i%>&text=<%=textKey%>&id=<%=dataId%>\" id=\"<%=id%>_<%=br[dataId]%>\" class=\"mp-582-indent mp-582-none\"></div><%}%></li><%}%></ul>",
+    tmpl: {"html":"<ul><%for(var i=0,br;i<list.length;i++){br=list[i]%><li class=\"mx-582-li\"><div class=\"mx-582-icon<%if(br.children){%> mx-582-cp<%}%>\" <%if(br.children){%> mx-click=\"toggle({id:'<%=br[dataId]%>'})\" <%}%>><%if(br.children){%>+<%}%></div><div><label><input type=\"checkbox\" mx-change=\"check()\" value=\"<%=br[dataId]%>\"/><%=br[textKey]%></label></div><%if(br.children){%><div mx-view=\"coms/tree/branch?index=<%=i%>&text=<%=textKey%>&id=<%=dataId%>\" id=\"<%=id%>_<%=br[dataId]%>\" class=\"mx-582-indent mx-582-none\"></div><%}%></li><%}%></ul>","subs":[]},
     ctor: function(extra) {
         var me = this;
         me.$list = me.owner.parent().invoke('getList', extra.index);
@@ -17,12 +16,12 @@ module.exports = Magix.View.extend({
     },
     render: function() {
         var me = this;
-        me.setHTML(me.id, tmpl(me.tmpl, {
+        me.$updater.set({
             textKey: me.$textKey,
             id: me.id,
             dataId: me.$dataId,
             list: me.$list
-        }));
+        }).digest();
     },
     getList: function(idx) {
         return this.$list[idx].children;

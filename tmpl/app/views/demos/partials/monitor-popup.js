@@ -6,7 +6,6 @@ Magix.applyStyle('@monitor-popup.css');
 var Service = require('../../../services/service');
 module.exports = Magix.View.extend({
     tmpl: '@monitor-popup.html',
-    tmplData: '@monitor-popup.html:data',
     ctor: function() {
         var me = this;
         Service.on('begin', function(e) {

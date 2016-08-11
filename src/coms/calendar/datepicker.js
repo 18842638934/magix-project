@@ -1,16 +1,15 @@
-define('coms/calendar/datepicker',['magix','$','../picker/index','../tmpl/index'],function(require,exports,module){
-/*Magix ,$ ,Picker ,tmpl */
+define('coms/calendar/datepicker',['magix','$','../picker/index'],function(require,exports,module){
+/*Magix ,$ ,Picker */
 /*
     author:xinglie.lkf@taobao.com
  */
 var Magix = require('magix');
 var $ = require('$');
 var Picker = require('../picker/index');
-var tmpl = require('../tmpl/index');
 var Base = Picker.prototype;
 var Vframe = Magix.Vframe;
 module.exports = Picker.extend({
-    tmpl: "<div id=\"cal_<%=id%>\" mx-view=\"coms/calendar/index\"></div>",
+    tmpl: {"html":"<div id=\"cal_<%=id%>\" mx-view=\"coms/calendar/index\"></div>","subs":[]},
     ctor: function() {
         var me = this;
         var node = $('#' + me.id);
@@ -25,10 +24,9 @@ module.exports = Picker.extend({
     },
     render: function() {
         var me = this;
-        var html = tmpl(me.tmpl, {
+        me.$updater.set({
             id: me.id
-        });
-        me.setHTML(me.id, html);
+        }).digest();
     },
     update: function(ops) {
         var me = this;

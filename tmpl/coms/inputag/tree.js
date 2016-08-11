@@ -6,11 +6,7 @@ Magix.applyStyle('@tree.css');
 var CSSNames = 'names@tree.css';
 var $ = require('$');
 var Monitor = require('../monitor/index');
-var Updater = require('../updater/index');
-var tmpl = require('../tmpl/index');
 var ListToTree = require('../generic/treeable');
-var html = '@tree.html';
-var htmlData = '@tree.html:data';
 module.exports = Magix.View.extend({
     tmpl: '@tree.html',
     ctor: function(extra) {
@@ -19,11 +15,6 @@ module.exports = Magix.View.extend({
         me.on('destroy', Monitor.teardown);
         me.$list = extra.list;
         me.$selected = extra.selected;
-        me.$updater = new Updater(me, {
-            tmpl: html,
-            data: htmlData,
-            build: tmpl
-        });
     },
     inside: function(node) {
         var me = this;

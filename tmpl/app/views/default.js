@@ -7,15 +7,16 @@ var Router = Magix.Router;
 var ShrinkCSS = '@./partials/header-sidebar.css:shrink';
 module.exports = Magix.View.extend({
     tmpl: '@default.html',
-    tmplData: '@default.html:data',
     ctor: function() {
         var me = this;
         me.observe(null, true);
+        $(window).on('resize', function() {
+            me.resize();
+        });
     },
     render: function() {
         var me = this;
         var loc = Router.parse();
-        console.log('xx');
         me.$updater.set({
             mainView: 'app/views' + loc.path
         }).digest();
@@ -28,9 +29,6 @@ module.exports = Magix.View.extend({
         });
     },
     'resizeMain<toggleSidebar>': function(e) {
-        this.resize();
-    },
-    '$win<resize>': function() {
         this.resize();
     }
 });

@@ -18,7 +18,6 @@ var Types = [{
 }];
 module.exports = Magix.View.extend({
     tmpl: '@view-subs-float.html',
-    tmplData: '@view-subs-float.html:data',
     render: function() {
         var me = this;
         me.$updater.set({

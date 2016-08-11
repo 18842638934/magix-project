@@ -16,7 +16,6 @@ var Types = [{
 }];
 module.exports = Form.extend({
     tmpl: '@view-subs.html',
-    tmplData: '@view-subs.html:data',
     render: function() {
         var me = this;
         var creative = {
@@ -38,9 +37,7 @@ module.exports = Form.extend({
     renderByType: function(type) {
         var me = this;
         var vf = Magix.Vframe.get('type_vf_' + me.id);
-        vf.mountView('@./partials/view-subs-' + type, {
-            creative: me.$updater.get('creative')
-        });
+        vf.mountView('@./partials/view-subs-' + type + '?creative={creative}');
     },
     'cTypes<change>': function(e) {
         this.renderByType(e.value);

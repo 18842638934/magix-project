@@ -2,23 +2,13 @@
     author:xinglie.lkf@taobao.com
  */
 var Magix = require('magix');
-var $ = require('$');
-var Updater = require('../updater/index');
-var tmpl = require('../tmpl/index');
 var Router = Magix.Router;
+var $ = require('$');
 Magix.applyStyle('@index.css');
-var html = '@index.html';
-var htmlData = '@index.html:data';
 module.exports = Magix.View.extend({
-    ctor: function() {
+    tmpl: '@index.html',
+    ctor: function(extra) {
         var me = this;
-
-        me.$updater = new Updater(me, {
-            tmpl: html,
-            data: htmlData,
-            build: tmpl
-        });
-
         me.$updater.onchanged = function(e) {
             if (e.keys.index) {
                 $('#' + me.id).trigger({
@@ -27,20 +17,19 @@ module.exports = Magix.View.extend({
                 });
             }
         };
+        me.$extra = extra;
     },
     render: function() {
         var me = this;
-        var html = $.trim($('#' + me.id + ' script').html());
-        var info = JSON.parse(html);
-        me.update(info);
+        me.update(me.$extra);
     },
     cal: function() {
         var me = this;
         var data = me.$updater;
-        var index = data.get('index');
-        var pages = data.get('pages');
+        var index = data.get('index') | 0;
+        var pages = data.get('pages') | 0;
         if (index > pages) index = pages;
-        var step = data.get('step');
+        var step = data.get('step') | 0;
         var middle = step / 2 | 0;
         var start = Math.max(1, index - middle);
         var end = Math.min(pages, start + step - 1);

@@ -7,11 +7,16 @@ Magix.applyStyle('@header-sidebar.css');
 var CSSNames = 'names@header-sidebar.css[fixed,expand,shrink]';
 module.exports = Magix.View.extend({
     tmpl: '@header-sidebar.html',
-    tmplData:'@header-sidebar.html:data',
     ctor: function() {
         var me = this;
         me.$updater.set({
             menus: []
+        });
+        var win = $(window);
+        win.on('resize', function() {
+            me.resize();
+        }).on('scroll', function() {
+            me.toggleFixed();
         });
     },
     render: function() {
@@ -40,7 +45,7 @@ module.exports = Magix.View.extend({
     },
     updateUrl: function(url) {
         var me = this;
-        console.log(url,me.$updater.get('url'));
+        console.log(url, me.$updater.get('url'));
         me.$updater.set({
             url: url
         }).digest();
@@ -49,10 +54,7 @@ module.exports = Magix.View.extend({
         var height = Math.max($(window).height(), 60);
         $('#' + this.id).height(height);
     },
-    '$win<resize>': function() {
-        this.resize();
-    },
-    '$win<scroll>': function() {
+    toggleFixed: function() {
         var me = this;
         var top = $(window).scrollTop();
         if (top > 50) {

@@ -3,23 +3,24 @@
  */
 var Magix = require('magix');
 var $ = require('$');
-var tmpl = require('../tmpl/index');
 var ListToTree = require('../generic/treeable');
 Magix.applyStyle('@index.css');
 module.exports = Magix.View.extend({
     tmpl: '@index.html',
+    ctor: function(extra) {
+        this.$extra = extra;
+    },
     render: function() {
         var me = this;
-        var html = $.trim($('#' + me.id + ' script').html());
-        var info = JSON.parse(html);
-        me.setHTML(me.id, tmpl(me.tmpl, {
+        me.$updater.set({
             id: me.id
-        }));
-        me.update(info);
+        }).digest();
+        me.update(me.$extra);
     },
     update: function(ops) {
         var me = this;
         var info = ListToTree(ops.list, ops.id, ops.pId);
+        console.dir(info);
         me.$info = info;
         me.owner.mountVframe('tree_' + me.id, '@./branch', {
             id: ops.id || 'id',

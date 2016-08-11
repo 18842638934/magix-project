@@ -6,7 +6,6 @@ var Datepicker = require('@coms/calendar/datepicker');
 var Rangepicker = require('@coms/calendar/rangepicker');
 module.exports = Magix.View.extend({
     tmpl: '@calendar.html',
-    tmplData: '@calendar.html:data',
     render: function() {
         var me = this;
         me.$updater.set({

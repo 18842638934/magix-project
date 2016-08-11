@@ -1,33 +1,25 @@
-define('coms/menu/index',['magix','$','../updater/index','../tmpl/index','../generic/treeable'],function(require,exports,module){
-/*Magix ,$ ,Updater ,tmpl ,ListToTree */
+define('coms/menu/index',['magix','$','../generic/treeable'],function(require,exports,module){
+/*Magix ,$ ,ListToTree */
 /*
     author:xinglie.lkf@taobao.com
  */
 var Magix = require('magix');
 var $ = require('$');
-var Updater = require('../updater/index');
-var tmpl = require('../tmpl/index');
 var ListToTree = require('../generic/treeable');
 var Vframe = Magix.Vframe;
-Magix.applyStyle('mp-e65',".mp-e65-items li{height:30px;line-height:30px;padding:0 8px;cursor:default;border-radius:4px}.mp-e65-items li.mp-e65-over{background-color:#197de1;background-image:-webkit-linear-gradient(top,#1b87e3 2%,#166ed5 98%);background-image:linear-gradient(180deg,#1b87e3 2%,#166ed5 98%);color:#ecf2f8;text-shadow:0 -1px 0 rgba(0,0,0,.05)}.mp-e65-container{transition:margin-left .25s;-moz-transition:margin-left .25s;-webkit-transition:margin-left .25s;-o-transition:margin-left .25s}.mp-e65-items li .mp-e65-more{float:right}.mp-e65-items{padding:4px;border-radius:4px;background-color:#fff;color:#474747;box-shadow:0 4px 10px 0 rgba(0,0,0,.1),0 3px 5px 0 rgba(0,0,0,.05),0 0 0 1px rgba(0,0,0,.09098);-webkit-backface-visibility:hidden;backface-visibility:hidden;user-select:none;-webkit-user-select:none;-moz-user-select:none;cursor:default}.mp-e65-toright{margin-left:10px}.mp-e65-toleft{margin-left:-10px}");
-var CSSNames = {"over":"mp-e65-over","toleft":"mp-e65-toleft","toright":"mp-e65-toright"};
+Magix.applyStyle('mx-e65',".mx-e65-items li{height:30px;line-height:30px;padding:0 8px;cursor:default;border-radius:4px}.mx-e65-items li.mx-e65-over{background-color:#197de1;background-image:-webkit-linear-gradient(top,#1b87e3 2%,#166ed5 98%);background-image:linear-gradient(180deg,#1b87e3 2%,#166ed5 98%);color:#ecf2f8;text-shadow:0 -1px 0 rgba(0,0,0,.05)}.mx-e65-container{transition:margin-left .25s;-moz-transition:margin-left .25s;-webkit-transition:margin-left .25s;-o-transition:margin-left .25s}.mx-e65-items li .mx-e65-more{float:right}.mx-e65-items{padding:4px;border-radius:4px;background-color:#fff;color:#474747;box-shadow:0 4px 10px 0 rgba(0,0,0,.1),0 3px 5px 0 rgba(0,0,0,.05),0 0 0 1px rgba(0,0,0,.09098);-webkit-backface-visibility:hidden;backface-visibility:hidden;user-select:none;-webkit-user-select:none;-moz-user-select:none;cursor:default}.mx-e65-toright{margin-left:10px}.mx-e65-toleft{margin-left:-10px}");
+var CSSNames = {"over":"mx-e65-over","toleft":"mx-e65-toleft","toright":"mx-e65-toright"};
 var Instance;
-var html = "<div style=\"width:<%=width%>px;<%if(isChild){%>position:absolute;left:-1000000px<%}%>\" mx-mouseover=\"over();\" class=\"mp-e65-container<%if(isChild){%> away<%}%>\" mx-contextmenu=\"prevent()\" mx-guid=\"xa941-\u001f\">@1-\u001f</div>";
-var htmlData = [{"guid":1,"keys":["width"],"tmpl":"<ul class=\"mp-e65-items\" mx-guid=\"xa942-\u001f\">@2-\u001f</ul>","selector":"div[mx-guid=\"xa941-\u001f\"]","attrs":[{"n":"style","v":"width:<%=width%>px;<%if(isChild){%>position:absolute;left:-1000000px<%}%>"}],"mask":"2"},{"guid":2,"keys":["list","viewId"],"tmpl":"<%for(var i=0,one;i<list.length;i++){one=list[i]%><li mx-mouseover=\"hover({id:'<%=one.id%>'})\" mx-mouseout=\"hover({id:'<%=one.id%>'});\" <%if(!one.children){%> mx-click=\"select({id:'<%=one.id%>'})\" <%}%> class=\"ellipsis\" title=\"<%=one.text%>\" id=\"<%=viewId%>_<%=one.id%>\"><i class=\"iconfont\">&#xe64b;</i><%=one.text%> <%if(one.children){%><span class=\"mp-e65-more\">➤</span><%}%></li><%}%>","selector":"ul[mx-guid=\"xa942-\u001f\"]","pKeys":["width"]}];
 var Menu = Magix.View.extend({
-    tmpl: "<div style=\"width:<%=width%>px;<%if(isChild){%>position:absolute;left:-1000000px<%}%>\" mx-mouseover=\"over();\" class=\"mp-e65-container<%if(isChild){%> away<%}%>\" mx-contextmenu=\"prevent()\" mx-guid=\"xa941-\u001f\">@1-\u001f</div>",
-    ctor: function() {
+    tmpl: {"html":"<div style=\"width:<%=width%>px;<%if(isChild){%>position:absolute;left:-1000000px<%}%>\" mx-mouseover=\"over();\" class=\"mx-e65-container<%if(isChild){%> away<%}%>\" mx-contextmenu=\"prevent()\" mx-guid=\"xa941-\u001f\">@1-\u001f</div>","subs":[{"guid":1,"keys":["width"],"tmpl":"<ul class=\"mx-e65-items\" mx-guid=\"xa942-\u001f\">@2-\u001f</ul>","selector":"div[mx-guid=\"xa941-\u001f\"]","attrs":[{"n":"style","v":"width:<%=width%>px;<%if(isChild){%>position:absolute;left:-1000000px<%}%>"}],"mask":"2"},{"guid":2,"keys":["list","viewId"],"tmpl":"<%for(var i=0,one;i<list.length;i++){one=list[i]%><li mx-mouseover=\"hover({id:'<%=one.id%>'})\" mx-mouseout=\"hover({id:'<%=one.id%>'});\" <%if(!one.children){%> mx-click=\"select({id:'<%=one.id%>'})\" <%}%> class=\"ellipsis\" title=\"<%=one.text%>\" id=\"<%=viewId%>_<%=one.id%>\"><i class=\"iconfont\">&#xe64b;</i><%=one.text%> <%if(one.children){%><span class=\"mx-e65-more\">➤</span><%}%></li><%}%>","selector":"ul[mx-guid=\"xa942-\u001f\"]","pKeys":["width"]}]},
+    ctor: function(extra) {
         var me = this;
-        me.$updater = new Updater(me, {
-            tmpl: html,
-            data: htmlData,
-            build: tmpl
-        });
         me.on('destroy', function() {
             if (me.$updater.get('isChild')) {
                 $('#' + me.id).remove();
             }
         });
+        me.$extra = extra;
     },
     inside: function(node) {
         var me = this;
@@ -84,10 +76,8 @@ var Menu = Magix.View.extend({
     },
     render: function() {
         var me = this;
-        var html = $.trim($('#' + me.id + ' script').html());
-        if (html) {
-            var info = JSON.parse(html);
-            me.update(info);
+        if (me.$extra.list) {
+            me.update(me.$extra);
         } else {
             me.endUpdate();
         }

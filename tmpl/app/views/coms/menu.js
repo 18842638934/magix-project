@@ -5,7 +5,6 @@ var Magix = require('magix');
 var Contextmenu = require('@coms/menu/context');
 module.exports = Magix.View.extend({
     tmpl: '@menu.html',
-    tmplData: '@menu.html:data',
     render: function(name) {
         var me = this;
         me.request('render').all(name || 'list', function(err, bag) {

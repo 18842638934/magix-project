@@ -5,8 +5,8 @@ define('app/views/demos/sdk',['magix','./partials/sdk-bigimg'],function(require,
  */
 var Magix = require('magix');
 var BigImg = require('./partials/sdk-bigimg');
-Magix.applyStyle('mp-d1a',".mp-d1a-vm{vertical-align:middle}.mp-d1a-w100{width:100px}.mp-d1a-w700{width:700px}.mp-d1a-m50{margin:50px}.mp-d1a-float{position:fixed;left:1000px;top:100px;border:1px solid #ccc;height:400px;width:200px}.mp-d1a-sitem{height:26px;line-height:26px;padding:0 10px}.mp-d1a-fr{float:right}");
-var CSSNames = {"vm":"mp-d1a-vm","w100":"mp-d1a-w100","w700":"mp-d1a-w700","m50":"mp-d1a-m50","float":"mp-d1a-float","sitem":"mp-d1a-sitem","fr":"mp-d1a-fr"};
+Magix.applyStyle('mx-d1a',".mx-d1a-vm{vertical-align:middle}.mx-d1a-w100{width:100px}.mx-d1a-w700{width:700px}.mx-d1a-m50{margin:50px}.mx-d1a-float{position:fixed;left:1000px;top:100px;border:1px solid #ccc;height:400px;width:200px}.mx-d1a-sitem{height:26px;line-height:26px;padding:0 10px}.mx-d1a-fr{float:right}");
+var CSSNames = {"vm":"mx-d1a-vm","w100":"mx-d1a-w100","w700":"mx-d1a-w700","m50":"mx-d1a-m50","float":"mx-d1a-float","sitem":"mx-d1a-sitem","fr":"mx-d1a-fr"};
 var Items = [{
     id: '6',
     name: '横  幅',
@@ -41,8 +41,7 @@ var Items = [{
 var ItemsMap = Magix.toMap(Items, 'id');
 
 module.exports = Magix.View.extend({
-    tmpl: "<table class=\"table mp-d1a-w700 mp-d1a-m50\"><thead><tr><th colspan=\"3\">名称</th></tr></thead><tbody><%for(var i=0;i<items.length;i++){%><tr><td class=\"mp-d1a-vm mp-d1a-w100\"><label><input type=\"checkbox\" mx-click=\"store({id:'<%=items[i].id%>'})\" id=\"cb_<%=id%>_<%=items[i].id%>\"/><%=items[i].name%></label></td><td mx-mouseover=\"hoverBig({img:'<%=items[i].bigImg%>'})\" mx-mouseout=\"hoverBig()\"><img src=\"<%=items[i].img%>\"/></td><td class=\"mp-d1a-vm\"><%=items[i].description%></td></tr><%}%></tbody></table><div class=\"mp-d1a-float\" mx-guid=\"xff41-\u001f\">@1-\u001f</div>",
-    tmplData:[{"guid":1,"keys":["selected"],"tmpl":"<ul><%for(var i=0;i<selected.length;i++){%><li class=\"mp-d1a-sitem\"><%=selected[i].name%><a href=\"#!/index\" class=\"mp-d1a-fr\" mx-click=\"remove({index:<%=i%>})\">删除</a></li><%}%></ul>","selector":"div[mx-guid=\"xff41-\u001f\"]"}],
+    tmpl: {"html":"<table class=\"table mx-d1a-w700 mx-d1a-m50\"><thead><tr><th colspan=\"3\">名称</th></tr></thead><tbody><%for(var i=0;i<items.length;i++){%><tr><td class=\"mx-d1a-vm mx-d1a-w100\"><label><input type=\"checkbox\" mx-click=\"store({id:'<%=items[i].id%>'})\" id=\"cb_<%=id%>_<%=items[i].id%>\"/><%=items[i].name%></label></td><td mx-mouseover=\"hoverBig({img:'<%=items[i].bigImg%>'})\" mx-mouseout=\"hoverBig()\"><img src=\"<%=items[i].img%>\"/></td><td class=\"mx-d1a-vm\"><%=items[i].description%></td></tr><%}%></tbody></table><div class=\"mx-d1a-float\" mx-guid=\"xff41-\u001f\">@1-\u001f</div>","subs":[{"guid":1,"keys":["selected"],"tmpl":"<ul><%for(var i=0;i<selected.length;i++){%><li class=\"mx-d1a-sitem\"><%=selected[i].name%><a href=\"#!/index\" class=\"mx-d1a-fr\" mx-click=\"remove({index:<%=i%>})\">删除</a></li><%}%></ul>","selector":"div[mx-guid=\"xff41-\u001f\"]"}]},
     ctor: function() {
         var me = this;
         me.on('destroy', function() {

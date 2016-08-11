@@ -6,9 +6,9 @@ define('coms/picker/index',['magix','$','../monitor/index'],function(require,exp
 var Magix = require('magix');
 var $ = require('$');
 var Monitor = require('../monitor/index');
-Magix.applyStyle('mp-d8e',".mp-d8e-picker{background:#fff;position:absolute;display:none;box-shadow:0 4px 10px 0 rgba(0,0,0,.1),0 3px 5px 0 rgba(0,0,0,.05),0 0 0 1px rgba(0,0,0,.09098)}.mp-d8e-left:after,.mp-d8e-left:before{border:8px solid transparent;border-bottom:8px solid #fff;width:0;height:0;position:absolute;top:-16px;left:8px;content:' '}.mp-d8e-left:before{border-width:8px;border-bottom-color:#888}.mp-d8e-right:after,.mp-d8e-right:before{border:8px solid transparent;border-bottom:8px solid #fff;width:0;height:0;position:absolute;top:-16px;right:8px;content:' '}.mp-d8e-right:before{border-width:8px;border-bottom-color:#888}");
+Magix.applyStyle('mx-d8e',".mx-d8e-picker{background:#fff;position:absolute;display:none;box-shadow:0 4px 10px 0 rgba(0,0,0,.1),0 3px 5px 0 rgba(0,0,0,.05),0 0 0 1px rgba(0,0,0,.09098)}.mx-d8e-left:after,.mx-d8e-left:before{border:8px solid transparent;border-bottom:8px solid #fff;width:0;height:0;position:absolute;top:-16px;left:8px;content:' '}.mx-d8e-left:before{border-width:8px;border-bottom-color:#888}.mx-d8e-right:after,.mx-d8e-right:before{border:8px solid transparent;border-bottom:8px solid #fff;width:0;height:0;position:absolute;top:-16px;right:8px;content:' '}.mx-d8e-right:before{border-width:8px;border-bottom-color:#888}");
 var ArrowHeight = 8;
-var CSSNames = {"left":"mp-d8e-left","right":"mp-d8e-right"};
+var CSSNames = {"left":"mx-d8e-left","right":"mx-d8e-right"};
 module.exports = Magix.View.extend({
     ctor: function(extra) {
         var me = this;
@@ -19,7 +19,7 @@ module.exports = Magix.View.extend({
         });
         me.$ownerNodeId = extra.ownerNodeId;
         me.$dock = extra.dock || 'left';
-        $('#' + me.id).addClass('mp-d8e-picker ' + CSSNames[me.$dock]);
+        $('#' + me.id).addClass('mx-d8e-picker ' + CSSNames[me.$dock]);
     },
     inside: function(node) {
         var me = this;

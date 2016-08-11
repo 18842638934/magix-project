@@ -1,31 +1,22 @@
-define('coms/inputag/tree',['magix','$','../monitor/index','../updater/index','../tmpl/index','../generic/treeable'],function(require,exports,module){
-/*Magix ,$ ,Monitor ,Updater ,tmpl ,ListToTree */
+define('coms/inputag/tree',['magix','$','../monitor/index','../generic/treeable'],function(require,exports,module){
+/*Magix ,$ ,Monitor ,ListToTree */
 /*
     author:xinglie.lkf@taobao.com
  */
 var Magix = require('magix');
-Magix.applyStyle('mp-9ad',".mp-9ad-tags{background:#fff;border:1px solid #ddd;width:330px;cursor:text;padding:2px;position:relative;overflow:hidden}.mp-9ad-ipt{height:16px;line-height:16px;border:none;outline:none;width:100%;font-size:12px}.mp-9ad-fl{float:left}.mp-9ad-item{display:inline-block;border-radius:4px;background:#eee;margin:1px 2px}.mp-9ad-item,.mp-9ad-name{overflow:hidden}.mp-9ad-name{float:left;border-right:1px solid #fff;padding:2px 4px;max-width:140px}.mp-9ad-delete{width:20px;float:left;height:18px;line-height:18px;text-align:center;cursor:pointer}.mp-9ad-none{display:none}.mp-9ad-tree{width:336px;overflow:auto;position:absolute;background:#eee;z-index:1}.mp-9ad-indent{margin-left:22px;border-left:1px dotted #ccc}.mp-9ad-li{padding:0 4px}.mp-9ad-icon,.mp-9ad-li{line-height:22px}.mp-9ad-icon{width:22px;height:22px;float:left;text-align:center;font-weight:800}.mp-9ad-cp{cursor:pointer}.mp-9ad-tree-name{padding:4px;border-radius:5px}.mp-9ad-over{background-color:#6363e6;background-image:-webkit-linear-gradient(top,#1b87e3 2%,#6363e6 98%);background-image:linear-gradient(180deg,#1b87e3 2%,#6363e6 98%);color:#ecf2f8;text-shadow:0 -1px 0 rgba(0,0,0,.05)}");
-var CSSNames = {"tags":"mp-9ad-tags","ipt":"mp-9ad-ipt","fl":"mp-9ad-fl","item":"mp-9ad-item","name":"mp-9ad-name","delete":"mp-9ad-delete","none":"mp-9ad-none","tree":"mp-9ad-tree","indent":"mp-9ad-indent","li":"mp-9ad-li","icon":"mp-9ad-icon","cp":"mp-9ad-cp","tree-name":"mp-9ad-tree-name","over":"mp-9ad-over"};
+Magix.applyStyle('mx-9ad',".mx-9ad-tags{background:#fff;border:1px solid #ddd;width:330px;cursor:text;padding:2px;position:relative;overflow:hidden}.mx-9ad-ipt{height:16px;line-height:16px;border:none;outline:none;width:100%;font-size:12px}.mx-9ad-fl{float:left}.mx-9ad-item{display:inline-block;border-radius:4px;background:#eee;margin:1px 2px}.mx-9ad-item,.mx-9ad-name{overflow:hidden}.mx-9ad-name{float:left;border-right:1px solid #fff;padding:2px 4px;max-width:140px}.mx-9ad-delete{width:20px;float:left;height:18px;line-height:18px;text-align:center;cursor:pointer}.mx-9ad-none{display:none}.mx-9ad-tree{width:336px;overflow:auto;position:absolute;background:#eee;z-index:1}.mx-9ad-indent{margin-left:22px;border-left:1px dotted #ccc}.mx-9ad-li{padding:0 4px}.mx-9ad-icon,.mx-9ad-li{line-height:22px}.mx-9ad-icon{width:22px;height:22px;float:left;text-align:center;font-weight:800}.mx-9ad-cp{cursor:pointer}.mx-9ad-tree-name{padding:4px;border-radius:5px}.mx-9ad-over{background-color:#6363e6;background-image:-webkit-linear-gradient(top,#1b87e3 2%,#6363e6 98%);background-image:linear-gradient(180deg,#1b87e3 2%,#6363e6 98%);color:#ecf2f8;text-shadow:0 -1px 0 rgba(0,0,0,.05)}");
+var CSSNames = {"tags":"mx-9ad-tags","ipt":"mx-9ad-ipt","fl":"mx-9ad-fl","item":"mx-9ad-item","name":"mx-9ad-name","delete":"mx-9ad-delete","none":"mx-9ad-none","tree":"mx-9ad-tree","indent":"mx-9ad-indent","li":"mx-9ad-li","icon":"mx-9ad-icon","cp":"mx-9ad-cp","tree-name":"mx-9ad-tree-name","over":"mx-9ad-over"};
 var $ = require('$');
 var Monitor = require('../monitor/index');
-var Updater = require('../updater/index');
-var tmpl = require('../tmpl/index');
 var ListToTree = require('../generic/treeable');
-var html = "<div class=\"mp-9ad-tags clearfix\" id=\"tags_<%=id%>\" mx-click=\"showList()\" mx-guid=\"x9451-\u001f\">@1-\u001f</div><div class=\"mp-9ad-tree mp-9ad-none\" id=\"list_<%=id%>\"></div>";
-var htmlData = [{"guid":1,"keys":["selected"],"tmpl":"<%for(var i=0;i<selected.length;i++){%><div class=\"mp-9ad-item\" id=\"si_<%=i%>_<%=id%>\" title=\"<%=selected[i]%>\"><div class=\"mp-9ad-name ellipsis\"><%=selected[i]%></div><div class=\"mp-9ad-delete\" mx-click=\"remove({index:<%=i%>})\">x</div></div><%}%><div class=\"mp-9ad-item\" id=\"iptw_<%=id%>\"><input id=\"ipt_<%=id%>\" class=\"mp-9ad-ipt\" mx-keyup=\"search()\" mx-paste=\"search()\" value=\"<%=iptValue%>\"/></div>","selector":"div[mx-guid=\"x9451-\u001f\"]"}];
 module.exports = Magix.View.extend({
-    tmpl: "<div class=\"mp-9ad-tags clearfix\" id=\"tags_<%=id%>\" mx-click=\"showList()\" mx-guid=\"x9451-\u001f\">@1-\u001f</div><div class=\"mp-9ad-tree mp-9ad-none\" id=\"list_<%=id%>\"></div>",
+    tmpl: {"html":"<div class=\"mx-9ad-tags clearfix\" id=\"tags_<%=id%>\" mx-click=\"showList()\" mx-guid=\"x9451-\u001f\">@1-\u001f</div><div class=\"mx-9ad-tree mx-9ad-none\" id=\"list_<%=id%>\"></div>","subs":[{"guid":1,"keys":["selected"],"tmpl":"<%for(var i=0;i<selected.length;i++){%><div class=\"mx-9ad-item\" id=\"si_<%=i%>_<%=id%>\" title=\"<%=selected[i]%>\"><div class=\"mx-9ad-name ellipsis\"><%=selected[i]%></div><div class=\"mx-9ad-delete\" mx-click=\"remove({index:<%=i%>})\">x</div></div><%}%><div class=\"mx-9ad-item\" id=\"iptw_<%=id%>\"><input id=\"ipt_<%=id%>\" class=\"mx-9ad-ipt\" mx-keyup=\"search()\" mx-paste=\"search()\" value=\"<%=iptValue%>\"/></div>","selector":"div[mx-guid=\"x9451-\u001f\"]"}]},
     ctor: function(extra) {
         Monitor.setup();
         var me = this;
         me.on('destroy', Monitor.teardown);
         me.$list = extra.list;
         me.$selected = extra.selected;
-        me.$updater = new Updater(me, {
-            tmpl: html,
-            data: htmlData,
-            build: tmpl
-        });
     },
     inside: function(node) {
         var me = this;

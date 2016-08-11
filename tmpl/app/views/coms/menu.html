@@ -1,12 +1,6 @@
-<div id="m1_<%=id%>" style="margin:20px;float:left" mx-view="coms/menu/index" mx-keys="list,width1">
-    <script type="magix/config">
-        <%=JSON.stringify({list:list,width:width1})%>
-    </script>
+<div id="m1_<%=id%>" style="margin:20px;float:left" mx-view="coms/menu/index?list={list}&width={width1}" mx-keys="list,width1">
 </div>
-<div id="m2_<%=id%>" style="margin:20px;float:left" mx-view="coms/menu/index" mx-keys="list,width2" mx-pick="menu2()">
-    <script type="magix/config">
-        <%=JSON.stringify({list:list,width:width2})%>
-    </script>
+<div id="m2_<%=id%>" style="margin:20px;float:left" mx-view="coms/menu/index?list={list}&width={width2}" mx-keys="list,width2" mx-pick="menu2()">
 </div>
 
 <button mx-click="changeService()" class="btn btn-size30" style="margin:20px;">切换数据源</button>

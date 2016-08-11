@@ -5,14 +5,14 @@ define('app/views/demos/drag-rotate',['magix','../../../coms/dragdrop/index'],fu
  */
 var Magix = require('magix');
 var DD = require('../../../coms/dragdrop/index');
-Magix.applyStyle('mp-324',".mp-324-item{width:200px;height:200px;background:#666;margin:40px}");
+Magix.applyStyle('mx-324',".mx-324-item{width:200px;height:200px;background:#666;margin:40px}");
 var ToDegree = function(angle) {
     var degree = angle * 180 / Math.PI;
     degree = Math.round(degree * 100) / 100;
     return degree;
 };
 module.exports = Magix.View.extend({
-    tmpl: "<div class=\"mp-324-item\" mx-mousedown=\"startDrag()\">ROTEAE</div>",
+    tmpl: {"html":"<div class=\"mx-324-item\" mx-mousedown=\"startDrag()\">ROTEAE</div>","subs":[]},
     tmplData: [],
     render: function() {
         var me = this;

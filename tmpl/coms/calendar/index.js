@@ -3,10 +3,6 @@
  */
 var Magix = require('magix');
 var $ = require('$');
-var Updater = require('../updater/index');
-var tmpl = require('../tmpl/index');
-var html = '@index.html';
-var htmlData = '@index.html:data';
 var GetNumOfDays = function(year, month) {
     return 32 - new Date(year, month - 1, 32).getDate();
 };
@@ -130,13 +126,9 @@ var DefaultFormatter = 'YYYY-MM-dd';
 var CSSNames = 'names@index.css[none,selected]';
 Magix.applyStyle('@index.css');
 module.exports = Magix.View.extend({
-    ctor: function() {
-        var me = this;
-        me.$updater = new Updater(me, {
-            tmpl: html,
-            data: htmlData,
-            build: tmpl
-        });
+    tmpl: '@index.html',
+    ctor: function(extra) {
+        this.$extra = extra;
     },
     update: function(ops) {
         ops = ops || {};
@@ -293,12 +285,10 @@ module.exports = Magix.View.extend({
     },
     render: function() {
         var me = this;
-        var html = $.trim($('#' + me.id + ' script').html());
-        if (html) {
-            var info = JSON.parse(html);
-            me.update(info);
-        } else {
+        if ($.isEmptyObject(me.$extra)) {
             me.endUpdate();
+        } else {
+            me.update(me.$extra);
         }
     },
     changeMonth: function(toNext) {

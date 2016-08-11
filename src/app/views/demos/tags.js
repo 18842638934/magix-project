@@ -4,9 +4,9 @@ define('app/views/demos/tags',['magix'],function(require,exports,module){
     author:xinglie.lkf@taobao.com
  */
 var Magix = require('magix');
-Magix.applyStyle('mp-997',".mp-997-m100{margin:100px}");
+Magix.applyStyle('mx-997',".mx-997-m100{margin:100px}");
 module.exports = Magix.View.extend({
-    tmpl: "<div class=\"mp-997-m100\" id=\"tag1\"></div><div class=\"mp-997-m100\" id=\"tag2\"></div>",
+    tmpl: {"html":"<div class=\"mx-997-m100\" id=\"tag1\"></div><div class=\"mx-997-m100\" id=\"tag2\"></div>","subs":[]},
     tmplData: [],
     render: function() {
         var me = this;

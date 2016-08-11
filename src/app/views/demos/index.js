@@ -6,9 +6,9 @@ define('app/views/demos/index',['magix','$','../../../coms/generic/fx'],function
 var Magix = require('magix');
 var $ = require('$');
 var FX = require('../../../coms/generic/fx');
-Magix.applyStyle('mp-afd',".mp-afd-w900{color:red}.mp-afd-w500{color:green}.content .mp-afd-w500{color:#ff0}");
+Magix.applyStyle('mx-afd',".mx-afd-w900{color:red}.mx-afd-w500{color:green}.content .mx-afd-w500{color:#ff0}");
 module.exports = Magix.View.extend({
-    tmpl: "<div class=\"<%=cls%>\" mx-guid=\"xae61-\u001f\">响应式测试，经验页</div><div id=\"counter\">--</div>",
+    tmpl: {"html":"<div class=\"<%=cls%>\" mx-guid=\"xae61-\u001f\">响应式测试，经验页</div><div id=\"counter\">--</div>","subs":[{"keys":["cls"],"selector":"div[mx-guid=\"xae61-\u001f\"]","attrs":[{"n":"className","v":"<%=cls%>","p":1}]}]},
     render: function() {
         var me = this;
         me.update();
@@ -30,11 +30,11 @@ module.exports = Magix.View.extend({
         var data = this.$updater;
         if (width > 500) {
             data.set({
-                cls: 'mp-afd-w900'
+                cls: 'mx-afd-w900'
             });
         } else {
             data.set({
-                cls: 'mp-afd-w500'
+                cls: 'mx-afd-w500'
             });
         }
         data.digest();

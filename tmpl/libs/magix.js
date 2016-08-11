@@ -1,4 +1,4 @@
-/*3.0.5*//*
+/*3.1.0*//*
     author:xinglie.lkf@taobao.com
  */
 define('magix', ['$'], function(require) {
@@ -94,10 +94,14 @@ var G_Id = function(prefix) {
 
 var MxStyleGlobalId = G_Id();
 
+
 var MxGlobalView = G_Id();
+
 var Magix_Cfg = {
     rootId: G_Id(),
+
     defaultView: MxGlobalView,
+
     error: function(e) {
         throw e;
     }
@@ -150,11 +154,11 @@ var Magix_CacheSort = function(a, b) {
  * Magix.Cache 类
  * @name Cache
  * @constructor
- * @param {Integer} max 最大值
- * @param {Integer} buffer 缓冲区大小
- * @param {Function} remove 当缓存的元素被删除时调用
+ * @param {Integer} [max] 缓存最大值，默认20
+ * @param {Integer} [buffer] 缓冲区大小，默认5
+ * @param {Function} [remove] 当缓存的元素被删除时调用
  * @example
- * var c=Magix.cache(5,2);//创建一个可缓存5个，且缓存区为2个的缓存对象
+ * var c = new Magix.cache(5,2);//创建一个可缓存5个，且缓存区为2个的缓存对象
  * c.set('key1',{});//缓存
  * c.get('key1');//获取
  * c.del('key1');//删除
@@ -196,7 +200,7 @@ G_Mix(G_Cache[G_PROTOTYPE], {
     /**
      * 循环缓存 需启用ceach或service模块
      * @param  {Function} cb 回调
-     * @param  {Object} ops 回调时传递的额外参数
+     * @param  {Object} [ops] 回调时传递的额外参数
      * @beta
      * @module ceach|service
      */
@@ -330,8 +334,8 @@ var Magix_ParamsFn = function(match, name, value) {
  * @param  {String} path 路径字符串
  * @return {Object} 解析后的对象
  * @example
- * var obj=Magix.parseUri('/xxx/?a=b&c=d');
- * //obj={path:'/xxx/',params:{a:'b',c:'d'}}
+ * var obj = Magix.parseUri('/xxx/?a=b&c=d');
+ * // obj = {path:'/xxx/',params:{a:'b',c:'d'}}
  */
 var G_ParseUri = function(path) {
     //把形如 /xxx/?a=b&c=d 转换成对象 {path:'/xxx/',params:{a:'b',c:'d'}}
@@ -374,21 +378,21 @@ var G_ParseUri = function(path) {
  * @param {Object} [keo] 保留空白值的对象
  * @return {String} 字符串路径
  * @example
- * var str=Magix.toUri('/xxx/',{a:'b',c:'d'});
- * //str==/xxx/?a=b&c=d
+ * var str = Magix.toUri('/xxx/',{a:'b',c:'d'});
+ * // str == /xxx/?a=b&c=d
  *
- * var str=Magix.toUri('/xxx/',{a:'',c:2});
+ * var str = Magix.toUri('/xxx/',{a:'',c:2});
  *
- * //str==/xxx/?a=&c=2
+ * // str == /xxx/?a=&c=2
  *
- * var str=Magix.toUri('/xxx/',{a:'',c:2},{c:1});
+ * var str = Magix.toUri('/xxx/',{a:'',c:2},{c:1});
  *
- * //str==/xxx/?c=2
- * var str=Magix.toUri('/xxx/',{a:'',c:2},{a:1,c:1});
+ * // str == /xxx/?c=2
+ * var str = Magix.toUri('/xxx/',{a:'',c:2},{a:1,c:1});
  *
- * //str==/xxx/?a=&c=2
+ * // str == /xxx/?a=&c=2
  */
-var G_ToUri = function(path, params, keo) { //上个方法的逆向
+var G_ToUri = function(path, params, keo) {
     var arr = [];
     var v, p, f;
     for (p in params) {
@@ -436,17 +440,35 @@ var Magix = {
      */
     /**
      * 设置或获取配置信息
-     * @function
-     * @param {Object} [cfg] 配置信息对象,更多信息请参考Magix.boot方法
-     * @return {Object} 配置信息对象
+     * @param  {Object} cfg 初始化配置参数对象
+     * @param {String} cfg.defaultView 默认加载的view
+     * @param {String} cfg.defaultPath 当无法从地址栏取到path时的默认值。比如使用hash保存路由信息，而初始进入时并没有hash,此时defaultPath会起作用
+     * @param {String} cfg.unfoundView 404时加载的view
+     * @param {Object} cfg.routes path与view映射关系表
+     * @param {String} cfg.rootId 根view的id
+     * @param {Array} cfg.exts 需要加载的扩展
+     * @param {Function} cfg.error 发布版以try catch执行一些用户重写的核心流程，当出错时，允许开发者通过该配置项进行捕获。注意：您不应该在该方法内再次抛出任何错误！
      * @example
      * Magix.config({
-     *      rootId:'J_app_main'
+     *      rootId:'J_app_main',
+     *      defaultView:'app/views/layouts/default',//默认加载的view
+     *      defaultPath:'/home',
+     *      routes:{
+     *          "/home":"app/views/layouts/default"
+     *      }
      * });
      *
-     * var config=Magix.config();
      *
-     * S.log(config.rootId);
+     * var config = Magix.config();
+     *
+     * console.log(config.rootId);
+     *
+     * // 可以多次调用该方法，除内置的配置项外，您也可以缓存一些数据，如
+     * Magix.config({
+     *     user:'彳刂'
+     * });
+     *
+     * console.log(Magix.config('user'));
      */
     config: function(cfg, r) {
         r = Magix_Cfg;
@@ -459,26 +481,17 @@ var Magix = {
         }
         return r;
     },
+
     /**
      * 应用初始化入口
-     * @param  {Object} cfg 初始化配置参数对象
-     * @param {String} cfg.defaultView 默认加载的view
-     * @param {String} cfg.defaultPath 当无法从地址栏取到path时的默认值。比如使用hash保存路由信息，而初始进入时并没有hash,此时defaultPath会起作用
-     * @param {String} cfg.unfoundView 404时加载的view
-     * @param {Object} cfg.routes pathname与view映射关系表
-     * @param {String} cfg.rootId 根view的id
-     * @param {Array} cfg.exts 需要加载的扩展
-     * @param {Boolean} cfg.coded 是否对地址栏中的参数进行编码或解码，默认true
-     * @param {Function} cfg.error 发布版以try catch执行一些用户重写的核心流程，当出错时，允许开发者通过该配置项进行捕获。注意：您不应该在该方法内再次抛出任何错误！
+     * @function
+     * @param {Object} [cfg] 配置信息对象,更多信息请参考Magix.config方法
+     * @return {Object} 配置信息对象
      * @example
      * Magix.boot({
-     *      rootId:'J_app_main',】
-     *      defaultView:'app/views/layouts/default',//默认加载的view
-     *      defaultPath:'/home',
-     *      routes:{
-     *          "/home":"app/views/layouts/default"
-     *      }
+     *      rootId:'J_app_main'
      * });
+     *
      */
 
     boot: function(cfg) {
@@ -500,23 +513,68 @@ var Magix = {
     /**
      * 把列表转化成hash对象
      * @param  {Array} list 源数组
-     * @param  {String} key  以数组中对象的哪个key的value做为hahs的key
+     * @param  {String} [key]  以数组中对象的哪个key的value做为hash的key
      * @return {Object}
      * @example
-     * var map=Magix.toMap([1,2,3,5,6]);
-     * //=> {1:1,2:1,3:1,4:1,5:1,6:1}
+     * var map = Magix.toMap([1,2,3,5,6]);
+     * // => {1:1,2:1,3:1,4:1,5:1,6:1}
      *
-     * var map=Magix.toMap([{id:20},{id:30},{id:40}],'id');
-     * //=>{20:{id:20},30:{id:30},40:{id:40}}
+     * var map = Magix.toMap([{id:20},{id:30},{id:40}],'id');
+     * // =>{20:{id:20},30:{id:30},40:{id:40}}
+     *
+     * console.log(map['30']);//=> {id:30}
+     * // 转成对象后不需要每次都遍历数组查询
      */
     toMap: G_ToMap,
     /**
      * 以try cache方式执行方法，忽略掉任何异常
      * @function
      * @param  {Array} fns     函数数组
-     * @param  {Array} args    参数数组
-     * @param  {Object} context 在待执行的方法内部，this的指向
+     * @param  {Array} [args]    参数数组
+     * @param  {Object} [context] 在待执行的方法内部，this的指向
      * @return {Object} 返回执行的最后一个方法的返回值
+     * @example
+     * var result = Magix.toTry(function(){
+     *     return true
+     * });
+     *
+     * // result == true
+     *
+     * var result = Magix.toTry(function(){
+     *     throw new Error('test');
+     * });
+     *
+     * // result == undefined
+     *
+     * var result = Magix.toTry([function(){
+     *     throw new Error('test');
+     * },function(){
+     *     return true;
+     * }]);
+     *
+     * // result == true
+     *
+     * //异常的方法执行时，可以通过Magix.config中的error来捕获，如
+     *
+     * Magix.config({
+     *     error:function(e){
+     *         console.log(e);//在这里可以进行错误上报
+     *     }
+     * });
+     *
+     * var result = Magix.toTry(function(a1,a2){
+     *     return a1 + a2;
+     * },[1,2]);
+     *
+     * // result == 3
+     * var o={
+     *     title:'test'
+     * };
+     * var result = Magix.toTry(function(){
+     *     return this.title;
+     * },null,o);
+     *
+     * // result == 'test'
      */
     toTry: G_ToTry,
     /**
@@ -527,19 +585,19 @@ var Magix = {
      * @param {Object} [keo] 保留空白值的对象
      * @return {String} 字符串路径
      * @example
-     * var str=Magix.toUrl('/xxx/',{a:'b',c:'d'});
-     * //str==/xxx/?a=b&c=d
+     * var str = Magix.toUrl('/xxx/',{a:'b',c:'d'});
+     * // str == /xxx/?a=b&c=d
      *
-     * var str=Magix.toUrl('/xxx/',{a:'',c:2});
+     * var str = Magix.toUrl('/xxx/',{a:'',c:2});
      *
-     * //str==/xxx/?a=&c=2
+     * // str==/xxx/?a=&c=2
      *
-     * var str=Magix.toUrl('/xxx/',{a:'',c:2},{c:1});
+     * var str = Magix.toUrl('/xxx/',{a:'',c:2},{c:1});
      *
-     * //str==/xxx/?c=2
-     * var str=Magix.toUrl('/xxx/',{a:'',c:2},{a:1,c:1});
+     * // str == /xxx/?c=2
+     * var str = Magix.toUrl('/xxx/',{a:'',c:2},{a:1,c:1});
      *
-     * //str==/xxx/?a=&c=2
+     * // str == /xxx/?a=&c=2
      */
     toUrl: G_ToUri,
     /**
@@ -548,8 +606,8 @@ var Magix = {
      * @param  {String} path 路径字符串
      * @return {Object} 解析后的对象
      * @example
-     * var obj=Magix.parseUrl('/xxx/?a=b&c=d');
-     * //obj={path:'/xxx/',params:{a:'b',c:'d'}}
+     * var obj = Magix.parseUrl('/xxx/?a=b&c=d');
+     * // obj = {path:'/xxx/',params:{a:'b',c:'d'}}
      */
     parseUrl: G_ParseUri,
     /*
@@ -571,15 +629,15 @@ var Magix = {
      * @param  {Object} aim    要mix的目标对象
      * @param  {Object} src    mix的来源对象
      * @example
-     *   var o1={
-     *       a:10
-     *   };
-     *   var o2={
-     *       b:20,
-     *       c:30
-     *   };
+     * var o1={
+     *     a:10
+     * };
+     * var o2={
+     *     b:20,
+     *     c:30
+     * };
      *
-     *   Magix.mix(o1,o2);//{a:10,b:20,c:30}
+     * Magix.mix(o1,o2);//{a:10,b:20,c:30}
      *
      *
      * @return {Object}
@@ -591,14 +649,14 @@ var Magix = {
      * @param  {Object}  owner 检测对象
      * @param  {String}  prop  属性
      * @example
-     *   var obj={
-     *       key1:undefined,
-     *       key2:0
-     *   }
+     * var obj={
+     *     key1:undefined,
+     *     key2:0
+     * }
      *
-     *   Magix.has(obj,'key1');//true
-     *   Magix.has(obj,'key2');//true
-     *   Magix.has(obj,'key3');//false
+     * Magix.has(obj,'key1');//true
+     * Magix.has(obj,'key2');//true
+     * Magix.has(obj,'key3');//false
      *
      *
      * @return {Boolean} 是否拥有prop属性
@@ -610,6 +668,16 @@ var Magix = {
      * @type {Array}
      * @beta
      * @module linkage|router
+     * @example
+     * var o = {
+     *     a:1,
+     *     b:2,
+     *     test:3
+     * };
+     * var keys = Magix.keys(o);
+     *
+     * // keys == ['a','b','test']
+     * @return {Array[string]}
      */
     keys: G_Keys,
 
@@ -618,6 +686,22 @@ var Magix = {
      * @function
      * @param {String|HTMLElement} node节点或节点id
      * @param {String|HTMLElement} container 容器
+     * @example
+     * var root = $('html');
+     * var body = $('body');
+     *
+     * var r = Magix.inside(body[0],root[0]);
+     *
+     * // r == true
+     *
+     * var r = Magix.inside(root[0],body[0]);
+     *
+     * // r == false
+     *
+     * var r = Magix.inside(root[0],[0]);
+     *
+     * // r == true
+     *
      * @return {Boolean}
      */
     inside: G_NodeIn,
@@ -625,13 +709,29 @@ var Magix = {
      * document.getElementById的简写
      * @param {String} id
      * @return {HTMLElement|Null}
+     * @example
+     * // html
+     * // &lt;div id="root"&gt;&lt;/div&gt;
+     *
+     * var node = Magix.node('root');
+     *
+     * // node => div[id='root']
+     *
+     * // node是document.getElementById的简写
      */
     node: G_GetById,
 
     /**
      * 应用样式
+     * @beta
+     * @module style
      * @param {String} prefix 样式的名称前缀
      * @param {String} css 样式字符串
+     * @example
+     * // 该方法配合magix-combine工具使用
+     * // 更多信息可参考magix-combine工具：https://github.com/thx/magix-combine
+     * // 样式问题可查阅这里：https://github.com/thx/magix-combine/issues/6
+     *
      */
     applyStyle: View_ApplyStyle,
 
@@ -640,6 +740,10 @@ var Magix = {
      * @function
      * @param {String} [prefix] 前缀
      * @return {String}
+     * @example
+     *
+     * var id = Magix.guid('mx-');
+     * // id maybe mx-7
      */
     guid: G_Id,
     Cache: G_Cache
@@ -658,8 +762,8 @@ var Event = {
      * 触发事件
      * @param {String} name 事件名称
      * @param {Object} data 事件对象
-     * @param {Boolean} remove 事件触发完成后是否移除这个事件的所有监听
-     * @param {Boolean} lastToFirst 是否从后向前触发事件的监听列表
+     * @param {Boolean} [remove] 事件触发完成后是否移除这个事件的所有监听
+     * @param {Boolean} [lastToFirst] 是否从后向前触发事件的监听列表
      */
     fire: function(name, data, remove, lastToFirst) {
         var key = G_SPLITER + name,
@@ -689,21 +793,19 @@ var Event = {
     /**
      * 绑定事件
      * @param {String} name 事件名称
-     * @param {Function} fn 事件回调
+     * @param {Function} fn 事件处理函数
      * @example
-     *  var T=Magix.mix({},Event);
-     *  T.on('done',function(e){
-     *      alert(1);
-     *  });
-     *  T.on('done',function(e){
-     *      alert(2);
-     *      T.off('done',arguments.callee);
-     *  });
+     * var T = Magix.mix({},Event);
+     * T.on('done',function(e){
+     *     alert(1);
+     * });
+     * T.on('done',function(e){
+     *     alert(2);
+     *     T.off('done',arguments.callee);
+     * });
 
-     *  T.fire('done',{data:'test'});
-     *  T.fire('done',{data:'test2'});
-
-     *  //!!不需要insert,场景不大，目前发现的主要在Router的changed事件，比如外部监听这种情况下写在插件里可以提前绑定，因为插件先加载。
+     * T.fire('done',{data:'test'});
+     * T.fire('done',{data:'test2'});
      */
     on: function(name, fn) {
         var me = this;
@@ -716,7 +818,7 @@ var Event = {
     /**
      * 解除事件绑定
      * @param {String} name 事件名称
-     * @param {Function} fn 事件回调
+     * @param {Function} [fn] 事件处理函数
      */
     off: function(name, fn) {
         var key = G_SPLITER + name,
@@ -904,7 +1006,7 @@ var Router = G_Mix({
     /**
      * 根据location.href路由并派发相应的事件,同时返回当前href与上一个href差异对象
      * @example
-     * var diff=Magix.Router.diff();
+     * var diff = Magix.Router.diff();
      * if(diff.isParam('page,rows')){
      *     console.log('page or rows changed');
      * }
@@ -924,7 +1026,7 @@ var Router = G_Mix({
      * @param {String|Object} [params] 参数对象
      * @param {Boolean} [replace] 是否替换当前历史记录
      * @example
-     * var R=Magix.Router;
+     * var R = Magix.Router;
      * R.to('/list?page=2&rows=20');//改变path和相关的参数，地址栏上的其它参数会进行丢弃，不会保留
      * R.to('page=2&rows=20');//只修改参数，地址栏上的其它参数会保留
      * R.to({//通过对象修改参数，地址栏上的其它参数会保留
@@ -977,42 +1079,7 @@ Magix.Router = Router;
 
 
     Router.bind = function() {
-        var lastHash = Router.parse().srcHash;
-        var newHash;
-        $(G_WINDOW).on('hashchange', function(e, loc) {
-            loc = Router.parse();
-            newHash = loc.srcHash;
-            if (newHash != lastHash) {
-                e = {
-                    backward: function() {
-                        e.p = 1;
-                        Router_WinLoc.hash = '#!' + lastHash;
-                    },
-                    forward: function() {
-                        e.p = 1;
-                        lastHash = newHash;
-                        Router.diff();
-                    },
-                    prevent: function() {
-                        e.p = 1;
-                    },
-                    location: loc
-                };
-                Router.fire('change', e);
-                if (!e.p) {
-                    e.forward();
-                }
-            }
-        });
-        G_WINDOW.onbeforeunload = function(e) {
-            e = e || G_WINDOW.event;
-            var te = {};
-            Router.fire('pageunload', te);
-            if (te.msg) {
-                if (e) e.returnValue = te.msg;
-                return te.msg;
-            }
-        };
+        $(G_WINDOW).on('hashchange', Router.diff);
         Router.diff();
     };
 
@@ -1020,6 +1087,9 @@ Magix.Router = Router;
 
     var Vframe_RootVframe;
 var Vframe_GlobalAlter;
+
+
+var Vframe_UrlParamsReg = /\{(.+)\}/;
 
 var Vframe_NotifyCreated = function(vframe, mId, p) {
     if (!vframe.$d && !vframe.$h && vframe.$cc == vframe.$rc) { //childrenCount === readyCount
@@ -1250,7 +1320,7 @@ G_Mix(G_Mix(Vframe[G_PROTOTYPE], Event), {
     /**
      * 加载对应的view
      * @param {String} viewPath 形如:app/views/home?type=1&page=2 这样的view路径
-     * @param {Object|Null} viewInitParams 调用view的init方法时传递的参数
+     * @param {Object|Null} [viewInitParams] 调用view的init方法时传递的参数
      */
     mountView: function(viewPath, viewInitParams /*,keepPreHTML*/ ) {
         var me = this;
@@ -1260,7 +1330,6 @@ G_Mix(G_Mix(Vframe[G_PROTOTYPE], Event), {
             me.$a = 1;
             me.$t = node.innerHTML; //.replace(ScriptsReg, ''); template
         }
-        //var useTurnaround=me.$vr&&me.useAnimUpdate();
         me.unmountView( /*keepPreHTML*/ );
         me.$d = 0; //destroyed 详见unmountView
         if (node && viewPath) {
@@ -1269,35 +1338,40 @@ G_Mix(G_Mix(Vframe[G_PROTOTYPE], Event), {
             sign = ++me.$s;
             G_Require(po.path, function(TView) {
                 if (sign == me.$s) { //有可能在view载入后，vframe已经卸载了
+
                     View_Prepare(TView);
-                    var params = G_Mix(po.params, viewInitParams);
 
-                    var mxo = decodeURIComponent(node.getAttribute('mx-options'));
-                    if (mxo) {
-                        mxo = G_ToTry(JSON.parse, mxo);
-
-                        G_Mix(params, mxo);
-
+                    var pParams = po.params;
+                    /*#if(modules.updater){#*/
+                    var parent = me.parent(),
+                        p, val;
+                    parent = parent && parent.$v;
+                    parent = parent && parent.$updater;
+                    if (parent) {
+                        for (p in pParams) {
+                            val = pParams[p];
+                            val = val.match(Vframe_UrlParamsReg);
+                            if (val) {
+                                pParams[p] = parent.get(val[1]);
+                            }
+                        }
                     }
+                    /*#}#*/
+                    var params = G_Mix(pParams, viewInitParams);
+
+
 
                     view = new TView({
                         owner: me,
                         id: me.id
                     }, params);
                     me.$v = view;
-                    // view.on('rendered', function(e) {
-                    //     me.mountZone(e.id);
-                    // });
-                    // view.on('prerender', function(e) {
-                    //     if (!me.unmountZone(e.id, 0, 1)) {
-                    //         Vframe_NotifyAlter(me);
-                    //     }
-                    // });
+
                     View_DelegateEvents(view);
+
 
                     view.init(params);
 
-                    //Vframe_RunInvokes(me);
                     view.render();
 
                     if (!view.tmpl && !view.$p) {
@@ -1330,7 +1404,9 @@ G_Mix(G_Mix(Vframe[G_PROTOTYPE], Event), {
             Vframe_NotifyAlter(me, Vframe_GlobalAlter);
 
             me.$v = 0; //unmountView时，尽可能早的删除vframe上的view对象，防止view销毁时，再调用该 vfrmae的类似unmountZone方法引起的多次created
+
             View_Oust(view);
+
             node = G_GetById(me.id);
             if (node && me.$a /*&&!keepPreHTML*/ ) { //如果view本身是没有模板的，也需要把节点恢复到之前的状态上：只有保留模板且view有模板的情况下，这条if才不执行，否则均需要恢复节点的html，即view安装前什么样，销毁后把节点恢复到安装前的情况
                 G_HTML(node, me.$t);
@@ -1349,11 +1425,11 @@ G_Mix(G_Mix(Vframe[G_PROTOTYPE], Event), {
      * 加载vframe
      * @param  {String} id             节点id
      * @param  {String} viewPath       view路径
-     * @param  {Object} viewInitParams 传递给view init方法的参数
+     * @param  {Object} [viewInitParams] 传递给view init方法的参数
      * @return {Vframe} vframe对象
      * @example
-     * //html
-     * &lt;div id="magix_vf_defer"&gt;&lt;/div&gt;
+     * // html
+     * // &lt;div id="magix_vf_defer"&gt;&lt;/div&gt;
      *
      *
      * //js
@@ -1380,9 +1456,16 @@ G_Mix(G_Mix(Vframe[G_PROTOTYPE], Event), {
         return vf;
     },
     /**
-     * 加载当前view下面的子view，因为view的持有对象是vframe，所以是加载vframes
+     * 加载某个区域下的view
      * @param {HTMLElement|String} zoneId 节点对象或id
-     * @param {Object} viewInitParams 传递给view init方法的参数
+     * @param {Object} [viewInitParams] 传递给view init方法的参数
+     * @example
+     * // html
+     * // &lt;div id="zone"&gt;
+     * //   &lt;div mx-view="path/to/v1"&gt;&lt;/div&gt;
+     * // &lt;/div&gt;
+     *
+     * view.onwer.mountZone('zone');//即可完成zone节点下的view渲染
      */
     mountZone: function(zoneId, viewInitParams /*,keepPreHTML*/ ) {
         var me = this;
@@ -1463,8 +1546,8 @@ G_Mix(G_Mix(Vframe[G_PROTOTYPE], Event), {
     }  ,
     /**
      * 获取父vframe
-     * @param  {Integer} level 层级，默认1,取当前vframe的父级
-     * @return {Vframe}
+     * @param  {Integer} [level] 向上查找层级，默认1,取当前vframe的父级
+     * @return {Vframe|undefined}
      * @beta
      * @module linkage
      */
@@ -1481,6 +1564,9 @@ G_Mix(G_Mix(Vframe[G_PROTOTYPE], Event), {
      * @return {Array[String]}
      * @beta
      * @module linkage
+     * @example
+     * var children = view.owner.children();
+     * console.log(children);
      */
     children: function(me) {
         me = this;
@@ -1489,40 +1575,49 @@ G_Mix(G_Mix(Vframe[G_PROTOTYPE], Event), {
     /**
      * 调用view的方法
      * @param  {String} name 方法名
-     * @param  {Array} args 参数
+     * @param  {Array} [args] 参数
      * @return {Object}
      * @beta
      * @module linkage
+     * @example
+     * // html
+     * // &lt;div&gt; mx-view="path/to/v1" id="test"&gt;&lt;/div&gt;
+     * var vf = Magix.Vframe.get('test');
+     * vf.invoke('methodName',['args1','agrs2']);
      */
     invoke: function(name, args) {
-            var result;
-            var vf = this,
-                view, fn, o, list, key;
-            if ((view = vf.$v) && view.$p) { //view rendered
-                result = (fn = view[name]) && G_ToTry(fn, args, view);
-            } else {
-                list = vf.$il;
-                o = list[key = G_SPLITER + name];
-                if (o) {
-                    o.r = 1;
-                }
-                o = {
-                    n: name,
-                    a: args,
-                    k: key
-                };
-                list.push(o);
-                list[key] = o;
+        var result;
+        var vf = this,
+            view, fn, o, list, key;
+        if ((view = vf.$v) && view.$p) { //view rendered
+            result = (fn = view[name]) && G_ToTry(fn, args, view);
+        } else {
+            list = vf.$il;
+            o = list[key = G_SPLITER + name];
+            if (o) {
+                o.r = 1;
             }
-            return result;
+            o = {
+                n: name,
+                a: args,
+                k: key
+            };
+            list.push(o);
+            list[key] = o;
         }
+        return result;
+    }
 
-        /**
-         * 子孙view修改时触发
-         * @name Vframe#alter
-         * @event
-         * @param {Object} e
-         */
+
+
+
+
+    /**
+     * 子孙view修改时触发
+     * @name Vframe#alter
+     * @event
+     * @param {Object} e
+     */
 
     /**
      * 子孙view创建完成时触发
@@ -1550,6 +1645,7 @@ Magix.Vframe = Vframe;
     //     d = e.data;
     //     G_ToTry(d.f, e, d.v);
     // };
+
     var Body_DOMEventLibBind = function(node, type, cb, remove) {
         /*if (remove) {
             $(node).off(type, selector, cb);
@@ -1558,6 +1654,7 @@ Magix.Vframe = Vframe;
         }*/
         $(node)[remove ? 'off' : Event_ON](type, cb);
     };
+
     /*
     dom event处理思路
 
@@ -1576,8 +1673,6 @@ var Body_ParentNode = 'parentNode';
 var Body_EvtInfoCache = new G_Cache(30, 10);
 var Body_EvtInfoReg = /([^\(]+)\(([\s\S]*)?\)/;
 var Body_RootEvents = {};
-
-var Body_ViewRelateInfo = {};
 
 
 var Body_DOMEventProcessor = function(e) {
@@ -1613,8 +1708,7 @@ var Body_DOMEventProcessor = function(e) {
                  */
                 while ((begin = begin[Body_ParentNode])) {
 
-                    tempId = begin.id;
-                    if (G_Has(Vframe_Vframes, tempId) || G_Has(Body_ViewRelateInfo, tempId)) {
+                    if (G_Has(Vframe_Vframes, tempId = begin.id)) {
                         current.$f = vId = tempId;
                         //current.setAttribute(type, (vId = tempId) + G_SPLITER + info);
                         break;
@@ -1623,7 +1717,7 @@ var Body_DOMEventProcessor = function(e) {
                 }
             }
             if (vId) { //有处理的vframe,派发事件，让对应的vframe进行处理
-                vframe = Vframe_Vframes[vId]  || Body_ViewRelateInfo[vId]  ;
+                vframe = Vframe_Vframes[vId]  ;
                 view = vframe && vframe.$v;
                 if (view && view.$s > 0) {
                     match = Body_EvtInfoCache.get(info);
@@ -1674,6 +1768,369 @@ var Body_DOMEventBind = function(type, remove) {
     }
     Body_RootEvents[type] = counter;
 };
+    var Tmpl_Escapes = {
+  "'": "'",
+  "\\": "\\",
+  "\r": "r",
+  "\n": "n",
+  "\u2028": "u2028",
+  "\u2029": "u2029"
+};
+var Tmpl_EscapeRegExp = /\\|'|\r|\n|\u2028|\u2029/g;
+var Tmpl_EscapeChar = function(match) {
+  return "\\" + Tmpl_Escapes[match];
+};
+var Tmpl_Mathcer = /<%=([\s\S]+?)%>|<%!([\s\S]+?)%>|<%([\s\S]+?)%>|$/g;
+var Tmpl_Compiler = function(text) {
+  // Compile the template source, escaping string literals appropriately.
+  var index = 0;
+  var source = "$p+='";
+  text.replace(Tmpl_Mathcer, function(match, escape, interpolate, evaluate, offset) {
+    source += text.slice(index, offset).replace(Tmpl_EscapeRegExp, Tmpl_EscapeChar);
+    index = offset + match.length;
+
+    if (escape) {
+      source += "'+\n(($t=(" + escape + "))==null?'':$e($t))+\n'";
+    } else if (interpolate) {
+      source += "'+\n(($t=(" + interpolate + "))==null?'':$t)+\n'";
+    } else if (evaluate) {
+      source += "';\n" + evaluate + "\n$p+='";
+    }
+    // Adobe VMs need the match returned to produce the correct offset.
+    return match;
+  });
+  source += "';\n";
+
+  // If a variable is not specified, place data values in local scope.
+  source = "with($mx){\n" + source + "}\n";
+  source = "var $t,$p='',$em={'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;','\\'':'&#x27;','`':'&#x60;'},$er=/[&<>\"'`]/g,$ef=function(m){return $em[m]},$e=function(v){v=v==null?'':''+v;return v.replace($er,$ef)};\n" +
+    source + "return $p;\n";
+
+  var render;
+  try {
+    /*jshint evil: true*/
+    render = Function("$mx", source);
+  } catch (e) {
+    e.source = source;
+    throw e;
+  }
+  return render;
+};
+var Tmpl_Cache = new G_Cache();
+/**
+ * Tmpl模板编译方法，语法参考underscore.template。该方法主要配合Updater存在
+ * @name Tmpl
+ * @beta
+ * @module updater
+ * @constructor
+ * @param {String} text 模板字符串
+ * @param {Object} data 数据对象
+ * @example
+ * // 主要配合updater使用
+ * // html
+ * // &lt;div mx-keys="a"&gt;&lt;%=a%&gt;&lt;/div&gt;
+ * render:fucntion(){
+ *   this.$updater.set({
+ *     a:1
+ *   }).digest();
+ * }
+ */
+var Tmpl = function(text, data) {
+  var fn = Tmpl_Cache.get(text);
+  if (!fn) {
+    fn = Tmpl_Compiler(text);
+    Tmpl_Cache.set(text, fn);
+  }
+  return fn(data);
+};
+    var Updater_HolderReg = /\u001f/g;
+var Updater_ContentReg = /@(\d+)\-\u001f/g;
+var Updater_Stringify = JSON.stringify;
+var Updater_UpdateDOM = function(host, changed, updateFlags, renderData) {
+    var view = host.$v;
+    var tmplData = view.tmpl;
+    var selfId = view.id;
+    var build = function(tmpl, data) {
+        return Tmpl(tmpl, data).replace(Updater_HolderReg, selfId);
+    };
+    var tmpl = tmplData.html;
+    var list = tmplData.subs;
+    if (changed || !host.$rd) {
+        if (host.$rd && updateFlags && list) {
+            var updatedNodes = {},
+                keys;
+            var one, updateTmpl, updateAttrs;
+            var updateNode = function(node) {
+                var id = node.id || (node.id = G_Id('n'));
+                if (!updatedNodes[id]) {
+                    //console.time('update:' + id);
+                    updatedNodes[id] = 1;
+                    var vf = one.view && Vframe_Vframes[id];
+                    if (updateAttrs) {
+                        for (var i = one.attrs.length - 1; i >= 0; i--) {
+                            var attr = one.attrs[i];
+                            var val = build(attr.v, renderData);
+                            if (attr.p) {
+                                node[attr.n] = val;
+                            } else {
+                                node.setAttribute(attr.n, val);
+                            }
+                        }
+                    }
+                    if (vf) {
+                        vf.unmountView();
+                    }
+                    if (one.tmpl && updateTmpl) {
+                        view.setHTML(id, build(one.tmpl, renderData));
+                    }
+                    if (vf) {
+                        vf.mountView(build(one.view, renderData));
+                    }
+                    //console.timeEnd('update:' + id);
+                }
+            };
+            for (var i = list.length - 1, update, q, mask, m; i >= 0; i--) { //keys
+                updateTmpl = 0;
+                updateAttrs = 0;
+                one = list[i];
+                update = 1;
+                mask = one.mask;
+                keys = one.pKeys;
+                if (keys) {
+                    q = keys.length;
+                    while (--q >= 0) {
+                        if (G_Has(updateFlags, keys[q])) {
+                            update = 0;
+                            break;
+                        }
+                    }
+                }
+                if (update) {
+                    keys = one.keys;
+                    q = keys.length;
+                    update = 0;
+                    while (--q >= 0) {
+                        if (G_Has(updateFlags, keys[q])) {
+                            update = 1;
+                            if (!mask || (updateTmpl && updateAttrs)) {
+                                updateTmpl = one.tmpl;
+                                updateAttrs = one.attrs;
+                                break;
+                            }
+                            m = mask.charAt(q);
+                            updateTmpl = updateTmpl || m & 1;
+                            updateAttrs = updateAttrs || m & 2;
+                        }
+                    }
+                    if (update) {
+                        update = '#' + selfId + ' ' + one.selector.replace(Updater_HolderReg, selfId);
+                        var nodes = document.querySelectorAll(update);
+                        q = 0;
+                        while (q < nodes.length) {
+                            updateNode(nodes[q++]);
+                        }
+                    }
+                }
+            }
+        } else {
+            var map,
+                tmplment = function(m, guid) {
+                    return map[guid].tmpl;
+                },
+                x;
+            if (list) {
+                if (!list.$) { //process once
+                    list.$ = map = {};
+                    x = list.length;
+                    while (x > 0) {
+                        var s = list[--x];
+                        if (s.guid) {
+                            map[s.guid] = s;
+                            s.tmpl = s.tmpl.replace(Updater_ContentReg, tmplment);
+                            delete s.guid;
+                        }
+                    }
+                }
+                map = list.$;
+            }
+            host.$rd = 1;
+            var str = tmpl.replace(Updater_ContentReg, tmplment);
+            view.setHTML(selfId, build(str, renderData));
+        }
+    }
+};
+/**
+ * 使用mx-keys进行局部刷新的类
+ * @constructor
+ * @name Updater
+ * @class
+ * @beta
+ * @module updater
+ * @param {View} view Magix.View对象
+ * @borrows Event.on as #on
+ * @borrows Event.fire as #fire
+ * @borrows Event.off as #off
+ * @property {Object} $data 存放数据的对象
+ */
+var Updater = function(view) {
+    var me = this;
+    me.$v = view;
+    me.$data = {};
+    me.$json = {};
+};
+var UP = Updater.prototype;
+G_Mix(UP, Event);
+G_Mix(UP, {
+    /**
+     * @lends Updater#
+     */
+    /**
+     * 获取放入的数据
+     * @param  {String} [key] key
+     * @return {Object} 返回对应的数据，当key未传递时，返回整个数据对象
+     * @example
+     * render: function() {
+     *     this.$updater.set({
+     *         a: 10,
+     *         b: 20
+     *     });
+     * },
+     * 'read&lt;click&gt;': function() {
+     *     console.log(this.$updater.get('a'));
+     * }
+     */
+    get: function(key) {
+        var result = this.$data;
+        if (key) result = result[key];
+        return result;
+    },
+    /**
+     * 获取放入的数据
+     * @param  {Object} obj 待放入的数据
+     * @return {Updater} 返回updater
+     * @example
+     * render: function() {
+     *     this.$updater.set({
+     *         a: 10,
+     *         b: 20
+     *     });
+     * },
+     * 'read&lt;click&gt;': function() {
+     *     console.log(this.$updater.get('a'));
+     * }
+     */
+    set: function(obj) {
+        var me = this;
+        G_Mix(me.$data, obj);
+        return me;
+    },
+    /**
+     * 检测数据变化，更新界面，放入数据后需要显式调用该方法才可以把数据更新到界面
+     * @example
+     * render: function() {
+     *     this.$updater.set({
+     *         a: 10,
+     *         b: 20
+     *     }).digest();
+     * }
+     */
+    digest: function() {
+        var me = this;
+        var data = me.$data;
+        var json = me.$json;
+        var keys = {};
+        var changed, val, key, valJSON, lchange;
+        for (key in data) {
+            val = data[key];
+            lchange = 0;
+            valJSON = Updater_Stringify(val);
+            if (!G_Has(json, key)) {
+                json[key] = valJSON;
+                lchange = 1;
+            } else {
+                lchange = valJSON != json[key];
+                json[key] = valJSON;
+            }
+            if (lchange) {
+                keys[key] = changed = 1;
+            }
+        }
+        Updater_UpdateDOM(me, changed, keys, data);
+        if (changed) {
+            me.fire('changed', {
+                keys: keys
+            });
+            delete me.$lss;
+        }
+        return me;
+    },
+    /**
+     * 获取当前数据状态的快照，配合altered方法可获得数据是否有变化
+     * @return {Updater} 返回updater
+     * @example
+     * render: function() {
+     *     this.$updater.set({
+     *         a: 20,
+     *         b: 30
+     *     }).digest().snapshot(); //更新完界面后保存快照
+     * },
+     * 'save&lt;click&gt;': function() {
+     *     //save to server
+     *     console.log(this.$updater.altered()); //false
+     *     this.$updater.set({
+     *         a: 20,
+     *         b: 30
+     *     });
+     *     console.log(this.$updater.altered()); //true
+     *     this.$updater.snapshot(); //再保存一次快照
+     *     console.log(this.$updater.altered()); //false
+     * }
+     */
+    snapshot: function() {
+        var me = this;
+        me.$ss = Updater_Stringify(me.$json);
+        return me;
+    },
+    /**
+     * 检测数据是否有变动
+     * @return {Boolean} 是否变动
+     * @example
+     * render: function() {
+     *     this.$updater.set({
+     *         a: 20,
+     *         b: 30
+     *     }).digest().snapshot(); //更新完界面后保存快照
+     * },
+     * 'save&lt;click&gt;': function() {
+     *     //save to server
+     *     console.log(this.$updater.altered()); //false
+     *     this.$updater.set({
+     *         a: 20,
+     *         b: 30
+     *     });
+     *     console.log(this.$updater.altered()); //true
+     *     this.$updater.snapshot(); //再保存一次快照
+     *     console.log(this.$updater.altered()); //false
+     * }
+     */
+    altered: function() {
+        var me = this;
+        if (me.$ss) { //存在快照
+            if (!me.$lss) me.$lss = JSON.stringify(me.$json); //不存在比较的快照，生成
+            return me.$ss != me.$lss; //比较2次快照是否一样
+        }
+        return true;
+    }
+
+
+    /**
+     * 当数据有变化且调用digest更新时触发
+     * @name Updater#changed
+     * @event
+     * @param {Object} e
+     * @param {String} e.keys 指示哪些key被更新
+     */
+});
 
 
     var View_EvtMethodReg = /^([^<]+)<([^>]+)>$/;
@@ -1838,6 +2295,7 @@ var View_Oust = function(view) {
         View_DestroyAllResources(view, 1);
 
         View_DelegateEvents(view, 1);
+
     }
     view.$s--;
 };
@@ -1853,14 +2311,13 @@ var View_Oust = function(view) {
  * @property {String} id 当前view与页面vframe节点对应的id
  * @property {Vframe} owner 拥有当前view的vframe对象
  * @example
- * 关于事件:
- * 示例：
- *   html写法：
+ * // 关于事件:
+ * // html写法：
  *
- *   &lt;input type="button" mx-click="test({id:100,name:'xinglie'})" value="test" /&gt;
- *   &lt;a href="http://etao.com" mx-click="test({com:'etao.com'})"&gt;http://etao.com&lt;/a&gt;
+ * //  &lt;input type="button" mx-click="test({id:100,name:'xinglie'})" value="test" /&gt;
+ * //  &lt;a href="http://etao.com" mx-click="test({com:'etao.com'})"&gt;http://etao.com&lt;/a&gt;
  *
- *   view写法：
+ * // js写法：
  *
  *     'test&lt;click&gt;':function(e){
  *          e.preventDefault();
@@ -1895,6 +2352,9 @@ var View = function(ops, me) {
 
     G_ToTry(View_Ctors, ops, me);
 
+
+    me.$updater = new Updater(me);
+
 };
 var ViewProto = View[G_PROTOTYPE];
 G_Mix(View, {
@@ -1906,7 +2366,7 @@ G_Mix(View, {
      * @param  {Object} props 扩展到原型上的方法
      * @example
      * define('app/tview',function(require){
-     *     var Magix=require('magix');
+     *     var Magix = require('magix');
      *     Magix.View.merge({
      *         ctor:function(){
      *             this.$attr='test';
@@ -1916,9 +2376,9 @@ G_Mix(View, {
      *         }
      *     });
      * });
-     * //加入Magix.start的exts中
+     * //加入Magix.config的exts中
      *
-     *  Magix.start({
+     *  Magix.config({
      *      //...
      *      exts:['app/tview']
      *
@@ -1938,16 +2398,60 @@ G_Mix(View, {
     /**
      * 继承
      * @param  {Object} [props] 原型链上的方法或属性对象
+     * @param {Function} [props.ctor] 类似constructor，但不是constructor，当我们继承时，你无需显示调用上一层级的ctor方法，magix会自动帮你调用
+     * @param {Array} [props.mixins] mix到当前原型链上的方法对象，该对象可以有一个ctor方法用于初始化
      * @param  {Object} [statics] 静态对象或方法
+     * @example
+     * var Magix = require('magix');
+     * var Sortable = {
+     *     ctor: function() {
+     *         console.log('sortable ctor');
+     *         //this==当前mix Sortable的view对象
+     *         this.on('destroy', function() {
+     *             console.log('dispose')
+     *         });
+     *     },
+     *     sort: function() {
+     *         console.log('sort');
+     *     }
+     * };
+     * module.exports = Magix.View.extend({
+     *     mixins: [Sortable],
+     *     ctor: function() {
+     *         console.log('view ctor');
+     *     },
+     *     render: function() {
+     *         this.sort();
+     *     }
+     * });
      */
     extend: function(props, statics) {
         var me = this;
         props = props || {};
         var ctor = props.ctor;
+
+        var ctors = [];
+        if (ctor) ctors.push(ctor);
+
         var NView = function(a, b) {
             me.call(this, a, b);
-            if (ctor) ctor.call(this, b);
+
+            G_ToTry(ctors, b, this);
+
         };
+
+        var mixins = props.mixins;
+        if (mixins) {
+            var i = mixins.length,
+                o;
+            while (--i >= 0) {
+                o = mixins[i];
+                ctor = o.ctor;
+                if (ctor) ctors.push(ctor);
+                G_Mix(props, ctor);
+            }
+        }
+
         NView.extend = me.extend;
         return G_Extend(NView, me, props, statics);
     }
@@ -1962,17 +2466,14 @@ G_Mix(G_Mix(ViewProto, Event), {
      */
     render: G_NOOP,
 
+    /**
+     * 初始化调用的方法
+     * @beta
+     * @module viewInit
+     * @param {Object} extra 外部传递的数据对象
+     */
     init: G_NOOP,
 
-
-    relate: function(node) {
-        var id = node.id || (node.id = G_Id());
-        var me = this;
-        Body_ViewRelateInfo[id] = me.owner;
-        me.on('destroy', function() {
-            delete Body_ViewRelateInfo[id];
-        });
-    },
 
     // *
     //  * 包装mx-event事件，比如把mx-click="test<prevent>({key:'field'})" 包装成 mx-click="magix_vf_root^test<prevent>({key:'field})"，以方便识别交由哪个view处理
@@ -2059,7 +2560,7 @@ G_Mix(G_Mix(ViewProto, Event), {
     /**
      * 监视地址栏中的参数或path，有变动时，才调用当前view的render方法。通常情况下location有变化不会引起当前view的render被调用，所以你需要指定地址栏中哪些参数有变化时才引起render调用，使得view只关注与自已需要刷新有关的参数
      * @param {Array|String} params  数组字符串
-     * @param {Boolean} isObservePath 是否监视path
+     * @param {Boolean} [isObservePath] 是否监视path
      * @beta
      * @module router
      * @example
@@ -2100,14 +2601,12 @@ G_Mix(G_Mix(ViewProto, Event), {
      * 让view帮你管理资源，强烈建议对组件等进行托管
      * @param {String} key 资源标识key
      * @param {Object} res 要托管的资源
-     * @param {Boolean} destroyWhenCalleRender 调用render方法时是否销毁托管的资源
+     * @param {Boolean} [destroyWhenCalleRender] 调用render方法时是否销毁托管的资源
      * @return {Object} 返回托管的资源
      * @beta
      * @module resource
      * @example
      * View.extend({
-     *     ctor:function(){
-     *     },
      *     render:function(){
      *         var me=this;
      *         var dropdown=new Dropdown();
@@ -2129,7 +2628,7 @@ G_Mix(G_Mix(ViewProto, Event), {
     /**
      * 释放管理的资源
      * @param  {String} key 托管时的key
-     * @param  {Boolean} destroy 是否销毁资源
+     * @param  {Boolean} [destroy] 是否销毁资源
      * @return {Object} 返回托管的资源，无论是否销毁
      * @beta
      * @module resource
@@ -2139,45 +2638,52 @@ G_Mix(G_Mix(ViewProto, Event), {
     },
 
 
-    /**
-     * 离开提示
-     * @param  {String} msg 提示消息
-     * @param  {Function} fun 是否提示的回调
-     * @beta
-     * @module tiprouter
-     */
-    leaveTip: function(msg, fun) {
-        var me = this;
-        var changeListener = function(e) {
-            e.prevent();
-            if (!me.$tipped) {
-                if (fun.call(me)) { //firefox的confirm可以同时有多个
-                    me.$tipped = true;
-                    if (window.confirm(msg)) {
-                        me.$tipped = false;
-                        e.forward();
-                    } else {
-                        me.$tipped = false;
-                        e.backward();
-                    }
-                } else {
-                    e.forward();
-                }
-            }
-        };
-        var unloadListener = function(e) {
-            if (fun.call(me)) {
-                e.msg = msg;
-            }
-        };
-        Router.on('change', changeListener);
-        Router.on('pageunload', unloadListener);
-        me.on('destroy', function() {
-            Router.off('change', changeListener);
-            Router.off('pageunload', unloadListener);
-        });
-    },
 
+    /**
+     * 向子(孙)view公开数据
+     * @param  {String} key key
+     * @param  {Object} data 数据
+     * @beta
+     * @module share
+     */
+    share: function(key, data) {
+        var me = this;
+        if (!me.$sd) {
+            me.$sd = {};
+        }
+        me.$sd[key] = data;
+    },
+    /**
+     * 获取祖先view上公开的数据
+     * @param  {String} key key
+     * @return {Object}
+     * @beta
+     * @module share
+     * @example
+     * //父view
+     * render:function(){
+     *     this.share('x',{a:20});
+     * }
+     * //子view
+     * render:function(){
+     *     var d=this.getShared('x');
+     * }
+     */
+    getShared: function(key) {
+        var me = this;
+        var sd = me.$sd;
+        var exist;
+        if (sd) {
+            exist = G_Has(sd, key);
+            if (exist) {
+                return sd[key];
+            }
+        }
+        var vf = me.owner.parent();
+        if (vf) {
+            return vf.invoke('getShared', key);
+        }
+    },
 
     /**
      * 设置view的html内容
@@ -2364,7 +2870,9 @@ G_Mix(Bag[G_PROTOTYPE], {
         G_Mix(me.$, key);
     }
 });
+
 var Service_FetchFlags_ONE = 1;
+
 var Service_FetchFlags_ALL = 2;
 var Service_CacheDone = function(cacheKey, err, fns) {
     fns = this[cacheKey]; //取出当前的缓存信息
@@ -2418,9 +2926,11 @@ var Service_Task = function(done, host, service, total, flag, bagCache) {
                     G_ToTry(done, doneArr, service);
                 }
             }
+
             if (flag == Service_FetchFlags_ONE) { //如果是其中一个成功，则每次成功回调一次
                 G_ToTry(done, [err ? err : G_NULL, bag, finish, idx], service);
             }
+
         }
         if (newBag) { //不管当前request或回调是否销毁，均派发end事件，就像前面缓存一样，尽量让请求处理完成，该缓存的缓存，该派发事件派发事件。
             host.fire('end', dispach);
@@ -2438,12 +2948,14 @@ var Service_Task = function(done, host, service, total, flag, bagCache) {
  */
 var Service_Send = function(me, attrs, done, flag, save) {
     if (me.$o) return me; //如果已销毁，返回
+
     if (me.$b) { //繁忙，后续请求入队
         return me.enqueue(function() {
             Service_Send(this, attrs, done, flag, save);
         });
     }
     me.$b = 1; //标志繁忙
+
     var host = me.constructor;
     //var bagCache = host.$c; //存放bag的Cache对象
     var bagCacheKeys = host.$r; //可缓存的bag key
@@ -2480,7 +2992,7 @@ var Service_Send = function(me, attrs, done, flag, save) {
             }
         }
     }
-    return me;
+    return  me  ;
 };
 /**
  * 接口请求服务类
@@ -2492,23 +3004,25 @@ var Service_Send = function(me, attrs, done, flag, save) {
  * @borrows Event.fire as fire
  * @borrows Event.off as off
  * @example
- * var S=Service.extend(function(bag,callback){
+ * var S = Magix.Service.extend(function(bag,callback){
  *     $.ajax({
  *         url:bag.get('url'),
  *         success:function(data){
- *             callback(null,data);
+ *             bag.set('data',data)//设置数据
+ *             callback();//通知内部完成数据请求
  *         },
  *         error:function(msg){
- *             callback(msg);
+ *             callback(msg);//出错
  *         }
  *     })
  * });
- *
+ * // 添加接口
  * S.add({
  *     name:'test',
- *     url:'/test'
+ *     url:'/test',
+ *     cache:1000*60 //缓存一分钟
  * });
- *
+ * // 使用接口
  * var s=new S();
  * s.all('test',function(err,bag){
  *     console.log(err,bag);
@@ -2531,13 +3045,13 @@ G_Mix(Service[G_PROTOTYPE], {
      * @param {Function} done   完成时的回调
      * @return {Service}
      * @example
-        new Service().all([{
-            name:'Test1'
-        },{
-            name:'Test2'
-        }],function(err,bag1,bag2){
-            console.log(arguments);
-        });
+     * new Service().all([{
+     *     name:'Test1'
+     * },{
+     *     name:'Test2'
+     * }],function(err,bag1,bag2){
+     *     console.log(arguments);
+     * });
      */
     all: function(attrs, done) {
         return Service_Send(this, attrs, done, Service_FetchFlags_ALL);
@@ -2548,29 +3062,34 @@ G_Mix(Service[G_PROTOTYPE], {
      * @param {Object|Array} attrs 保存attrs时的描述信息，如:{name:'Home',urlParams:{a:'12'},formParams:{b:2}}
      * @param {Function} done   完成时的回调
      * @return {Service}
+     * @example
+     * // 同all,但与all不同的是，当指定接口缓存时，all方法会优先使用缓存，而save方法则每次都会发送请求到服务器，忽略掉缓存。同时save更语义化
      */
     save: function(attrs, done) {
         return Service_Send(this, attrs, done, Service_FetchFlags_ALL, 1);
     },
+
     /**
-     * 获取attrs，其中任意一个成功均立即回调，回调会被调用多次
+     * 获取attrs，其中任意一个成功均立即回调，回调会被调用多次。注：当使用promise时，不存在该方法。
      * @function
      * @param {Object|Array} attrs 获取attrs时的描述信息，如:{name:'Home',cacheKey:'key',urlParams:{a:'12'},formParams:{b:2}}
      * @param {Function} callback   完成时的回调
+     * @beta
+     * @module serviceWithoutPromise
      * @return {Service}
      * @example
      *  //代码片断：
-     *  var s=new Service().one([
-     *      {name:'M1'},
-     *      {name:'M2'},
-     *      {name:'M3'}
-     *  ],function(err,bag){//m1,m2,m3，谁快先调用谁，且被调用三次
-     *      if(err){
-     *          alert(err.msg);
-     *      }else{
-     *          alert(bag.get('name'));
-     *      }
-     *  });
+     * var s = new Service().one([
+     *     {name:'M1'},
+     *     {name:'M2'},
+     *     {name:'M3'}
+     * ],function(err,bag){//m1,m2,m3，谁快先调用谁，且被调用三次
+     *     if(err){
+     *         alert(err.msg);
+     *     }else{
+     *         alert(bag.get('name'));
+     *     }
+     * });
      */
     one: function(attrs, done) {
         return Service_Send(this, attrs, done, Service_FetchFlags_ONE);
@@ -2579,16 +3098,18 @@ G_Mix(Service[G_PROTOTYPE], {
      * 前一个all,one或save任务做完后的下一个任务
      * @param  {Function} callback 当前面的任务完成后调用该回调
      * @return {Service}
+     * @beta
+     * @module serviceWithoutPromise
      * @example
-     *  var r=new Service().all([
-     *      {name:'M1'},
-     *      {name:'M2'}
-     *  ],function(err,bag1,bag2){
-     *      r.dequeue(['args1','args2']);
-     *  });
-     *  r.enqueue(function(args1,args2){
-     *      alert([args1,args2]);
-     *  });
+     * var r = new Service().all([
+     *     {name:'M1'},
+     *     {name:'M2'}
+     * ],function(err,bag1,bag2){
+     *     r.dequeue(['args1','args2']);
+     * });
+     * r.enqueue(function(args1,args2){
+     *     alert([args1,args2]);
+     * });
      */
     enqueue: function(callback) {
         var me = this;
@@ -2601,8 +3122,10 @@ G_Mix(Service[G_PROTOTYPE], {
     /**
      * 做下一个任务
      * @param {Array} preArgs 传递的参数
+     * @beta
+     * @module serviceWithoutPromise
      * @example
-     * var r=new Service();
+     * var r = new Service();
      * r.all('Name',function(e,bag){
      *     r.dequeue([e,bag]);
      * });
@@ -2639,6 +3162,7 @@ G_Mix(Service[G_PROTOTYPE], {
             }, 0);
         }
     },
+
     /**
      * 销毁当前请求，不可以继续发起新请求，而且不再调用相应的回调
      */
@@ -2653,6 +3177,14 @@ G_Mix(Service[G_PROTOTYPE], {
          * @event
          * @param {Object} e 事件对象
          * @param {Bag} e.bag bag对象
+         * @example
+         * var S = Magix.Service.extend({
+         *     //codes
+         * });
+         *
+         * S.on('begin',function(e){//监听所有的开始请求事件
+         *     console.log(e);
+         * });
          */
         /**
          * 当Service结束请求时触发(成功或失败均触发)
@@ -2660,7 +3192,7 @@ G_Mix(Service[G_PROTOTYPE], {
          * @event
          * @param {Object} e 事件对象
          * @param {Bag} e.bag bag对象
-         * @param {String} e.msg 当请求出错时，msg是出错的消息
+         * @param {String} e.error 当请求出错时，error是出错的消息
          */
         /**
          * 当Service发送请求失败时触发
@@ -2668,7 +3200,7 @@ G_Mix(Service[G_PROTOTYPE], {
          * @event
          * @param {Object} e 事件对象
          * @param {Bag} e.bag bag对象
-         * @param {String} e.msg 当请求出错时，msg是出错的消息
+         * @param {String} e.error 当请求出错时，error是出错的消息
          */
         /**
          * 当Service发送请求成功时触发
@@ -2746,7 +3278,17 @@ var Service_Manager = G_Mix({
      * 获取bag注册时的元信息
      * @param  {String|Object} attrs 名称
      * @return {Object}
-     * @throws {Error} If unfound:name
+     * @example
+     * var S = Magix.Service.extend({
+     *     //extend code
+     * });
+     *
+     * S.add({
+     *     name:'test',
+     *     url:'/test'
+     * });
+     *
+     * console.log(S.meta('test'),S.meta({name:'test'}));//这2种方式都可以拿到add时的对象信息
      */
     meta: function(attrs) {
         var me = this;
@@ -2780,6 +3322,22 @@ var Service_Manager = G_Mix({
     /**
      * 根据name清除缓存的attrs
      * @param  {String|Array} names 字符串或数组
+     * @example
+     * var S = Magix.Service.extend({
+     *     //extend code
+     * });
+     *
+     * S.add({
+     *     name:'test',
+     *     url:'/test',
+     *     cache:1000*60
+     * });
+     *
+     * var s = new Service();
+     * s.all('test');
+     * s.all('test');//from cache
+     * S.clear('test');
+     * s.all('test');//fetch from server
      */
     clear: function(names) {
         this.$c.each(Manager_ClearCache, G_ToMap((names + G_EMPTY).split(G_COMMA)));
@@ -2788,6 +3346,18 @@ var Service_Manager = G_Mix({
      * 从缓存中获取bag对象
      * @param  {Object} attrs
      * @return {Bag}
+     * @example
+     * var S = Magix.Service.extend({
+     *     //extend code
+     * });
+     *
+     * S.add({
+     *     name:'test',
+     *     url:'/test',
+     *     cache:1000*60
+     * });
+     *
+     * S.cached('test');//尝试从缓存中获取bag对象
      */
     cached: function(attrs) {
         var me = this;
@@ -2818,11 +3388,25 @@ var Service_Manager = G_Mix({
     }
 }, Event);
 /**
+ * 继承
  * @lends Service
  * @param  {Function} sync 接口服务同步数据方法
- * @param  {Integer} cacheMax 最大缓存数
- * @param  {Integer} cacheBuffer 缓存缓冲区大小
+ * @param  {Integer} [cacheMax] 最大缓存数，默认20
+ * @param  {Integer} [cacheBuffer] 缓存缓冲区大小，默认5
  * @return {Function} 返回新的接口类
+ * @example
+ * var S = Magix.Service.extend(function(bag,callback){
+ *     $.ajax({
+ *         url:bag.get('url'),
+ *         success:function(data){
+ *             bag.set('data',data);
+ *             callback();
+ *         },
+ *         error:function(msg){
+ *             callback({message:msg});
+ *         }
+ *     })
+ * },10,2);//最大缓存10个接口数据，缓冲区2个
  */
 Service.extend = function(sync, cacheMax, cacheBuffer) {
     var me = this;
@@ -2860,9 +3444,26 @@ Magix.Service = Service;
      * @borrows Event.off as #off
      * @beta
      * @module base
+     * @example
+     * var T = Magix.Base.extend({
+     *     hi:function(){
+     *         this.fire('hi');
+     *     }
+     * });
+     * var t = new T();
+     * t.onhi=function(e){
+     *     console.log(e);
+     * };
+     * t.hi();
      */
     Magix.Base = G_NOOP;
 
+
+    define(MxGlobalView, function() {
+        return View.extend(
+
+        );
+    });
 
     return Magix;
 });

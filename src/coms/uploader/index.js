@@ -5,7 +5,7 @@ define('coms/uploader/index',['magix','$'],function(require,exports,module){
  */
 var Magix = require('magix');
 var $ = require('$');
-Magix.applyStyle('mp-ce9',".mp-ce9-pr{position:relative}.mp-ce9-file{left:0;top:0;bottom:0;right:0;width:100%;height:100%;opacity:0;cursor:pointer;font-size:100px;filter:alpha(opacity=0)}.mp-ce9-cnt,.mp-ce9-file{position:absolute}.mp-ce9-cnt{left:-999999px}");
+Magix.applyStyle('mx-ce9',".mx-ce9-pr{position:relative}.mx-ce9-file{left:0;top:0;bottom:0;right:0;width:100%;height:100%;opacity:0;cursor:pointer;font-size:100px;filter:alpha(opacity=0)}.mx-ce9-cnt,.mx-ce9-file{position:absolute}.mx-ce9-cnt{left:-999999px}");
 var Uploader = Magix.Base.extend({
     destroy: function() {
         var me = this;
@@ -15,7 +15,7 @@ var Uploader = Magix.Base.extend({
 var Iframe = Uploader.extend({
     send: function(input) {
         var id = Magix.guid('up');
-        $('body').append('<div id="' + id + '_temp" class="mp-ce9-cnt"><form target="' + id + '" enctype="multipart/form-data" method="post" action="test"></form><iframe name="' + id + '" id="' + id + '"></iframe></div>');
+        $('body').append('<div id="' + id + '_temp" class="mx-ce9-cnt"><form target="' + id + '" enctype="multipart/form-data" method="post" action="test"></form><iframe name="' + id + '" id="' + id + '"></iframe></div>');
         var cnt = $('#' + id + '_temp');
         var form = cnt.find('form');
         form.append(input);
@@ -61,7 +61,7 @@ module.exports = Magix.View.extend({
     },
     add: function() {
         var me = this;
-        $('#' + me.id).append('<input type="file" class="mp-ce9-file" mx-change="upload()" name="file" />').addClass('mp-ce9-pr');
+        $('#' + me.id).append('<input type="file" class="mx-ce9-file" mx-change="upload()" name="file" />').addClass('mx-ce9-pr');
     },
     render: function() {
         var me = this;

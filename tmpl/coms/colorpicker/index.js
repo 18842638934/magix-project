@@ -4,7 +4,6 @@
 var Magix = require('magix');
 var $ = require('$');
 var Picker = require('../picker/index');
-var tmpl = require('../tmpl/index');
 var DD = require('../dragdrop/index');
 Magix.applyStyle('@index.css');
 var GraphicsType = (window.SVGAngle || document.implementation.hasFeature('http://www.w3.org/TR/SVG11/feature#BasicStructure', '1.1') ? 'SVG' : 'VML');
@@ -76,11 +75,10 @@ module.exports = Picker.extend({
     },
     render: function() {
         var me = this;
-        var html = tmpl(me.tmpl, {
+        me.$updater.set({
             id: me.id,
             shortcuts: ShortCuts
-        });
-        me.setHTML(me.id, html);
+        }).digest();
         var slideNode = $('#slide_' + me.id);
         var pickerNode = $('#cpicker_' + me.id);
         if (GraphicsType == 'SVG') {

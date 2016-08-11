@@ -5,10 +5,7 @@
     </div>
     <div class="form-item">
         <div class="title">创意类型</div>
-        <div class="content" mx-view="coms/dropdown/index" mx-change="cTypes()">
-            <script type="magix/config">
-                <%=JSON.stringify({list:list,width:width,selected:selected})%>
-            </script>
+        <div class="content" mx-view="coms/dropdown/index?list={list}&width={width}&selected={selected}" mx-change="cTypes()">
         </div>
     </div>
     <div id="type_vf_<%=id%>" mx-view>
