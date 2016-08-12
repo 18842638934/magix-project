@@ -25,6 +25,7 @@ module.exports = Form.extend({
             delayTime: 200,
             others: []
         };
+        me.share('creative', creative);
         me.$updater.set({
             creative: creative,
             id: me.id,
