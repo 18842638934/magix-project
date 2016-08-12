@@ -10,7 +10,8 @@ var $ = require('$');
 var Monitor = require('../monitor/index');
 var ListToTree = require('../generic/treeable');
 module.exports = Magix.View.extend({
-    tmpl: {"html":"<div class=\"mx-9ad-tags clearfix\" id=\"tags_<%=id%>\" mx-click=\"showList()\" mx-guid=\"x9451-\u001f\">@1-\u001f</div><div class=\"mx-9ad-tree mx-9ad-none\" id=\"list_<%=id%>\"></div>","subs":[{"guid":1,"keys":["selected"],"tmpl":"<%for(var i=0;i<selected.length;i++){%><div class=\"mx-9ad-item\" id=\"si_<%=i%>_<%=id%>\" title=\"<%=selected[i]%>\"><div class=\"mx-9ad-name ellipsis\"><%=selected[i]%></div><div class=\"mx-9ad-delete\" mx-click=\"remove({index:<%=i%>})\">x</div></div><%}%><div class=\"mx-9ad-item\" id=\"iptw_<%=id%>\"><input id=\"ipt_<%=id%>\" class=\"mx-9ad-ipt\" mx-keyup=\"search()\" mx-paste=\"search()\" value=\"<%=iptValue%>\"/></div>","selector":"div[mx-guid=\"x9451-\u001f\"]"}]},
+    tmpl: "<div class=\"mx-9ad-tags clearfix\" id=\"tags_<%=id%>\" mx-click=\"showList()\" mx-guid=\"x9451-\u001f\">@1-\u001f</div><div class=\"mx-9ad-tree mx-9ad-none\" id=\"list_<%=id%>\"></div>",
+    tmplData: [{"guid":1,"keys":["selected"],"tmpl":"<%for(var i=0;i<selected.length;i++){%><div class=\"mx-9ad-item\" id=\"si_<%=i%>_<%=id%>\" title=\"<%=selected[i]%>\"><div class=\"mx-9ad-name ellipsis\"><%=selected[i]%></div><div class=\"mx-9ad-delete\" mx-click=\"remove({index:<%=i%>})\">x</div></div><%}%><div class=\"mx-9ad-item\" id=\"iptw_<%=id%>\"><input id=\"ipt_<%=id%>\" class=\"mx-9ad-ipt\" mx-keyup=\"search()\" mx-paste=\"search()\" value=\"<%=iptValue%>\"/></div>","selector":"div[mx-guid=\"x9451-\u001f\"]"}],
     ctor: function(extra) {
         Monitor.setup();
         var me = this;

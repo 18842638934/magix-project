@@ -56,7 +56,8 @@ var Position = {
     }
 };
 module.exports = Magix.View.extend({
-    tmpl: {"html":"<span mx-mouseover=\"over();\" mx-mouseout=\"out()\" class=\"mx-fa3-help\"><%=icon%></span><div class=\"mx-fa3-content <%=cssdock%>\" style=\"width:200px;min-height:50px;display:none\" id=\"content_<%=id%>\" mx-mouseover=\"cover()\" mx-mouseout=\"cout()\"><%=content%></div>","subs":[]},
+    tmpl: "<span mx-mouseover=\"over();\" mx-mouseout=\"out()\" class=\"mx-fa3-help\"><%=icon%></span><div class=\"mx-fa3-content <%=cssdock%>\" style=\"width:200px;min-height:50px;display:none\" id=\"content_<%=id%>\" mx-mouseover=\"cover()\" mx-mouseout=\"cout()\"><%=content%></div>",
+    tmplData: [],
     ctor: function(extra) {
         var me = this;
         if (!extra.dock) extra.dock = 'bottom';

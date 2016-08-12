@@ -6,6 +6,7 @@ var View = require('@coms/form/index');
 Magix.applyStyle('@form-addition.css');
 module.exports = View.extend({
     tmpl: '@form-addition.html',
+    tmplData: '@form-addition.html:data',
     ctor: function() {
         var me = this;
         // me.leaveTip('表单有改动，您确认离开吗？', function() {

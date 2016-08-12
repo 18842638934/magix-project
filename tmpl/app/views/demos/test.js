@@ -4,6 +4,7 @@
 var Magix = require('magix');
 module.exports = Magix.View.extend({
     tmpl: '@test.html',
+    tmplData: '@test.html:data',
     render: function() {
         var me = this;
         me.$updater.set({

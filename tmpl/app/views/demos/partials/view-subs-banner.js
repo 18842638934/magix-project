@@ -5,6 +5,7 @@
 var Magix = require('magix');
 module.exports = Magix.View.extend({
     tmpl: '@view-subs-banner.html',
+    tmplData: '@view-subs-banner.html:data',
     render: function() {
         var me = this;
         setTimeout(me.wrapAsync(function() {

@@ -4,7 +4,6 @@
 var Magix = require('magix');
 var BigImg = require('./partials/sdk-bigimg');
 Magix.applyStyle('@sdk.css');
-var CSSNames = 'names@sdk.css';
 var Items = [{
     id: '6',
     name: '横  幅',
@@ -40,13 +39,14 @@ var ItemsMap = Magix.toMap(Items, 'id');
 
 module.exports = Magix.View.extend({
     tmpl: '@sdk.html',
+    tmplData: '@sdk.html:data',
     ctor: function() {
         var me = this;
         me.on('destroy', function() {
             BigImg.destroy();
         });
         me.$updater.onchanged = function(e) {
-            console.log(e,me.$updater.get());
+            console.log(e, me.$updater.get());
         };
     },
     render: function() {

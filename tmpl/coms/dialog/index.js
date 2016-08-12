@@ -7,6 +7,7 @@ Magix.applyStyle('@index.css');
 var CSSNames = 'names@index.css[left,top,right,bottom]';
 module.exports = Magix.View.extend({
     tmpl: '@index.html',
+    tmplData: '@index.html:data',
     ctor: function(extra) {
         var me = this;
         me.$options = extra;

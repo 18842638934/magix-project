@@ -6,6 +6,7 @@ var Magix = require('magix');
 var $ = require('$');
 module.exports = Magix.View.extend({
     tmpl: '@branch.html',
+    tmplData: '@branch.html:data',
     ctor: function(extra) {
         var me = this;
         me.$info = me.owner.parent().invoke('getInfo', extra.index);

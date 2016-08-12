@@ -8,6 +8,7 @@ Magix.applyStyle('@sdk-bigimg.css');
 var CSSNames = 'names@sdk-bigimg.css';
 var BigImg = Magix.View.extend({
     tmpl: '@sdk-bigimg.html',
+    tmplData: '@sdk-bigimg.html:data',
     ctor: function(extra) {
         var me = this;
         me.$img = extra.img;

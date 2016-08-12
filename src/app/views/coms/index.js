@@ -26,7 +26,8 @@ var shake = function(a, e, t, i, o) {
     var timer = setTimeout(s, t);
 };
 module.exports = Magix.View.extend({
-    tmpl: {"html":"常用组件首页","subs":[]},
+    tmpl: "常用组件首页",
+    tmplData: [],
     render: function() {
         var me = this;
         me.$updater.digest();

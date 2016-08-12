@@ -8,7 +8,8 @@ var $ = require('$');
 var Router = Magix.Router;
 var ShrinkCSS = 'mx-286-shrink';
 module.exports = Magix.View.extend({
-    tmpl: {"html":"<div mx-view=\"app/views/partials/header\" mx-togglesidebar=\"resizeMain()\"></div><div class=\"inmain\" id=\"inmain\"><div mx-guid=\"x05a1-\u001f\" mx-view=\"<%=mainView%>\"><div class=\"loading\"><span></span></div></div></div>","subs":[{"keys":["mainView"],"selector":"div[mx-guid=\"x05a1-\u001f\"]","view":"<%=mainView%>"}]},
+    tmpl: "<div mx-view=\"app/views/partials/header\" mx-togglesidebar=\"resizeMain()\"></div><div class=\"inmain\" id=\"inmain\"><div mx-guid=\"x05a1-\u001f\" mx-view=\"<%=mainView%>\"><div class=\"loading\"><span></span></div></div></div>",
+    tmplData: [{"keys":["mainView"],"selector":"div[mx-guid=\"x05a1-\u001f\"]","view":"<%=mainView%>"}],
     ctor: function() {
         var me = this;
         me.observe(null, true);

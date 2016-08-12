@@ -127,6 +127,7 @@ var CSSNames = 'names@index.css[none,selected]';
 Magix.applyStyle('@index.css');
 module.exports = Magix.View.extend({
     tmpl: '@index.html',
+    tmplData: '@index.html:data',
     ctor: function(extra) {
         this.$extra = extra;
     },

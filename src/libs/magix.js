@@ -1,4 +1,4 @@
-/*3.1.0*//*
+/*3.1.1*//*
     author:xinglie.lkf@taobao.com
  */
 define('magix', ['$'], function(require) {
@@ -1079,7 +1079,42 @@ Magix.Router = Router;
 
 
     Router.bind = function() {
-        $(G_WINDOW).on('hashchange', Router.diff);
+        var lastHash = Router.parse().srcHash;
+        var newHash;
+        $(G_WINDOW).on('hashchange', function(e, loc) {
+            loc = Router.parse();
+            newHash = loc.srcHash;
+            if (newHash != lastHash) {
+                e = {
+                    backward: function() {
+                        e.p = 1;
+                        Router_WinLoc.hash = '#!' + lastHash;
+                    },
+                    forward: function() {
+                        e.p = 1;
+                        lastHash = newHash;
+                        Router.diff();
+                    },
+                    prevent: function() {
+                        e.p = 1;
+                    },
+                    location: loc
+                };
+                Router.fire('change', e);
+                if (!e.p) {
+                    e.forward();
+                }
+            }
+        });
+        G_WINDOW.onbeforeunload = function(e) {
+            e = e || G_WINDOW.event;
+            var te = {};
+            Router.fire('pageunload', te);
+            if (te.msg) {
+                if (e) e.returnValue = te.msg;
+                return te.msg;
+            }
+        };
         Router.diff();
     };
 
@@ -1342,7 +1377,7 @@ G_Mix(G_Mix(Vframe[G_PROTOTYPE], Event), {
                     View_Prepare(TView);
 
                     var pParams = po.params;
-                    /*#if(modules.updater){#*/
+
                     var parent = me.parent(),
                         p, val;
                     parent = parent && parent.$v;
@@ -1356,9 +1391,8 @@ G_Mix(G_Mix(Vframe[G_PROTOTYPE], Event), {
                             }
                         }
                     }
-                    /*#}#*/
-                    var params = G_Mix(pParams, viewInitParams);
 
+                    var params = G_Mix(pParams, viewInitParams);
 
 
                     view = new TView({
@@ -1641,18 +1675,17 @@ Magix.Vframe = Vframe;
  *
  *      fca firstChildrenAlter  fcc firstChildrenCreated
  */
-    // var Body_DOMGlobalProcessor = function(e, d) {
-    //     d = e.data;
-    //     G_ToTry(d.f, e, d.v);
-    // };
+    var Body_DOMGlobalProcessor = function(e, d) {
+        d = e.data;
+        G_ToTry(d.f, e, d.v);
+    };
 
-    var Body_DOMEventLibBind = function(node, type, cb, remove) {
-        /*if (remove) {
+    var Body_DOMEventLibBind = function(node, type, cb, remove, selector, scope) {
+        if (remove) {
             $(node).off(type, selector, cb);
         } else {
             $(node).on(type, selector, scope, cb);
-        }*/
-        $(node)[remove ? 'off' : Event_ON](type, cb);
+        }
     };
 
     /*
@@ -1848,13 +1881,12 @@ var Updater_ContentReg = /@(\d+)\-\u001f/g;
 var Updater_Stringify = JSON.stringify;
 var Updater_UpdateDOM = function(host, changed, updateFlags, renderData) {
     var view = host.$v;
-    var tmplData = view.tmpl;
+    var tmpl = view.tmpl;
+    var list = view.tmplData;
     var selfId = view.id;
     var build = function(tmpl, data) {
         return Tmpl(tmpl, data).replace(Updater_HolderReg, selfId);
     };
-    var tmpl = tmplData.html;
-    var list = tmplData.subs;
     if (changed || !host.$rd) {
         if (host.$rd && updateFlags && list) {
             var updatedNodes = {},
@@ -2133,8 +2165,7 @@ G_Mix(UP, {
 });
 
 
-    var View_EvtMethodReg = /^([^<]+)<([^>]+)>$/;
-//var View_EvtSelectorReg = /\$(.+)/;
+    var View_EvtMethodReg = /^(\$?)([^<]+)<([^>]+)>$/;
 //var View_MxEvt = /\smx-(?!view|vframe)[a-z]+\s*=\s*"/g;
 
 var View_DestroyAllResources = function(me, lastly) {
@@ -2178,19 +2209,19 @@ var View_WrapRender = function(prop, fn, me) {
 };
 var View_DelegateEvents = function(me, destroy) {
     var events = me.$eo; //eventsObject
-    var p /*, e*/ ;
+    var p, e;
     for (p in events) {
         Body_DOMEventBind(p, destroy);
     }
-    // events = me.$el; //eventsList
-    // p = events.length;
-    // while (p--) {
-    //     e = events[p];
-    //     Body_DOMEventLibBind(e.h, e.t, e.s && G_HashKey + me.id + ' ' + e.s, Body_DOMGlobalProcessor, destroy, {
-    //         v: me,
-    //         f: e.f
-    //     });
-    // }
+    events = me.$el; //eventsList
+    p = events.length;
+    while (p--) {
+        e = events[p];
+        Body_DOMEventLibBind(e.e || G_HashKey + me.id, e.n, Body_DOMGlobalProcessor, destroy, e.s, {
+            v: me,
+            f: e.f
+        });
+    }
 };
 
 // var View_Style_Map;
@@ -2211,10 +2242,10 @@ var View_DelegateEvents = function(me, destroy) {
 
 var View_Ctors = [];
 
-// var View_Globals = {
-//     win: G_WINDOW,
-//     doc: G_DOCUMENT
-// };
+var View_Globals = {
+    win: G_WINDOW,
+    doc: G_DOCUMENT
+};
 /**
  * 预处理view
  * @param  {View} oView view子类
@@ -2223,50 +2254,36 @@ var View_Ctors = [];
 var View_Prepare = function(oView) {
     if (!oView[G_SPLITER]) { //只处理一次
         oView[G_SPLITER] = 1;
-        //oView.extend = me.extend;
         var prop = oView[G_PROTOTYPE],
-            old, temp, name, evts, eventsObject = {},
-            p;
-        /*,eventsList = [],node, p, selector;*/
+            oldFun, matches, selectorOrCallback, events, eventsObject = {},
+            eventsList = [],
+            node, isSelector, p, item;
         for (p in prop) {
-            old = prop[p];
-            temp = p.match(View_EvtMethodReg);
-            if (temp) {
-                name = temp[1];
-                evts = temp[2];
-                evts = evts.split(G_COMMA);
-                while ((temp = evts.pop())) {
-                    // selector = name.match(View_EvtSelectorReg);
-                    // if (selector) {
-                    //     name = selector[1];
-                    //     node = View_Globals[name];
-                    //     eventsList.push({
-                    //         f: old,
-                    //         s: node ? G_NULL : name,
-                    //         t: temp,
-                    //         h: node || G_DOCBODY
-                    //     });
-                    // } else {
-                    eventsObject[temp] = 1;
-                    prop[name + G_SPLITER + temp] = old;
-                    //}
+            oldFun = prop[p];
+            matches = p.match(View_EvtMethodReg);
+            if (matches) {
+                isSelector = matches[1];
+                selectorOrCallback = matches[2];
+                events = matches[3].split(G_COMMA);
+                while ((item = events.pop())) {
+                    if (isSelector) {
+                        node = View_Globals[selectorOrCallback];
+                        eventsList.push({
+                            f: oldFun,
+                            s: node ? G_NULL : ' ' + selectorOrCallback,
+                            n: item,
+                            e: node
+                        });
+                    } else {
+                        eventsObject[item] = 1;
+                        prop[selectorOrCallback + G_SPLITER + item] = oldFun;
+                    }
                 }
             }
         }
         View_WrapRender(prop);
         prop.$eo = eventsObject;
-        //prop.$el = eventsList;
-
-        //css = prop.css;
-        /*
-            view上添加的style样式字符串，经magix处理后，会变成一个name映射对象，在页面上使用时，使用style.name来获取处理后的class名称
-         */
-        // if (css) {
-        //     prop.cssNames = View_Style_Map = {};
-        //     View_Style_Key = oView.$k;
-        //     oView.$c = css.replace(View_Style_Reg, View_Style_Processor);
-        // }
-
+        prop.$el = eventsList;
     }
 };
 
@@ -2637,6 +2654,54 @@ G_Mix(G_Mix(ViewProto, Event), {
         return View_DestroyResource(this.$r, key, destroy);
     },
 
+
+    /**
+     * 离开提示
+     * @param  {String} msg 提示消息
+     * @param  {Function} fn 是否提示的回调
+     * @beta
+     * @module tiprouter
+     * @example
+     * var Magix = require('magix');
+     * module.exports = Magix.View.extend({
+     *     init:function(){
+     *         this.leaveTip('页面数据未保存，确认离开吗？',function(){
+     *             return true;//true提示，false，不提示
+     *         });
+     *     }
+     * });
+     */
+    leaveTip: function(msg, fn) {
+        var me = this;
+        var changeListener = function(e) {
+            e.prevent();
+            if (!me.$tipped) {
+                if (fn.call(me)) { //firefox的confirm可以同时有多个
+                    me.$tipped = true;
+                    if (window.confirm(msg)) {
+                        me.$tipped = false;
+                        e.forward();
+                    } else {
+                        me.$tipped = false;
+                        e.backward();
+                    }
+                } else {
+                    e.forward();
+                }
+            }
+        };
+        var unloadListener = function(e) {
+            if (fn.call(me)) {
+                e.msg = msg;
+            }
+        };
+        Router.on('change', changeListener);
+        Router.on('pageunload', unloadListener);
+        me.on('destroy', function() {
+            Router.off('change', changeListener);
+            Router.off('pageunload', unloadListener);
+        });
+    },
 
 
     /**

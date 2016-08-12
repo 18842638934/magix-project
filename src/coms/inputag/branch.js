@@ -7,7 +7,8 @@ define('coms/inputag/branch',['magix','$'],function(require,exports,module){
 var Magix = require('magix');
 var $ = require('$');
 module.exports = Magix.View.extend({
-    tmpl: {"html":"<ul><%for(var i=0,br;i<list.length;i++){br=list[i]%><li class=\"mx-9ad-li\"><div class=\"mx-9ad-icon<%if(br.children){%> mx-9ad-cp<%}%>\" <%if(br.children){%> mx-click=\"toggle({id:'<%=br[dataId]%>'})\" <%}%>><%if(br.children){%>+<%}%></div><div class=\"ellipsis\" title=\"<%=br[textKey]%>\"><label mx-click=\"fill({text:'<%=br[textKey]%>'})\" mx-mouseout=\"hover()\" mx-mouseover=\"hover()\" class=\"mx-9ad-tree-name\"><%=br[textKey]%></label></div><%if(br.children){%><div mx-view=\"coms/inputag/branch?index=<%=i%>&text=<%=textKey%>&id=<%=dataId%>\" id=\"<%=id%>_<%=br[dataId]%>\" class=\"mx-9ad-indent mx-9ad-none\"></div><%}%></li><%}%></ul>","subs":[]},
+    tmpl: "<ul><%for(var i=0,br;i<list.length;i++){br=list[i]%><li class=\"mx-9ad-li\"><div class=\"mx-9ad-icon<%if(br.children){%> mx-9ad-cp<%}%>\" <%if(br.children){%> mx-click=\"toggle({id:'<%=br[dataId]%>'})\" <%}%>><%if(br.children){%>+<%}%></div><div class=\"ellipsis\" title=\"<%=br[textKey]%>\"><label mx-click=\"fill({text:'<%=br[textKey]%>'})\" mx-mouseout=\"hover()\" mx-mouseover=\"hover()\" class=\"mx-9ad-tree-name\"><%=br[textKey]%></label></div><%if(br.children){%><div mx-view=\"coms/inputag/branch?index=<%=i%>&text=<%=textKey%>&id=<%=dataId%>\" id=\"<%=id%>_<%=br[dataId]%>\" class=\"mx-9ad-indent mx-9ad-none\"></div><%}%></li><%}%></ul>",
+    tmplData: [],
     ctor: function(extra) {
         var me = this;
         me.$info = me.owner.parent().invoke('getInfo', extra.index);

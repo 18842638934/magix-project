@@ -55,6 +55,7 @@ var Position = {
 };
 module.exports = Magix.View.extend({
     tmpl: '@index.html',
+    tmplData: '@index.html:data',
     ctor: function(extra) {
         var me = this;
         if (!extra.dock) extra.dock = 'bottom';

@@ -8,7 +8,8 @@ var $ = require('$');
 var FX = require('../../../coms/generic/fx');
 Magix.applyStyle('mx-afd',".mx-afd-w900{color:red}.mx-afd-w500{color:green}.content .mx-afd-w500{color:#ff0}");
 module.exports = Magix.View.extend({
-    tmpl: {"html":"<div class=\"<%=cls%>\" mx-guid=\"xae61-\u001f\">响应式测试，经验页</div><div id=\"counter\">--</div>","subs":[{"keys":["cls"],"selector":"div[mx-guid=\"xae61-\u001f\"]","attrs":[{"n":"className","v":"<%=cls%>","p":1}]}]},
+    tmpl: "<div class=\"<%=cls%>\" mx-guid=\"xae61-\u001f\">响应式测试，经验页</div><div id=\"counter\">--</div>",
+    tmplData: [{"keys":["cls"],"selector":"div[mx-guid=\"xae61-\u001f\"]","attrs":[{"n":"className","v":"<%=cls%>","p":1}]}],
     render: function() {
         var me = this;
         me.update();

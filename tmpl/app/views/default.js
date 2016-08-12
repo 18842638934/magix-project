@@ -7,6 +7,7 @@ var Router = Magix.Router;
 var ShrinkCSS = '@./partials/header-sidebar.css:shrink';
 module.exports = Magix.View.extend({
     tmpl: '@default.html',
+    tmplData: '@default.html:data',
     ctor: function() {
         var me = this;
         me.observe(null, true);

@@ -9,7 +9,8 @@ var Picker = require('../picker/index');
 var Base = Picker.prototype;
 var Vframe = Magix.Vframe;
 module.exports = Picker.extend({
-    tmpl: {"html":"<div id=\"cal_<%=id%>\" mx-view=\"coms/calendar/index\"></div>","subs":[]},
+    tmpl: "<div id=\"cal_<%=id%>\" mx-view=\"coms/calendar/index\"></div>",
+    tmplData: [],
     ctor: function() {
         var me = this;
         var node = $('#' + me.id);

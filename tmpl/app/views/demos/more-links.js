@@ -8,6 +8,7 @@ var CSSNames = 'names@more-links.css';
 var MoreLinks = require('./partials/more-links');
 module.exports = Magix.View.extend({
     tmpl: '@more-links.html',
+    tmplData: '@more-links.html:data',
     ctor: function() {
         MoreLinks.setup();
         this.on('destroy', MoreLinks.teardown);

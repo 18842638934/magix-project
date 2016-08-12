@@ -8,6 +8,7 @@ var Base = Picker.prototype;
 var Vframe = Magix.Vframe;
 module.exports = Picker.extend({
     tmpl: '@datepicker.html',
+    tmplData: '@datepicker.html:data',
     ctor: function() {
         var me = this;
         var node = $('#' + me.id);

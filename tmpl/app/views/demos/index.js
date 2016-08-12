@@ -7,6 +7,7 @@ var FX = require('@coms/generic/fx');
 Magix.applyStyle('@index.css');
 module.exports = Magix.View.extend({
     tmpl: '@index.html',
+    tmplData: '@index.html:data',
     render: function() {
         var me = this;
         me.update();

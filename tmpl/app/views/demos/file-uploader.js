@@ -11,7 +11,7 @@ module.exports = Magix.View.extend({
         var me = this;
         me.$updater.digest();
     },
-    'range<change>':function(e){
+    'range<change>': function(e) {
         console.log(e.value);
     }
 });

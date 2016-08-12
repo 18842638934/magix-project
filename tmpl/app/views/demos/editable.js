@@ -6,6 +6,7 @@ var View = require('../../../coms/form/index');
 Magix.applyStyle('@editable.css');
 module.exports = View.extend({
     tmpl: '@editable.html',
+    tmplData: '@editable.html:data',
     ctor: function() {
         var list = [];
         for (var i = 0; i < 10; i++) {

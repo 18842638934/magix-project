@@ -19,7 +19,8 @@ var Types = [{
     text: '下边'
 }];
 module.exports = Magix.View.extend({
-    tmpl: {"html":"<div class=\"mx-514-form-item\"><div class=\"mx-514-title\">弹出位置</div><div class=\"mx-514-content\" mx-view=\"coms/dropdown/index?list={list}&width={width}\"></div></div>","subs":[]},
+    tmpl: "<div class=\"mx-514-form-item\"><div class=\"mx-514-title\">弹出位置</div><div class=\"mx-514-content\" mx-view=\"coms/dropdown/index?list={list}&width={width}\"></div></div>",
+    tmplData: [],
     render: function() {
         var me = this;
         me.$updater.set({

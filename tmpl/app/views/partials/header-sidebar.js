@@ -7,16 +7,11 @@ Magix.applyStyle('@header-sidebar.css');
 var CSSNames = 'names@header-sidebar.css[fixed,expand,shrink]';
 module.exports = Magix.View.extend({
     tmpl: '@header-sidebar.html',
+    tmplData: '@header-sidebar.html:data',
     ctor: function() {
         var me = this;
         me.$updater.set({
             menus: []
-        });
-        var win = $(window);
-        win.on('resize', function() {
-            me.resize();
-        }).on('scroll', function() {
-            me.toggleFixed();
         });
     },
     render: function() {
@@ -74,6 +69,13 @@ module.exports = Magix.View.extend({
                     left: 0
                 });
             }
+        }
+    },
+    '$win<resize,scroll>': function(e) {
+        if (e.type == 'resize') {
+            this.resize();
+        } else {
+            this.toggleFixed();
         }
     }
 });

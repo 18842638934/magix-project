@@ -28,7 +28,6 @@ combineTool.config({
     },
     excludeTmplFolders: excludeTmplFolders,
     onlyAllows: onlyAllows,
-    outputTmplObject: true,
     prefix: 'mp-',
     snippets: {
         loading: '<div class="loading"><span></span></div>'

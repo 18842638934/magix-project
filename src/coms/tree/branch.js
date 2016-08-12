@@ -7,7 +7,8 @@ define('coms/tree/branch',['magix','$'],function(require,exports,module){
 var Magix = require('magix');
 var $ = require('$');
 module.exports = Magix.View.extend({
-    tmpl: {"html":"<ul><%for(var i=0,br;i<list.length;i++){br=list[i]%><li class=\"mx-582-li\"><div class=\"mx-582-icon<%if(br.children){%> mx-582-cp<%}%>\" <%if(br.children){%> mx-click=\"toggle({id:'<%=br[dataId]%>'})\" <%}%>><%if(br.children){%>+<%}%></div><div><label><input type=\"checkbox\" mx-change=\"check()\" value=\"<%=br[dataId]%>\"/><%=br[textKey]%></label></div><%if(br.children){%><div mx-view=\"coms/tree/branch?index=<%=i%>&text=<%=textKey%>&id=<%=dataId%>\" id=\"<%=id%>_<%=br[dataId]%>\" class=\"mx-582-indent mx-582-none\"></div><%}%></li><%}%></ul>","subs":[]},
+    tmpl: "<ul><%for(var i=0,br;i<list.length;i++){br=list[i]%><li class=\"mx-582-li\"><div class=\"mx-582-icon<%if(br.children){%> mx-582-cp<%}%>\" <%if(br.children){%> mx-click=\"toggle({id:'<%=br[dataId]%>'})\" <%}%>><%if(br.children){%>+<%}%></div><div><label><input type=\"checkbox\" mx-change=\"check()\" value=\"<%=br[dataId]%>\"/><%=br[textKey]%></label></div><%if(br.children){%><div mx-view=\"coms/tree/branch?index=<%=i%>&text=<%=textKey%>&id=<%=dataId%>\" id=\"<%=id%>_<%=br[dataId]%>\" class=\"mx-582-indent mx-582-none\"></div><%}%></li><%}%></ul>",
+    tmplData: [],
     ctor: function(extra) {
         var me = this;
         me.$list = me.owner.parent().invoke('getList', extra.index);

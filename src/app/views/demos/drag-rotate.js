@@ -12,7 +12,7 @@ var ToDegree = function(angle) {
     return degree;
 };
 module.exports = Magix.View.extend({
-    tmpl: {"html":"<div class=\"mx-324-item\" mx-mousedown=\"startDrag()\">ROTEAE</div>","subs":[]},
+    tmpl: "<div class=\"mx-324-item\" mx-mousedown=\"startDrag()\">ROTEAE</div>",
     tmplData: [],
     render: function() {
         var me = this;

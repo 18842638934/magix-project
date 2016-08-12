@@ -8,7 +8,8 @@ var $ = require('$');
 var ListToTree = require('../generic/treeable');
 Magix.applyStyle('mx-582',".mx-582-indent{margin-left:22px;border-left:1px dotted #ccc}.mx-582-li{padding:0 4px}.mx-582-icon,.mx-582-li{line-height:22px}.mx-582-icon{width:22px;height:22px;float:left;text-align:center;font-weight:800}.mx-582-cp{cursor:pointer}.mx-582-none{display:none}");
 module.exports = Magix.View.extend({
-    tmpl: {"html":"<div id=\"tree_<%=id%>\" mx-view=\"\"></div>","subs":[]},
+    tmpl: "<div id=\"tree_<%=id%>\" mx-view=\"\"></div>",
+    tmplData: [],
     ctor: function(extra) {
         this.$extra = extra;
     },

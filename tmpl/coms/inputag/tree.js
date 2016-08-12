@@ -9,6 +9,7 @@ var Monitor = require('../monitor/index');
 var ListToTree = require('../generic/treeable');
 module.exports = Magix.View.extend({
     tmpl: '@tree.html',
+    tmplData: '@tree.html:data',
     ctor: function(extra) {
         Monitor.setup();
         var me = this;

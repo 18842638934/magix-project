@@ -10,6 +10,7 @@ var CSSNames = 'names@index.css[over,toleft,toright]';
 var Instance;
 var Menu = Magix.View.extend({
     tmpl: '@index.html',
+    tmplData: '@index.html:data',
     ctor: function(extra) {
         var me = this;
         me.on('destroy', function() {

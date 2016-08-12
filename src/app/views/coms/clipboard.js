@@ -8,8 +8,8 @@ Magix.applyStyle('mx-638',".mx-638-vm{vertical-align:middle}.mx-638-w100{width:1
 var Clipboard = require('../../../coms/clipboard/index');
 var Dialog = require('../../../coms/dialog/index');
 module.exports = Magix.View.extend({
-    tmpl: {"html":"<div class=\"mx-638-m50\"><input id=\"cb1_<%=id%>\" value=\"test\"/><textarea id=\"cb2_<%=id%>\"> value=\"test\" </textarea><div id=\"cb3_<%=id%>\" contenteditable=\"true\">xxxx<br/>20</div><div id=\"cb4_<%=id%>\">d<strong>exxx</strong>f<br/>ok</div></div><div class=\"mx-638-m50\"><button mx-click=\"copy({id:1})\" class=\"btn\">copy input</button> <button mx-click=\"copy({id:2})\" class=\"btn\">copy textarea</button> <button mx-click=\"copy({id:3})\" class=\"btn\">copy div</button> <button mx-click=\"copy({id:4})\" class=\"btn\">copy div</button></div>","subs":[]},
-    tmplData:"<div class=\"mx-638-m50\"><input id=\"cb1_<%=id%>\" value=\"test\"/><textarea id=\"cb2_<%=id%>\"> value=\"test\" </textarea><div id=\"cb3_<%=id%>\" contenteditable=\"true\">xxxx<br/>20</div><div id=\"cb4_<%=id%>\">d<strong>exxx</strong>f<br/>ok</div></div><div class=\"mx-638-m50\"><button mx-click=\"copy({id:1})\" class=\"btn\">copy input</button> <button mx-click=\"copy({id:2})\" class=\"btn\">copy textarea</button> <button mx-click=\"copy({id:3})\" class=\"btn\">copy div</button> <button mx-click=\"copy({id:4})\" class=\"btn\">copy div</button></div>",
+    tmpl: "<div class=\"mx-638-m50\"><input id=\"cb1_<%=id%>\" value=\"test\"/><textarea id=\"cb2_<%=id%>\"> value=\"test\" </textarea><div id=\"cb3_<%=id%>\" contenteditable=\"true\">xxxx<br/>20</div><div id=\"cb4_<%=id%>\">d<strong>exxx</strong>f<br/>ok</div></div><div class=\"mx-638-m50\"><button mx-click=\"copy({id:1})\" class=\"btn\">copy input</button> <button mx-click=\"copy({id:2})\" class=\"btn\">copy textarea</button> <button mx-click=\"copy({id:3})\" class=\"btn\">copy div</button> <button mx-click=\"copy({id:4})\" class=\"btn\">copy div</button></div>",
+    tmplData: [],
     render: function() {
         var me = this;
         me.$updater.set({

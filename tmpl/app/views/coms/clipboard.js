@@ -7,7 +7,7 @@ var Clipboard = require('@coms/clipboard/index');
 var Dialog = require('@coms/dialog/index');
 module.exports = Magix.View.extend({
     tmpl: '@clipboard.html',
-    tmplData:'@clipboard.html',
+    tmplData: '@clipboard.html:data',
     render: function() {
         var me = this;
         me.$updater.set({

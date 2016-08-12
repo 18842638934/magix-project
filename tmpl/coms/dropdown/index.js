@@ -12,6 +12,7 @@ var TOP = 1,
     BOTTOM = 2;
 module.exports = Magix.View.extend({
     tmpl: '@index.html',
+    tmplData: '@index.html:data',
     ctor: function(extra) {
         var me = this;
         Monitor.setup();

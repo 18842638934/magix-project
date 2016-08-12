@@ -62,6 +62,7 @@ var RGB2HSV = function(r, g, b) {
 };
 module.exports = Picker.extend({
     tmpl: '@index.html',
+    tmplData: '@index.html:data',
     ctor: function(extra) {
         var me = this;
         me.$color = extra.color || '#ffffff';

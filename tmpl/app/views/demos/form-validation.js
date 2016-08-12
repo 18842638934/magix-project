@@ -7,6 +7,7 @@ var $ = require('$');
 Magix.applyStyle('@form-addition.css');
 module.exports = View.extend({
     tmpl: '@form-validation.html',
+    tmplData: '@form-validation.html:data',
     ctor: function() {
         var me = this;
         // me.leaveTip('表单有改动，您确认离开吗？', function() {

@@ -17,7 +17,8 @@ var Types = [{
     text: '浮窗'
 }];
 module.exports = Form.extend({
-    tmpl: {"html":"<div class=\"mx-514-wrapper\"><div class=\"mx-514-form-item\"><div class=\"mx-514-title\">创意标题</div><div class=\"mx-514-content\"><input class=\"input\"/></div></div><div class=\"mx-514-form-item\"><div class=\"mx-514-title\">创意类型</div><div class=\"mx-514-content\" mx-view=\"coms/dropdown/index?list={list}&width={width}&selected={selected}\" mx-change=\"cTypes()\"></div></div><div id=\"type_vf_<%=id%>\" mx-view><div class=\"loading\"><span></span></div></div><button class=\"btn\" mx-click=\"save();\">保存</button></div>","subs":[]},
+    tmpl: "<div class=\"mx-514-wrapper\"><div class=\"mx-514-form-item\"><div class=\"mx-514-title\">创意标题</div><div class=\"mx-514-content\"><input class=\"input\"/></div></div><div class=\"mx-514-form-item\"><div class=\"mx-514-title\">创意类型</div><div class=\"mx-514-content\" mx-view=\"coms/dropdown/index?list={list}&width={width}&selected={selected}\" mx-change=\"cTypes()\"></div></div><div id=\"type_vf_<%=id%>\" mx-view><div class=\"loading\"><span></span></div></div><button class=\"btn\" mx-click=\"save();\">保存</button></div>",
+    tmplData: [],
     render: function() {
         var me = this;
         var creative = {

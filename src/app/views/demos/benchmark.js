@@ -13,7 +13,7 @@ if (!Date.now) {
     };
 }
 module.exports = FormView.extend({
-    tmpl: {"html":"<div class=\"mx-573-buttons\"><button class=\"btn\" mx-click=\"render()\">渲染</button> 行：<input class=\"input\" value=\"<%=rows%>\" mx-change=\"setValue({path:'rows'})\"/> 列：<input class=\"input\" value=\"<%=cols%>\" mx-change=\"setValue({path:'cols'})\"/> 用时:<span id=\"time_<%=id%>\">0</span></div><div id=\"list_<%=id%>\" mx-guid=\"x63f1-\u001f\">@1-\u001f</div>","subs":[{"guid":1,"keys":["list"],"tmpl":"<%for(var i=0;i<list.length;i++){for(var j=0;j<list[i].length;j++){%><div class=\"mx-573-item\"><%=list[i][j]%></div><div class=\"mx-573-dropdown\" mx-view=\"coms/dropdown/index?list={dropdown}\"></div><%if(j==list[i].length-1){%><div mx-view=\"app/views/demos/benchmark\"></div><%}}}%>","selector":"div[mx-guid=\"x63f1-\u001f\"]"}]},
+    tmpl: "<div class=\"mx-573-buttons\"><button class=\"btn\" mx-click=\"render()\">渲染</button> 行：<input class=\"input\" value=\"<%=rows%>\" mx-change=\"setValue({path:'rows'})\"/> 列：<input class=\"input\" value=\"<%=cols%>\" mx-change=\"setValue({path:'cols'})\"/> 用时:<span id=\"time_<%=id%>\">0</span></div><div id=\"list_<%=id%>\" mx-guid=\"x63f1-\u001f\">@1-\u001f</div>",
     tmplData: [{"guid":1,"keys":["list"],"tmpl":"<%for(var i=0;i<list.length;i++){for(var j=0;j<list[i].length;j++){%><div class=\"mx-573-item\"><%=list[i][j]%></div><div class=\"mx-573-dropdown\" mx-view=\"coms/dropdown/index?list={dropdown}\"></div><%if(j==list[i].length-1){%><div mx-view=\"app/views/demos/benchmark\"></div><%}}}%>","selector":"div[mx-guid=\"x63f1-\u001f\"]"}],
     render: function() {
         var me = this;

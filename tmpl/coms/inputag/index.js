@@ -8,6 +8,7 @@ var $ = require('$');
 var Monitor = require('../monitor/index');
 module.exports = Magix.View.extend({
     tmpl: '@index.html',
+    tmplData: '@index.html:data',
     ctor: function(extra) {
         Monitor.setup();
         var me = this;

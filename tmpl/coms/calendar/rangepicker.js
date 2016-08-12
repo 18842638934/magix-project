@@ -93,6 +93,7 @@ var QueryQuickDateKeys = [
 ];
 var Rangepicker = Picker.extend({
     tmpl: '@rangepicker.html',
+    tmplData: '@rangepicker.html:data',
     ctor: function(ops) {
         var me = this;
         me.$dates = ops.dates;

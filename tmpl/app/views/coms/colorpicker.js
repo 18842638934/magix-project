@@ -5,6 +5,7 @@ var Magix = require('magix');
 var Colorpicker = require('@coms/colorpicker/index');
 module.exports = Magix.View.extend({
     tmpl: '@colorpicker.html',
+    tmplData: '@colorpicker.html:data',
     render: function() {
         var me = this;
         me.$updater.digest();
