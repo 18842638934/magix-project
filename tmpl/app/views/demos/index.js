@@ -14,6 +14,7 @@ module.exports = Magix.View.extend({
         var fx = new FX();
         var node = $('#counter');
         fx.run(1000, function(f) {
+            //console.log(f(0,2000));
             node.html(f(0, 2000).toFixed(0));
         });
         fx.run(60000, function(f) {
@@ -23,6 +24,7 @@ module.exports = Magix.View.extend({
             node.html(f(20000, -20000).toFixed(0));
         });
         me.capture('fx', fx);
+        console.log(me.capture('fx'));
     },
     update: function() {
         var width = $(window).width();

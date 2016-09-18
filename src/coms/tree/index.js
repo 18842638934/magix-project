@@ -23,16 +23,14 @@ module.exports = Magix.View.extend({
     update: function(ops) {
         var me = this;
         var info = ListToTree(ops.list, ops.id, ops.pId);
-        console.dir(info);
+        console.log(info,me);
         me.$info = info;
         me.owner.mountVframe('tree_' + me.id, 'coms/tree/branch', {
             id: ops.id || 'id',
             pId: ops.pId || 'pId',
-            text: (ops.text || 'text')
+            text: (ops.text || 'text'),
+            list: info.list
         });
-    },
-    getList: function() {
-        return this.$info.list;
     }
 });
 });

@@ -19,8 +19,7 @@ Magix.mix(Runner.prototype, {
                 for (var i = 0, o; i < q.length; i++) {
                     o = q[i];
                     if (o.r) {
-                        i--;
-                        q.splice(i, 1);
+                        q.splice(i--, 1);
                     } else {
                         Magix.toTry(o.f);
                     }

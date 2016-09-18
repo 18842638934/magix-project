@@ -8,6 +8,9 @@ Magix.applyStyle('mx-14b',".mx-14b-roll{overflow:hidden;background:#eee;margin:1
 module.exports = Magix.View.extend({
     tmpl: "<ul mx-view=\"coms/roll/index\" class=\"mx-14b-roll\"><li>one</li><li>two</li><li>three</li></ul>",
     tmplData: [],
+    init: function(extra) {
+        console.log(extra);
+    },
     render: function() {
         var me = this;
         me.$updater.digest();

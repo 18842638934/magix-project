@@ -5,7 +5,8 @@
     margin-left:200px;
 }
 .menus{
-    padding-top:45px;
+    padding-top:70px;
+    padding-bottom:30px;
 }
 .menus a{
     padding-left:30px;
@@ -19,9 +20,4 @@
     opacity: 1;
     border-color: rgb(138, 107, 190);
     background-color: rgb(51, 51, 51);
-}
-.fixed{
-    position: fixed;
-    left:0;
-    top:0;
 }

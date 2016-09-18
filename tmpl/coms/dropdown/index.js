@@ -7,9 +7,7 @@ Magix.applyStyle('@index.css');
 var Monitor = require('../monitor/index');
 var EnhanceMax = 100;
 var EnhanceItemHeight = 25;
-var EnhanceOffsetItems = 20;
-var TOP = 1,
-    BOTTOM = 2;
+var XScroll = require('../generic/xscroll');
 module.exports = Magix.View.extend({
     tmpl: '@index.html',
     tmplData: '@index.html:data',
@@ -48,64 +46,24 @@ module.exports = Magix.View.extend({
         });
         if (val) {
             me.search(val, function(list) {
-                me.enhance(data, list);
+                me.enhance(list);
             });
         } else {
-            me.enhance(data, list);
+            me.enhance(list);
         }
     },
-    scroll: function(data) {
+    enhance: function(list) {
         var me = this;
-        var scroll = Magix.node('scroll_' + me.id);
-        //scroll.scrollTop = 0;
-        var before = data.get('before'),
-            after = data.get('after');
-        scroll.onscroll = function() {
-            var list = me.$rlist;
-            var top = scroll.scrollTop;
-            var to = '';
-            if (after > 0 && top + EnhanceOffsetItems * EnhanceItemHeight > before + EnhanceMax * EnhanceItemHeight) {
-                to = BOTTOM;
-            } else if (before > 0 && top < before + EnhanceOffsetItems * EnhanceItemHeight) {
-                to = TOP;
-            }
-            if (to) {
-                var items = to == TOP ? EnhanceMax - EnhanceOffsetItems : EnhanceOffsetItems;
-                before = Math.max(top - items * EnhanceItemHeight, 0);
-                after = Math.max(list.length * EnhanceItemHeight - before - EnhanceMax * EnhanceItemHeight, 0);
-                var start = Math.floor(before / EnhanceItemHeight);
-                data.set({
-                    before: before,
-                    after: after,
-                    list: list.slice(start, start + EnhanceMax)
-                }).digest();
-            }
-        };
-    },
-    enhance: function(data, list) {
-        var max = list.length,
-            me = this;
-        me.$rlist = list;
-        var scroll = Magix.node('scroll_' + me.id);
-        if (scroll) scroll.scrollTop = 0;
-        if (max > EnhanceMax) {
-            var totalHeight = max * EnhanceItemHeight;
-            var before = 0,
-                after = totalHeight - EnhanceMax * EnhanceItemHeight,
-                newList = list.slice(0, EnhanceMax);
-            data.set({
-                before: before,
-                after: after,
-                list: newList
-            }).digest();
-            if (!scroll) me.scroll(data);
-        } else {
-            data.set({
-                before: 0,
-                after: 0,
-                list: list
-            }).digest();
+        var xscroll = me.$xscroll;
+        if (!xscroll) {
+            xscroll = new XScroll();
+            me.capture('xscroll', xscroll);
+            xscroll.onupdate = function(e) {
+                //console.log(e);
+                me.$updater.set(e).digest();
+            };
         }
+        xscroll.link(EnhanceItemHeight, EnhanceMax, list, 'scroll_' + me.id);
     },
     render: function() {
         var me = this;
@@ -219,14 +177,14 @@ module.exports = Magix.View.extend({
             var lastVal = data.get('iptValue');
             if (val != lastVal) {
                 data.set({
-                    tip: '处理中...'
+                    tip: '搜索中...'
                 }).digest();
                 me.search(val, function(list) {
                     data.set({
                         tip: '',
                         iptValue: val
                     });
-                    me.enhance(data, list);
+                    me.enhance(list);
                 });
             }
         }), 150);

@@ -1,17 +1,15 @@
-define('coms/dropdown/index',['magix','$','../monitor/index'],function(require,exports,module){
-/*Magix ,$ ,Monitor */
+define('coms/dropdown/index',['magix','$','../monitor/index','../generic/xscroll'],function(require,exports,module){
+/*Magix ,$ ,Monitor ,XScroll */
 /*
     author:xinglie.lkf@taobao.com
  */
 var Magix = require('magix');
 var $ = require('$');
-Magix.applyStyle('mx-740',".mx-740-li{height:21px;line-height:21px;padding:2px 8px;border-radius:2px;user-select:none;-webkit-user-select:none;-moz-user-select:none;cursor:default}.mx-740-over{background-color:#6363e6;background-image:-webkit-linear-gradient(top,#1b87e3 2%,#6363e6 98%);background-image:linear-gradient(180deg,#1b87e3 2%,#6363e6 98%);color:#ecf2f8;text-shadow:0 -1px 0 rgba(0,0,0,.05)}.mx-740-selected{color:#ccc}.mx-740-header{position:relative;height:18px;line-height:18px;border:1px solid #ccc;border-radius:2px;padding:2px 8px 3px;user-select:none;-webkit-user-select:none;-moz-user-select:none;cursor:default}.mx-740-icon{position:absolute;right:5px;top:2px}.mx-740-ib{display:inline-block}.mx-740-header-active{color:#eee}.mx-740-list{max-height:200px;overflow:auto}.mx-740-items{position:absolute;z-index:50;padding:4px;border-radius:2px;background-color:#fff;color:#474747;box-shadow:0 4px 10px 0 rgba(0,0,0,.1),0 3px 5px 0 rgba(0,0,0,.05),0 0 0 1px rgba(0,0,0,.09098)}.mx-740-none{display:none}.mx-740-ipt{border-radius:10px;margin-bottom:10px}.mx-740-tip{position:absolute;right:13px;top:10px;color:#999}");
+Magix.applyStyle('mx-740',".mx-740-li{height:21px;line-height:21px;padding:2px 8px;border-radius:2px;user-select:none;-webkit-user-select:none;-moz-user-select:none;cursor:default}.mx-740-over{background-color:#6363e6;background-image:-webkit-linear-gradient(top,#1b87e3 2%,#6363e6 98%);background-image:linear-gradient(180deg,#1b87e3 2%,#6363e6 98%);color:#ecf2f8;text-shadow:0 -1px 0 rgba(0,0,0,.05)}.mx-740-selected{color:#ccc}.mx-740-header{position:relative;height:18px;line-height:18px;border:1px solid #ccc;border-radius:2px;padding:2px 8px 3px;user-select:none;-webkit-user-select:none;-moz-user-select:none;cursor:default}.mx-740-icon{position:absolute;right:5px;top:2px}.mx-740-ib{display:inline-block}.mx-740-header-active{color:#eee}.mx-740-list{max-height:200px;overflow:auto}.mx-740-items{position:absolute;z-index:50;padding:4px;border-radius:2px;background-color:#fff;color:#474747;box-shadow:0 4px 10px 0 rgba(0,0,0,.1),0 3px 5px 0 rgba(0,0,0,.05),0 0 0 1px rgba(0,0,0,.09098)}.mx-740-none{display:none}.mx-740-ipt{border-radius:10px;margin-bottom:10px}.mx-740-tip{position:absolute;right:13px;top:4px;color:#999}");
 var Monitor = require('../monitor/index');
 var EnhanceMax = 100;
 var EnhanceItemHeight = 25;
-var EnhanceOffsetItems = 20;
-var TOP = 1,
-    BOTTOM = 2;
+var XScroll = require('../generic/xscroll');
 module.exports = Magix.View.extend({
     tmpl: "<div mx-click=\"toggle();\" class=\"mx-740-header\" id=\"header_<%=id%>\" style=\"width:<%=width%>px\" mx-guid=\"x1eb1-\u001f\">@1-\u001f</div><div id=\"list_<%=id%>\" class=\"mx-740-items mx-740-none\"><%if(search){%><input class=\"input mx-740-ipt\" mx-guid=\"x1eb2-\u001f\" mx-keyup=\"search()\" mx-paste=\"search()\" style=\"width:<%=width-10%>px\"/> <span class=\"mx-740-tip\" mx-guid=\"x1eb3-\u001f\">@2-\u001f</span><%}%><ul id=\"scroll_<%=id%>\" class=\"mx-740-list\" mx-guid=\"x1eb4-\u001f\" style=\"width:<%=width+9%>px;<%if(height){%>max-height:<%=height%>px;overflow:auto<%}%>\">@3-\u001f</ul></div>",
     tmplData: [{"guid":1,"keys":["titleText","width"],"tmpl":"<span class=\"ellipsis mx-740-ib\" style=\"width:<%=width-15%>px\" id=\"title_<%=id%>\" title=\"<%=titleText%>\"><%=titleText%></span><span class=\"mx-740-icon\" id=\"icon_<%=id%>\">⇩</span>","selector":"div[mx-guid=\"x1eb1-\u001f\"]","attrs":[{"n":"style","v":"width:<%=width%>px"}],"mask":"13"},{"guid":2,"keys":["tip"],"tmpl":"<%=tip%>","selector":"span[mx-guid=\"x1eb3-\u001f\"]"},{"guid":3,"keys":["list","selected","width","height"],"tmpl":"<%if(before){%><li style=\"height:<%=before%>px\"></li><%}for(var i=0,one;i<list.length;i++){one=list[i]%><li mx-mouseover=\"hover()\" mx-mouseout=\"hover();\" mx-click=\"select({id:'<%=one.id%>'})\" class=\"mx-740-li ellipsis<%if(selected==one.id){%> mx-740-selected<%}%>\" title=\"<%=one.text%>\"><%=one.text%></li><%}if(after){%><li style=\"height:<%=after%>px\"></li><%}%>","selector":"ul[mx-guid=\"x1eb4-\u001f\"]","attrs":[{"n":"style","v":"width:<%=width+9%>px;<%if(height){%>max-height:<%=height%>px;overflow:auto<%}%>"}],"mask":"1122"},{"keys":["width"],"selector":"input[mx-guid=\"x1eb2-\u001f\"]","attrs":[{"n":"style","v":"width:<%=width-10%>px"}]}],
@@ -50,64 +48,24 @@ module.exports = Magix.View.extend({
         });
         if (val) {
             me.search(val, function(list) {
-                me.enhance(data, list);
+                me.enhance(list);
             });
         } else {
-            me.enhance(data, list);
+            me.enhance(list);
         }
     },
-    scroll: function(data) {
+    enhance: function(list) {
         var me = this;
-        var scroll = Magix.node('scroll_' + me.id);
-        //scroll.scrollTop = 0;
-        var before = data.get('before'),
-            after = data.get('after');
-        scroll.onscroll = function() {
-            var list = me.$rlist;
-            var top = scroll.scrollTop;
-            var to = '';
-            if (after > 0 && top + EnhanceOffsetItems * EnhanceItemHeight > before + EnhanceMax * EnhanceItemHeight) {
-                to = BOTTOM;
-            } else if (before > 0 && top < before + EnhanceOffsetItems * EnhanceItemHeight) {
-                to = TOP;
-            }
-            if (to) {
-                var items = to == TOP ? EnhanceMax - EnhanceOffsetItems : EnhanceOffsetItems;
-                before = Math.max(top - items * EnhanceItemHeight, 0);
-                after = Math.max(list.length * EnhanceItemHeight - before - EnhanceMax * EnhanceItemHeight, 0);
-                var start = Math.floor(before / EnhanceItemHeight);
-                data.set({
-                    before: before,
-                    after: after,
-                    list: list.slice(start, start + EnhanceMax)
-                }).digest();
-            }
-        };
-    },
-    enhance: function(data, list) {
-        var max = list.length,
-            me = this;
-        me.$rlist = list;
-        var scroll = Magix.node('scroll_' + me.id);
-        if (scroll) scroll.scrollTop = 0;
-        if (max > EnhanceMax) {
-            var totalHeight = max * EnhanceItemHeight;
-            var before = 0,
-                after = totalHeight - EnhanceMax * EnhanceItemHeight,
-                newList = list.slice(0, EnhanceMax);
-            data.set({
-                before: before,
-                after: after,
-                list: newList
-            }).digest();
-            if (!scroll) me.scroll(data);
-        } else {
-            data.set({
-                before: 0,
-                after: 0,
-                list: list
-            }).digest();
+        var xscroll = me.$xscroll;
+        if (!xscroll) {
+            xscroll = new XScroll();
+            me.capture('xscroll', xscroll);
+            xscroll.onupdate = function(e) {
+                //console.log(e);
+                me.$updater.set(e).digest();
+            };
         }
+        xscroll.link(EnhanceItemHeight, EnhanceMax, list, 'scroll_' + me.id);
     },
     render: function() {
         var me = this;
@@ -221,14 +179,14 @@ module.exports = Magix.View.extend({
             var lastVal = data.get('iptValue');
             if (val != lastVal) {
                 data.set({
-                    tip: '处理中...'
+                    tip: '搜索中...'
                 }).digest();
                 me.search(val, function(list) {
                     data.set({
                         tip: '',
                         iptValue: val
                     });
-                    me.enhance(data, list);
+                    me.enhance(list);
                 });
             }
         }), 150);

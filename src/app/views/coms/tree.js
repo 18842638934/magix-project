@@ -5,7 +5,7 @@ define('app/views/coms/tree',['magix'],function(require,exports,module){
  */
 var Magix = require('magix');
 module.exports = Magix.View.extend({
-    tmpl: "<div id=\"tree_<%=id%>\" mx-view=\"coms/tree/index?list={list1}\"><script type=\"magix/config\"><%=JSON.stringify({list:list1})%></script></div><div id=\"code_<%=id%>\" mx-view=\"coms/tree/index?list={list2}&pId=parentCode&text=keyName&id=keyCode\"></div><div>adf<div class=\"a\">aaa</div>adfasdfasd</div>",
+    tmpl: "<div id=\"tree_<%=id%>\" mx-view=\"coms/tree/index?list=<%@list1%>\"><script type=\"magix/config\"><%=JSON.stringify({list:list1})%></script></div><div>adf<div class=\"a\">aaa</div>adfasdfasd</div>",
     tmplData: [],
     render: function() {
         var me = this;

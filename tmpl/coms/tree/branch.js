@@ -9,7 +9,12 @@ module.exports = Magix.View.extend({
     tmplData: '@branch.html:data',
     ctor: function(extra) {
         var me = this;
-        me.$list = me.owner.parent().invoke('getList', extra.index);
+        if (Magix.has(extra, 'index')) {
+            me.$list = extra.list[extra.index].children;
+        } else {
+            me.$list = extra.list;
+        }
+        console.log(me);
         me.$textKey = extra.text;
         me.$dataId = extra.id;
     },
@@ -21,9 +26,6 @@ module.exports = Magix.View.extend({
             dataId: me.$dataId,
             list: me.$list
         }).digest();
-    },
-    getList: function(idx) {
-        return this.$list[idx].children;
     },
     checkAll: function(state) {
         $('#' + this.id + ' input[type="checkbox"]').prop('checked', state);

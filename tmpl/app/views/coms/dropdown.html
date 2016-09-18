@@ -1,18 +1,18 @@
 <div class="wrapper">
-    <div id="d1_<%=viewId%>" mx-view="coms/dropdown/index?width=200&list={list}" class="dropdown">
+    <div id="d1_<%=viewId%>" mx-view="coms/dropdown/index?width=200&list=<%@list%>" class="dropdown">
     </div>
-    <div id="d2_<%=viewId%>" class="dropdown" mx-view="coms/dropdown/index?list={list}&selected={d2Id}&search=true&height=100" mx-change="d2Change()" mx-keys="d2Id">
+    <div id="d2_<%=viewId%>" class="dropdown" mx-view="coms/dropdown/index?list=<%@list%>&selected=<%@d2Id%>&search=true&height=100" mx-change="d2Change()" mx-keys="d2Id">
     </div>
     <button mx-click="changeService()" class="btn btn-size25">切换数据源</button>
-    <div id="d3_<%=viewId%>" class="dropdown bottom" mx-view="coms/dropdown/index?list={list}">
+    <div id="d3_<%=viewId%>" class="dropdown bottom" mx-view="coms/dropdown/index?list=<%@list%>">
     </div>
-    <div id="d4_<%=viewId%>" class="dropdown" mx-view="coms/dropdown/index?list={list}&search=true">
+    <div id="d4_<%=viewId%>" class="dropdown" mx-view="coms/dropdown/index?list=<%@big%>&search=true">
     </div>
-    <div class="dropdown" mx-view="coms/dropdown/index?list={list}&selected={d2Id}" mx-keys="d2Id">
+    <div class="dropdown" mx-view="coms/dropdown/index?list=<%@list%>&selected=<%@d2Id%>" mx-keys="d2Id">
     </div>
     <br />
-    <div class="dropdown" id="p_<%=viewId%>" mx-view="coms/dropdown/index?list={provinces}&selected=" mx-change="pChg()">
+    <div class="dropdown" id="p_<%=viewId%>" mx-view="coms/dropdown/index?list=<%@provinces%>&selected=" mx-change="pChg()">
     </div>
-    <div class="dropdown" mx-view="coms/dropdown/index?list={cities}" mx-keys="cities">
+    <div class="dropdown" mx-view="coms/dropdown/index?list=<%@cities%>" mx-keys="cities">
     </div>
 </div>

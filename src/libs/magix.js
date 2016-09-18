@@ -1,9 +1,25 @@
-/*3.1.1*//*
+/*3.1.5*/
+/*modules:tmpl,updater,share,core,autoEndUpdate,linkage,base,style,viewInit,service,serviceWithoutPromise,router,resource,configIni,nodeAttachVframe,viewMerge,magix,event,vframe,body,view*/
+/*
     author:xinglie.lkf@taobao.com
  */
 define('magix', ['$'], function(require) {
     var $ = require('$');
     var G_Require = function(name, fn) {
+        if (name) {
+            if (window.seajs) {
+                seajs.use(name, fn);
+            } else {
+                var a = [];
+                if (!G_IsArray(name)) name = [name];
+                for (var i = 0; i < name.length; i++) {
+                    a.push(require(name[i]));
+                }
+                if (fn) fn.apply(G_NULL, a);
+            }
+        } else {
+            fn();
+        }
         // if (name) {
         //     var a = [];
         //     if (!G_IsArray(name)) name = [name];
@@ -18,11 +34,11 @@ define('magix', ['$'], function(require) {
 
             magix单独使用时，由外部在合适的时机boot，不添加虚拟根节点，不自动boot，这样可选择的空间更大
          */
-        if (name) {
-            seajs.use(name, fn);
-        } else if (fn) {
-            fn();
-        }
+        // if (name) {
+        //     seajs.use(name, fn);
+        // } else if (fn) {
+        //     fn();
+        // }
     };
     var T = function() {};
     var G_Extend = function(ctor, base, props, statics, cProto) {
@@ -58,12 +74,7 @@ define('magix', ['$'], function(require) {
         }
     };
 
-    /*
-    源码级模块定制，更利于取舍功能
-    固定的模块有magix,event,body,vframe,view
-    可选的模块有router,service,base,fullstyle,style,cnum,ceach,resource,edgerouter,tiprouter,simplerouter
- */
-var G_COUNTER = 0;
+    var G_COUNTER = 0;
 var G_EMPTY = '';
 var G_EMPTY_ARRAY = [];
 var G_Slice = G_EMPTY_ARRAY.slice;
@@ -503,7 +514,7 @@ var Magix = {
 
             G_Require(Magix_Cfg.exts, function() {
                 Router.on('changed', Vframe_NotifyLocationChange);
-                Router.bind();
+                Router_Bind();
             });
 
         });
@@ -843,6 +854,29 @@ var Event = {
     }
 };
 Magix.Event = Event;
+    var Router_Edge;
+
+
+    var Router_Update = function(path, params, loc, replace, lQuery) {
+        path = G_ToUri(path, params, lQuery);
+        if (path != loc.srcHash) {
+            path = '#!' + path;
+            if (replace) {
+                Router_WinLoc.replace(path);
+            } else {
+                Router_WinLoc.hash = path;
+            }
+        }
+    };
+
+    var Router_Bind = function() {
+        $(G_WINDOW).on('hashchange', Router.diff);
+        Router.diff();
+    };
+
+
+
+
     var Router_PATH = 'path';
 var Router_VIEW = 'view';
 var Router_PARAMS = 'params';
@@ -855,7 +889,7 @@ var Router_LLoc = {
     href: G_EMPTY
 };
 var Router_LParams;
-var Router_TrimHashReg = /(?:^https?:\/\/[^\/]+|#.*$)/gi;
+var Router_TrimHashReg = /(?:^.*\/\/[^\/]+|#.*$)/gi;
 var Router_TrimQueryReg = /^[^#]*#?!?/;
 
 var Router_IsParam = function(params, r, ps) {
@@ -884,7 +918,9 @@ var Router_AttachViewAndPath = function(loc) {
         }
     }
     if (!loc[Router_VIEW]) {
-        var path = loc.hash[Router_PATH] || (Router.edge && loc.query[Router_PATH]) || Router_PNR_DefaultPath;
+
+        var path = loc.hash[Router_PATH] || (Router_Edge && loc.query[Router_PATH]) || Router_PNR_DefaultPath;
+
         //if (!path) path = Router_PNR_DefaultPath;
         // if (Router_PNR_IsFun) {
         //     result = Router_PNR_Routers.call(Magix_Cfg, path, loc);
@@ -918,7 +954,6 @@ var Router_GetChged = function(oldLocation, newLocation) {
             idx, key;
         for (idx = tArr.length - 1; idx >= 0; idx--) {
             key = tArr[idx];
-            console.log(key, idx);
             if (idx == 1) {
                 oldParams = oldLocation;
                 newParams = newLocation;
@@ -958,24 +993,6 @@ var Router = G_Mix({
      * @lends Router
      */
     /**
-     * 执行url的更新
-     * @param  {String} path 路径名
-     * @param  {Object} params 参数
-     * @param  {Object} loc 上次的location
-     * @param  {Boolean} replace 是否使用replace更新url
-     */
-    update: function(path, params, loc, replace) {
-        path = G_ToUri(path, params, loc.query[Router_PARAMS]);
-        if (path != loc.srcHash) {
-            path = '#!' + path;
-            if (replace) {
-                Router_WinLoc.replace(path);
-            } else {
-                Router_WinLoc.hash = path;
-            }
-        }
-    },
-    /**
      * 解析href的query和hash，默认href为location.href
      * @param {String} [href] href
      * @return {Object} 解析的对象
@@ -983,20 +1000,23 @@ var Router = G_Mix({
     parse: function(href) {
         href = href || Router_WinLoc.href;
         var result = Router_HrefCache.get(href),
-            query, hash, queryObj, hashObj;
+            query, hash, queryObj, hashObj, params;
         if (!result) {
             query = href.replace(Router_TrimHashReg, G_EMPTY);
             hash = href.replace(Router_TrimQueryReg, G_EMPTY);
             queryObj = G_ParseUri(query);
             hashObj = G_ParseUri(hash);
+            params = G_Mix({}, queryObj[Router_PARAMS]);
+
+            G_Mix(params, hashObj[Router_PARAMS])
+
             result = {
                 href: href,
-                //prev: Router_LLoc.href,
                 srcQuery: query,
                 srcHash: hash,
                 query: queryObj,
                 hash: hashObj,
-                params: G_Mix(G_Mix({}, queryObj[Router_PARAMS]), hashObj[Router_PARAMS])
+                params: params
             };
             Router_AttachViewAndPath(result);
             Router_HrefCache.set(href, result);
@@ -1049,18 +1069,21 @@ var Router = G_Mix({
         var tParams = temp[Router_PARAMS];
         var tPath = temp[Router_PATH];
         var lPath = Router_LLoc[Router_PATH]; //历史路径
+        var lQuery = Router_LLoc.query[Router_PARAMS];
         G_Mix(tParams, params); //把路径中解析出来的参数与用户传递的参数进行合并
 
         if (tPath) { //设置路径带参数的形式，如:/abc?q=b&c=e或不带参数 /abc
             //tPath = G_Path(lPath, tPath);
-            for (lPath in Router_LLoc.query[Router_PARAMS]) { //未出现在query中的参数设置为空
-                if (!G_Has(tParams, lPath)) tParams[lPath] = G_EMPTY;
+            if (!Router_Edge) { //pushState不用处理
+                for (lPath in lQuery) { //未出现在query中的参数设置为空
+                    if (!G_Has(tParams, lPath)) tParams[lPath] = G_EMPTY;
+                }
             }
         } else if (Router_LParams) { //只有参数，如:a=b&c=d
             tPath = lPath; //使用历史路径
             tParams = G_Mix(G_Mix({}, Router_LParams), tParams); //复制原来的参数，合并新的参数
         }
-        Router.update(tPath, Router_LParams = tParams, Router_LLoc, replace);
+        Router_Update(tPath, Router_LParams = tParams, Router_LLoc, replace, lQuery);
     }
 
     /**
@@ -1076,55 +1099,11 @@ var Router = G_Mix({
      */
 }, Event);
 Magix.Router = Router;
-
-
-    Router.bind = function() {
-        var lastHash = Router.parse().srcHash;
-        var newHash;
-        $(G_WINDOW).on('hashchange', function(e, loc) {
-            loc = Router.parse();
-            newHash = loc.srcHash;
-            if (newHash != lastHash) {
-                e = {
-                    backward: function() {
-                        e.p = 1;
-                        Router_WinLoc.hash = '#!' + lastHash;
-                    },
-                    forward: function() {
-                        e.p = 1;
-                        lastHash = newHash;
-                        Router.diff();
-                    },
-                    prevent: function() {
-                        e.p = 1;
-                    },
-                    location: loc
-                };
-                Router.fire('change', e);
-                if (!e.p) {
-                    e.forward();
-                }
-            }
-        });
-        G_WINDOW.onbeforeunload = function(e) {
-            e = e || G_WINDOW.event;
-            var te = {};
-            Router.fire('pageunload', te);
-            if (te.msg) {
-                if (e) e.returnValue = te.msg;
-                return te.msg;
-            }
-        };
-        Router.diff();
-    };
-
-
-
     var Vframe_RootVframe;
 var Vframe_GlobalAlter;
 
 
-var Vframe_UrlParamsReg = /\{(.+)\}/;
+var Vframe_ReadDataFlag = '~';
 
 var Vframe_NotifyCreated = function(vframe, mId, p) {
     if (!vframe.$d && !vframe.$h && vframe.$cc == vframe.$rc) { //childrenCount === readyCount
@@ -1188,6 +1167,10 @@ var Vframe_AddVframe = function(id, vf) {
         Vframe.fire('add', {
             vframe: vf
         });
+
+        id = G_GetById(id);
+        if (id) id.vframe = vf;
+
     }
 };
 
@@ -1210,6 +1193,10 @@ var Vframe_RemoveVframe = function(id, fcc, vf) {
             vframe: vf,
             fcc: fcc //fireChildrenCreated
         });
+
+        id = G_GetById(id);
+        if (id) id.vframe = G_NULL;
+
     }
 };
 
@@ -1311,12 +1298,6 @@ G_Mix(Vframe, G_Mix({
      * @lends Vframe
      */
     /**
-     * 获取vframe节点
-     * @type {Vframe}
-     * @return {Vframe} vframe对象
-     */
-    root: Vframe_Root,
-    /**
      * 获取所有的vframe对象
      * @return {Object}
      */
@@ -1370,24 +1351,26 @@ G_Mix(G_Mix(Vframe[G_PROTOTYPE], Event), {
         if (node && viewPath) {
             me.path = viewPath;
             po = G_ParseUri(viewPath);
+            view = po.path;
             sign = ++me.$s;
-            G_Require(po.path, function(TView) {
+            G_Require(view, function(TView) {
                 if (sign == me.$s) { //有可能在view载入后，vframe已经卸载了
+                    if (!TView) {
+                        Magix_Cfg.error(Error('cannot load:' + view));
+                    }
 
                     View_Prepare(TView);
 
                     var pParams = po.params;
 
-                    var parent = me.parent(),
+                    var parent = Vframe_Vframes[me.pId],
                         p, val;
-                    parent = parent && parent.$v;
-                    parent = parent && parent.$updater;
+                    parent = parent && parent.$v.$updater;
                     if (parent) {
                         for (p in pParams) {
                             val = pParams[p];
-                            val = val.match(Vframe_UrlParamsReg);
-                            if (val) {
-                                pParams[p] = parent.get(val[1]);
+                            if (val.charAt(0) == Vframe_ReadDataFlag) {
+                                pParams[p] = parent.get(val);
                             }
                         }
                     }
@@ -1524,7 +1507,7 @@ G_Mix(G_Mix(Vframe[G_PROTOTYPE], Event), {
          */
 
         me.$h = 1; //hold fire creted
-        me.unmountZone(zoneId, 1);
+        //me.unmountZone(zoneId, 1); 不去清理，详情见：https://github.com/thx/magix/issues/27
 
         for (i = vframes.length - 1; i >= 0; i--) {
             vf = vframes[i];
@@ -1768,6 +1751,7 @@ var Body_DOMEventProcessor = function(e) {
                     fn = view[name];
                     if (fn) {
                         e.current = current;
+                        e.currentTarget = current;
                         e.params = match.p;
                         G_ToTry(fn, e, view);
                         //e.previous = current; //下一个处理函数可检测是否已经处理过
@@ -1813,16 +1797,18 @@ var Tmpl_EscapeRegExp = /\\|'|\r|\n|\u2028|\u2029/g;
 var Tmpl_EscapeChar = function(match) {
   return "\\" + Tmpl_Escapes[match];
 };
-var Tmpl_Mathcer = /<%=([\s\S]+?)%>|<%!([\s\S]+?)%>|<%([\s\S]+?)%>|$/g;
+var Tmpl_Mathcer = /<%@([\s\S]+?)%>|<%=([\s\S]+?)%>|<%!([\s\S]+?)%>|<%([\s\S]+?)%>|$/g;
 var Tmpl_Compiler = function(text) {
   // Compile the template source, escaping string literals appropriately.
   var index = 0;
   var source = "$p+='";
-  text.replace(Tmpl_Mathcer, function(match, escape, interpolate, evaluate, offset) {
+  text.replace(Tmpl_Mathcer, function(match, ref, escape, interpolate, evaluate, offset) {
     source += text.slice(index, offset).replace(Tmpl_EscapeRegExp, Tmpl_EscapeChar);
     index = offset + match.length;
 
-    if (escape) {
+    if (ref) {
+      source += "'\n$s=$i();\n$p+=$s;\n$mx[$s]=" + ref + ";\n$p+='";
+    } else if (escape) {
       source += "'+\n(($t=(" + escape + "))==null?'':$e($t))+\n'";
     } else if (interpolate) {
       source += "'+\n(($t=(" + interpolate + "))==null?'':$t)+\n'";
@@ -1836,13 +1822,12 @@ var Tmpl_Compiler = function(text) {
 
   // If a variable is not specified, place data values in local scope.
   source = "with($mx){\n" + source + "}\n";
-  source = "var $t,$p='',$em={'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;','\\'':'&#x27;','`':'&#x60;'},$er=/[&<>\"'`]/g,$ef=function(m){return $em[m]},$e=function(v){v=v==null?'':''+v;return v.replace($er,$ef)};\n" +
-    source + "return $p;\n";
+  source = "var $t,$p='',$em={'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;','\\'':'&#x27;','`':'&#x60;'},$er=/[&<>\"'`]/g,$ef=function(m){return $em[m]},$e=function(v){v=v==null?'':''+v;return v.replace($er,$ef)},$i=function(){return '~'+$g++},$s;\n" + source + "return $p;\n";
 
   var render;
   try {
     /*jshint evil: true*/
-    render = Function("$mx", source);
+    render = Function("$g", "$mx", source);
   } catch (e) {
     e.source = source;
     throw e;
@@ -1874,15 +1859,17 @@ var Tmpl = function(text, data) {
     fn = Tmpl_Compiler(text);
     Tmpl_Cache.set(text, fn);
   }
-  return fn(data);
+  return fn(1, data);
 };
     var Updater_HolderReg = /\u001f/g;
 var Updater_ContentReg = /@(\d+)\-\u001f/g;
 var Updater_Stringify = JSON.stringify;
 var Updater_UpdateDOM = function(host, changed, updateFlags, renderData) {
     var view = host.$v;
+
     var tmpl = view.tmpl;
     var list = view.tmplData;
+
     var selfId = view.id;
     var build = function(tmpl, data) {
         return Tmpl(tmpl, data).replace(Updater_HolderReg, selfId);
@@ -1897,27 +1884,48 @@ var Updater_UpdateDOM = function(host, changed, updateFlags, renderData) {
                 if (!updatedNodes[id]) {
                     //console.time('update:' + id);
                     updatedNodes[id] = 1;
-                    var vf = one.view && Vframe_Vframes[id];
                     if (updateAttrs) {
                         for (var i = one.attrs.length - 1; i >= 0; i--) {
                             var attr = one.attrs[i];
                             var val = build(attr.v, renderData);
                             if (attr.p) {
                                 node[attr.n] = val;
+                            } else if (!val && attr.a) {
+                                node.removeAttribute(attr.n);
                             } else {
                                 node.setAttribute(attr.n, val);
                             }
                         }
                     }
-                    if (vf) {
-                        vf.unmountView();
+                    var magixView = one.view,
+                        viewValue, vf;
+                    if (magixView) {
+                        vf = Vframe_Vframes[id];
+                        viewValue = build(magixView, renderData);
+                        if (vf) {
+                            vf[viewValue ? 'unmountView' : 'unmountVframe']();
+                        }
                     }
                     if (one.tmpl && updateTmpl) {
                         view.setHTML(id, build(one.tmpl, renderData));
                     }
-                    if (vf) {
-                        vf.mountView(build(one.view, renderData));
+                    if (magixView && viewValue) {
+                        view.owner.mountVframe(id, viewValue);
                     }
+
+                    //var vf = one.view && Vframe_Vframes[id];
+                    // if (vf) {
+                    // vf.unmountView();
+                    // }
+                    // if (one.tmpl && updateTmpl) {
+                    // view.setHTML(id, build(one.tmpl, renderData));
+                    // }
+                    // if (vf) {
+                    // vf.mountView(build(one.view, renderData));
+                    // }
+                    /*
+
+                     */
                     //console.timeEnd('update:' + id);
                 }
             };
@@ -1955,7 +1963,7 @@ var Updater_UpdateDOM = function(host, changed, updateFlags, renderData) {
                         }
                     }
                     if (update) {
-                        update = '#' + selfId + ' ' + one.selector.replace(Updater_HolderReg, selfId);
+                        update = G_HashKey + selfId + ' ' + one.selector.replace(Updater_HolderReg, selfId);
                         var nodes = document.querySelectorAll(update);
                         q = 0;
                         while (q < nodes.length) {
@@ -2270,7 +2278,7 @@ var View_Prepare = function(oView) {
                         node = View_Globals[selectorOrCallback];
                         eventsList.push({
                             f: oldFun,
-                            s: node ? G_NULL : ' ' + selectorOrCallback,
+                            s: node ? G_NULL : selectorOrCallback,
                             n: item,
                             e: node
                         });
@@ -2447,27 +2455,12 @@ G_Mix(View, {
         props = props || {};
         var ctor = props.ctor;
 
-        var ctors = [];
-        if (ctor) ctors.push(ctor);
-
         var NView = function(a, b) {
             me.call(this, a, b);
 
-            G_ToTry(ctors, b, this);
+            if (ctor) ctor.call(this, b);
 
         };
-
-        var mixins = props.mixins;
-        if (mixins) {
-            var i = mixins.length,
-                o;
-            while (--i >= 0) {
-                o = mixins[i];
-                ctor = o.ctor;
-                if (ctor) ctors.push(ctor);
-                G_Mix(props, ctor);
-            }
-        }
 
         NView.extend = me.extend;
         return G_Extend(NView, me, props, statics);
@@ -2624,22 +2617,31 @@ G_Mix(G_Mix(ViewProto, Event), {
      * @module resource
      * @example
      * View.extend({
-     *     render:function(){
-     *         var me=this;
-     *         var dropdown=new Dropdown();
+     *     render: function(){
+     *         var me = this;
+     *         var dropdown = new Dropdown();
      *
      *         me.capture('dropdown',dropdown,true);
+     *     },
+     *     getTest: function(){
+     *         var dd = me.capture('dropdown');
+     *         console.log(dd);
      *     }
      * });
      */
     capture: function(key, res, destroyWhenCallRender, cache, wrapObj) {
         cache = this.$r;
-        View_DestroyResource(cache, key, 1);
-        wrapObj = {
-            e: res,
-            x: destroyWhenCallRender
-        };
-        cache[key] = wrapObj;
+        if (res) {
+            View_DestroyResource(cache, key, 1);
+            wrapObj = {
+                e: res,
+                x: destroyWhenCallRender
+            };
+            cache[key] = wrapObj;
+        } else {
+            wrapObj = cache[key];
+            res = wrapObj && wrapObj.e || res;
+        }
         return res;
     },
     /**
@@ -2654,54 +2656,6 @@ G_Mix(G_Mix(ViewProto, Event), {
         return View_DestroyResource(this.$r, key, destroy);
     },
 
-
-    /**
-     * 离开提示
-     * @param  {String} msg 提示消息
-     * @param  {Function} fn 是否提示的回调
-     * @beta
-     * @module tiprouter
-     * @example
-     * var Magix = require('magix');
-     * module.exports = Magix.View.extend({
-     *     init:function(){
-     *         this.leaveTip('页面数据未保存，确认离开吗？',function(){
-     *             return true;//true提示，false，不提示
-     *         });
-     *     }
-     * });
-     */
-    leaveTip: function(msg, fn) {
-        var me = this;
-        var changeListener = function(e) {
-            e.prevent();
-            if (!me.$tipped) {
-                if (fn.call(me)) { //firefox的confirm可以同时有多个
-                    me.$tipped = true;
-                    if (window.confirm(msg)) {
-                        me.$tipped = false;
-                        e.forward();
-                    } else {
-                        me.$tipped = false;
-                        e.backward();
-                    }
-                } else {
-                    e.forward();
-                }
-            }
-        };
-        var unloadListener = function(e) {
-            if (fn.call(me)) {
-                e.msg = msg;
-            }
-        };
-        Router.on('change', changeListener);
-        Router.on('pageunload', unloadListener);
-        me.on('destroy', function() {
-            Router.off('change', changeListener);
-            Router.off('pageunload', unloadListener);
-        });
-    },
 
 
     /**
@@ -2941,8 +2895,10 @@ var Service_FetchFlags_ONE = 1;
 var Service_FetchFlags_ALL = 2;
 var Service_CacheDone = function(cacheKey, err, fns) {
     fns = this[cacheKey]; //取出当前的缓存信息
-    delete this[cacheKey]; //先删除掉信息
-    G_ToTry(fns, err, fns.e); //执行所有的回调
+    if (fns) {
+        delete this[cacheKey]; //先删除掉信息
+        G_ToTry(fns, err, fns.e); //执行所有的回调
+    }
 };
 var Service_Task = function(done, host, service, total, flag, bagCache) {
     var doneArr = [];
@@ -3051,12 +3007,15 @@ var Service_Send = function(me, attrs, done, flag, save) {
                     bagCacheKeys[cacheKey] = cacheList;
                     complete = G_Proxy(Service_CacheDone, bagCacheKeys, cacheKey); //替换回调，详见Service_CacheDone
                 }
+
                 host.$s(bagEntity, complete);
+
             } else { //不需要更新时，直接回调
                 complete();
             }
         }
     }
+
     return  me  ;
 };
 /**
@@ -3501,7 +3460,7 @@ Magix.Service = Service;
     G_Mix(G_NOOP[G_PROTOTYPE], Event);
     G_NOOP.extend = T_Extend;
     /**
-     * 组件基类
+     * mix Magix.Event的基类
      * @name Base
      * @constructor
      * @borrows Event.fire as #fire

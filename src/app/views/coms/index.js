@@ -26,12 +26,21 @@ var shake = function(a, e, t, i, o) {
     var timer = setTimeout(s, t);
 };
 module.exports = Magix.View.extend({
-    tmpl: "常用组件首页",
-    tmplData: [],
+    tmpl: "常用组件首页<div mx-view=\"app/views/coms/roll?a=<%@a%>&g=<%@g%>\"></div><div mx-view=\"app/views/coms/roll?a=<%@a%>&g=<%@g%>\" mx-guid=\"x9c61-\u001f\"></div><button mx-click=\"update()\">update</button>",
+    tmplData: [{"keys":["g"],"selector":"div[mx-guid=\"x9c61-\u001f\"]","view":"app/views/coms/roll?a=<%@a%>&g=<%@g%>"}],
     render: function() {
         var me = this;
-        me.$updater.digest();
+        me.$updater.set({
+            a:1,
+            g: Math.random()
+        }).digest();
+        console.log(me);
         shake($('#' + me.id), 20, 25, 12, 3);
+    },
+    'update<click>': function() {
+        this.$updater.set({
+            g: Math.random()
+        }).digest();
     }
 });
 });

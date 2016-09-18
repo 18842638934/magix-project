@@ -7,11 +7,16 @@ define('coms/tree/branch',['magix','$'],function(require,exports,module){
 var Magix = require('magix');
 var $ = require('$');
 module.exports = Magix.View.extend({
-    tmpl: "<ul><%for(var i=0,br;i<list.length;i++){br=list[i]%><li class=\"mx-582-li\"><div class=\"mx-582-icon<%if(br.children){%> mx-582-cp<%}%>\" <%if(br.children){%> mx-click=\"toggle({id:'<%=br[dataId]%>'})\" <%}%>><%if(br.children){%>+<%}%></div><div><label><input type=\"checkbox\" mx-change=\"check()\" value=\"<%=br[dataId]%>\"/><%=br[textKey]%></label></div><%if(br.children){%><div mx-view=\"coms/tree/branch?index=<%=i%>&text=<%=textKey%>&id=<%=dataId%>\" id=\"<%=id%>_<%=br[dataId]%>\" class=\"mx-582-indent mx-582-none\"></div><%}%></li><%}%></ul>",
+    tmpl: "<ul><%for(var i=0,br;i<list.length;i++){br=list[i]%><li class=\"mx-582-li\"><div class=\"mx-582-icon<%if(br.children){%> mx-582-cp<%}%>\" <%if(br.children){%> mx-click=\"toggle({id:'<%=br[dataId]%>'})\" <%}%>><%if(br.children){%>+<%}%></div><div><label><input type=\"checkbox\" mx-change=\"check()\" value=\"<%=br[dataId]%>\"/><%=br[textKey]%></label></div><%if(br.children){%><div mx-view=\"coms/tree/branch?text=<%@textKey%>&id=<%@dataId%>&list=<%@br.children%>\" id=\"<%=id%>_<%=br[dataId]%>\" class=\"mx-582-indent mx-582-none\" test=\"ab\"></div><%}%></li><%}%></ul>",
     tmplData: [],
     ctor: function(extra) {
         var me = this;
-        me.$list = me.owner.parent().invoke('getList', extra.index);
+        if (Magix.has(extra, 'index')) {
+            me.$list = extra.list[extra.index].children;
+        } else {
+            me.$list = extra.list;
+        }
+        console.log(me);
         me.$textKey = extra.text;
         me.$dataId = extra.id;
     },
@@ -23,9 +28,6 @@ module.exports = Magix.View.extend({
             dataId: me.$dataId,
             list: me.$list
         }).digest();
-    },
-    getList: function(idx) {
-        return this.$list[idx].children;
     },
     checkAll: function(state) {
         $('#' + this.id + ' input[type="checkbox"]').prop('checked', state);

@@ -28,7 +28,16 @@ module.exports = Magix.View.extend({
     tmplData: '@index.html:data',
     render: function() {
         var me = this;
-        me.$updater.digest();
+        me.$updater.set({
+            a:1,
+            g: Math.random()
+        }).digest();
+        console.log(me);
         shake($('#' + me.id), 20, 25, 12, 3);
+    },
+    'update<click>': function() {
+        this.$updater.set({
+            g: Math.random()
+        }).digest();
     }
 });

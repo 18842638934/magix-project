@@ -1,12 +1,12 @@
-<div id="tree_<%=id%>" mx-view="coms/tree/index?list={list1}">
+<div id="tree_<%=id%>" mx-view="coms/tree/index?list=<%@list1%>">
     <script type="magix/config">
         <%=JSON.stringify({list:list1})%>
     </script>
 </div>
-
-<div id="code_<%=id%>" mx-view="coms/tree/index?list={list2}&pId=parentCode&text=keyName&id=keyCode">
+<!--
+<div id="code_<%=id%>" mx-view="coms/tree/index?list=<%@list2%>&pId=parentCode&text=keyName&id=keyCode">
 </div>
-
+ -->
 <div>
     adf
     <div class="a">aaa</div>

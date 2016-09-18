@@ -4,6 +4,7 @@
 var Magix = require('magix');
 var $ = require('$');
 var Router = Magix.Router;
+Magix.applyStyle('@default.css');
 var ShrinkCSS = '@./partials/header-sidebar.css:shrink';
 module.exports = Magix.View.extend({
     tmpl: '@default.html',
@@ -11,11 +12,11 @@ module.exports = Magix.View.extend({
     ctor: function() {
         var me = this;
         me.observe(null, true);
-        $(window).on('resize', function() {
-            me.resize();
-        });
+        $('body').append('<div id="tester" />');
+        me.owner.mountVframe('tester','app/views/home/index');
     },
     render: function() {
+        console.log(this.id);
         var me = this;
         var loc = Router.parse();
         me.$updater.set({
@@ -30,6 +31,9 @@ module.exports = Magix.View.extend({
         });
     },
     'resizeMain<toggleSidebar>': function(e) {
+        this.resize();
+    },
+    '$win<resize>': function() {
         this.resize();
     }
 });

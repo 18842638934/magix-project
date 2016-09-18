@@ -49,6 +49,7 @@ module.exports = Magix.View.extend({
                     text: '请选择城市',
                     id: ''
                 }],
+                big: me.$big,
                 provinces: [{
                     "id": "",
                     "text": "请选择省份"

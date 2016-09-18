@@ -12,7 +12,7 @@
                 </label>
             </div>
             <%if(br.children){%>
-            <div mx-view="@./branch?index=<%=i%>&text=<%=textKey%>&id=<%=dataId%>" id="<%=id%>_<%=br[dataId]%>" class="indent none"></div>
+            <div mx-view="@./branch?text=<%@textKey%>&id=<%@dataId%>&list=<%@br.children%>" id="<%=id%>_<%=br[dataId]%>" class="indent none" test='ab'></div>
             <%}%>
         </li>
     <%}%>
