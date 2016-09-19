@@ -20,11 +20,11 @@ var combineTool = require('magix-combine');
 combineTool.config({
     excludeTmplFolders: excludeTmplFolders,
     onlyAllows: onlyAllows,
+    useMagixTmplAndUpdater: true,
     prefix: 'mp-',
     snippets: {
         loading: '<div class="loading"><span></span></div>'
-    },
-    useMagixTmplAndUpdater: true
+    }
 });
 
 gulp.task('cleanSrc', function() {
@@ -33,7 +33,6 @@ gulp.task('cleanSrc', function() {
 gulp.task('combine', ['cleanSrc'], function() {
     combineTool.combine();
 });
-
 
 gulp.task('watch', ['combine'], function() {
     watch(tmplFolder + '/**/*', function(e) {
@@ -51,8 +50,7 @@ gulp.task('cleanBuild', function() {
     return del(buildFolder);
 });
 gulp.task('build', ['cleanBuild'], function() {
-    combineTool.build();
-    gulp.src(buildFolder + '/**/*.js')
+    gulp.src(srcFolder + '/**/*.js')
         .pipe(uglify({
             compress: {
                 drop_console: true,
@@ -61,7 +59,7 @@ gulp.task('build', ['cleanBuild'], function() {
         }))
         .pipe(gulp.dest(buildFolder));
 
-    gulp.src(buildFolder + '/**/*.css')
+    gulp.src(srcFolder + '/**/*.css')
         .pipe(cssnano({
             safe: true
         }))
