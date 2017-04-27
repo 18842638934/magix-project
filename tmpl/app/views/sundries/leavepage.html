@@ -1,0 +1,64 @@
+<h3>离开提醒</h3>
+<p class="w900">
+    你可以尝试修改下面的表单，修改后在不点击“保存表单”的情况下，尝试点击导航去别的页面或刷新页面，会有相应的提示，此时你可以点击“保存表单”，然后再点击导航去别的页面或刷新页面，这时候就不会再有提示了。
+</p>
+<h4 class="mt10">演示</h4>
+<form mx-view="app/gallery/mx-validation/index" id="form_<%=viewId%>">
+    <div class="form-line clearfix">
+        <label class="line-label">
+            <i class="line-required">*</i> 必填校验：
+        </label>
+        <div class="fl">
+            <input class="input" type="text" validator-required="true" value="<%:rValue%>" />
+        </div>
+    </div>
+    <div class="form-line clearfix">
+        <label class="line-label">
+            Taginput：
+        </label>
+        <div class="fl">
+            <div class="input"
+                mx-view="app/gallery/mx-taginput/index"
+                view-list="<%@list2%>"
+                view-placeholder="请选择分类"
+                view-textKey="text"
+                view-valueKey="id"
+                validator-required="true"
+                mx-change="showSelected()"
+                <%:tags%>
+            ></div>
+        </div>
+    </div>
+    <div class="form-line clearfix">
+        <label class="line-label">
+            下拉框：
+        </label>
+        <div class="fl">
+            <div mx-view="app/gallery/mx-dropdown/index"
+                view-emptyText="下拉框"
+                view-width="340"
+                mx-change="showValue()"
+                validator-required="true"
+                <%:dropdwon%>>
+                <item value="a1">text 1</item>
+            </div>
+        </div>
+    </div>
+    <div class="form-line clearfix">
+        <label class="line-label">
+            日历：
+        </label>
+        <div class="fl">
+            <input class="input" type="text" validator-required="true" mx-view="app/gallery/mx-calendar/datepicker" <%:date%> />
+        </div>
+    </div>
+    <div class="form-line clearfix">
+        <label class="line-label">
+            颜色：
+        </label>
+        <div class="fl">
+            <input class="input" type="text" validator-required="true" mx-view="app/gallery/mx-colorpicker/picker" <%:color%> />
+        </div>
+    </div>
+</form>
+<button class="btn btn-brand" mx-click="save()">保存表单</button>

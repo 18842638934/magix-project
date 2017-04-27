@@ -1,0 +1,44 @@
+// Box sizing
+.box-sizing(@boxmodel) {
+  -webkit-box-sizing: @boxmodel;
+     -moz-box-sizing: @boxmodel;
+          box-sizing: @boxmodel;
+}
+
+* {
+  .box-sizing(border-box);
+}
+*:before,
+*:after {
+  .box-sizing(border-box);
+}
+
+input:focus,textarea:focus,a:focus,button:focus{
+  outline: none;
+  resize:none;
+}
+a {
+    color: #6363e6;
+    text-decoration: none;
+    &:hover, &:focus {
+        color: #5A5AD1;
+    }
+    &:hover, &:focus, &:active, &:visited {
+        outline: 0;
+        text-decoration: none;
+    }
+}
+label{
+    cursor: default;
+    padding: 9px 0;
+    display: inline-block;
+    max-width: 100%;
+    font-weight: 400;
+}
+[mx-view] item{
+  visibility: hidden;
+}
+label.disabled{
+    color: #999;
+    cursor: not-allowed;
+}

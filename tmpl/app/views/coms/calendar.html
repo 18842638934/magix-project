@@ -1,11 +1,209 @@
-<div id="cal_<%=id%>" mx-view="coms/calendar/index?min=<%@min%>&max=<%@max%>&selected=<%@selected%>">
+<h3>日期选择组件</h3>
+<h4>日历组件</h4>
+<table class="table table-striped w900">
+    <thead>
+        <tr>
+            <th>参数名称</th>
+            <th>参数类型</th>
+            <th>参数说明</th>
+            <th>默认值</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>selected</td>
+            <td>string</td>
+            <td>默认选中的日期，yyyy-MM-dd格式的日期</td>
+            <td>今天</td>
+        </tr>
+        <tr>
+            <td>weekStart</td>
+            <td>number</td>
+            <td>0-6，0表示周日</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>max</td>
+            <td>string</td>
+            <td>最大可选的日期，yyyy-MM-dd格式的日期</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>min</td>
+            <td>string</td>
+            <td>最小可选的日期，yyyy-MM-dd格式的日期</td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+<h4 class="mt10">事件</h4>
+<h5>change</h5>
+<table class="table table-striped w900">
+    <thead>
+        <tr>
+            <th>参数名称</th>
+            <th>参数类型</th>
+            <th>参数说明</th>
+            <th>默认值</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>date</td>
+            <td>string</td>
+            <td>选中的日期</td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+<h4 class="mt10">演示</h4>
+<table>
+    <thead>
+        <tr>
+            <th>默认情况</th>
+            <th>周一开始</th>
+            <th>最小可选日期</th>
+            <th>最大可选日期</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <div mx-view="app/gallery/mx-calendar/index" mx-change="showDate()"></div>
+            </td>
+            <td>
+                <div mx-view="app/gallery/mx-calendar/index" view-weekStart="<%@1%>" mx-change="showDate()"></div>
+            </td>
+            <td>
+                <div mx-view="app/gallery/mx-calendar/index" view-min="2017-03-30" mx-change="showDate()"></div>
+            </td>
+            <td>
+                <div mx-view="app/gallery/mx-calendar/index" view-max="2018-03-30" mx-change="showDate()"></div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<h4 class="mt20">日期选择组件</h4>
+<table class="table table-striped w900">
+    <thead>
+        <tr>
+            <th>参数名称</th>
+            <th>参数类型</th>
+            <th>参数说明</th>
+            <th>默认值</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>selected</td>
+            <td>string</td>
+            <td>默认选中的日期，yyyy-MM-dd格式的日期</td>
+            <td>今天</td>
+        </tr>
+        <tr>
+            <td>weekStart</td>
+            <td>number</td>
+            <td>0-6，0表示周日</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>max</td>
+            <td>string</td>
+            <td>最大可选的日期，yyyy-MM-dd格式的日期</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>min</td>
+            <td>string</td>
+            <td>最小可选的日期，yyyy-MM-dd格式的日期</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>placement</td>
+            <td>string</td>
+            <td>日历在目标的方位，仅top与bottom</td>
+            <td>bottom</td>
+        </tr>
+        <tr>
+            <td>align</td>
+            <td>string</td>
+            <td>日历与目标的对齐方式，仅left与right</td>
+            <td>left</td>
+        </tr>
+    </tbody>
+</table>
+<h4 class="mt10">演示</h4>
+<div class="clearfix">
+    <input mx-change="showIptDate()" class="input" mx-view="app/gallery/mx-calendar/datepicker" view-placement="top"/>
+    <input mx-change="showIptDate()" class="input ml10" mx-view="app/gallery/mx-calendar/datepicker" view-align="right"/>
 </div>
-
-<input class="input" style="margin:60px;" type="text" mx-click="showCal();" value="2016-04-08" />
-<input class="input" style="margin:60px;" type="text" mx-click="showCal();" value="2016-04-08" />
-<input class="input" style="margin:60px;" type="text" mx-click="showCal();" value="2016-04-08" />
-<input class="input" style="margin:60px;" type="text" mx-click="showCal({dock:'right'});" value="2016-04-08" x="2" />
-
-<input class="input" style="margin:60px;width:160px;position: absolute;right:100px;top:100px" type="text" mx-click="showRangeCal({dock:'right'});" value="2016-04-08~2016-04-12" />
-
-<div href="#!/index" mx-click="showCal1()" style="float:left;margin:100px">test anchor</div>
+<h4 class="mt20">日期范围选择组件</h4>
+<table class="table table-striped w900">
+    <thead>
+        <tr>
+            <th>参数名称</th>
+            <th>参数类型</th>
+            <th>参数说明</th>
+            <th>默认值</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>start</td>
+            <td>string</td>
+            <td>开始日期，yyyy-MM-dd格式的日期</td>
+            <td>今天</td>
+        </tr>
+        <tr>
+            <td>end</td>
+            <td>string</td>
+            <td>结束日期，yyyy-MM-dd格式的日期</td>
+            <td>今天</td>
+        </tr>
+        <tr>
+            <td>shortcuts</td>
+            <td>boolean</td>
+            <td>是否显示快捷日期</td>
+            <td>是</td>
+        </tr>
+        <tr>
+            <td>linkage</td>
+            <td>boolean</td>
+            <td>是否联动2个输入框的日期</td>
+            <td>是</td>
+        </tr>
+        <tr>
+            <td>max</td>
+            <td>string</td>
+            <td>最大可选的日期，yyyy-MM-dd格式的日期</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>min</td>
+            <td>string</td>
+            <td>最小可选的日期，yyyy-MM-dd格式的日期</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>placement</td>
+            <td>string</td>
+            <td>日历在目标的方位，仅top与bottom</td>
+            <td>bottom</td>
+        </tr>
+        <tr>
+            <td>align</td>
+            <td>string</td>
+            <td>日历与目标的对齐方式，仅left与right</td>
+            <td>left</td>
+        </tr>
+    </tbody>
+</table>
+<h4 class="mt10">演示</h4>
+<div class="clearfix">
+    <input mx-change="showRngDate()" class="input" mx-view="app/gallery/mx-calendar/rangepicker" view-placement="top"/>
+    <input mx-change="showRngDate()" class="input ml10" mx-view="app/gallery/mx-calendar/rangepicker" view-align="right"/>
+</div>
+<div class="clearfix mb1000 mt20">
+    <input mx-change="showRngDate()" class="input" mx-view="app/gallery/mx-calendar/rangepicker" view-placement="top" view-shortcuts="false"/>
+    <input mx-change="showRngDate()" class="input ml10" mx-view="app/gallery/mx-calendar/rangepicker" view-align="right" view-shortcuts="false" view-linkage="false" view-min="2017-3-30"/>
+</div>

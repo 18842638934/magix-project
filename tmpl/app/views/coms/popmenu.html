@@ -1,0 +1,67 @@
+<h3>Popmenu组件</h3>
+<p>该组件只提供功能，不提供界面，主要关联触发节点与要显示的节点</p>
+<h4>配置项</h4>
+<table class="table table-striped w900">
+    <thead>
+        <tr>
+            <th>参数名称</th>
+            <th>参数类型</th>
+            <th>参数说明</th>
+            <th>默认值</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>related</td>
+            <td>string</td>
+            <td>关联的节点id，包含#号</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>placement</td>
+            <td>string</td>
+            <td>关联节点在触发节点的方位，仅top与bottom</td>
+            <td>bottom</td>
+        </tr>
+        <tr>
+            <td>align</td>
+            <td>string</td>
+            <td>关联节点与触发节点的对齐方式，仅left与right</td>
+            <td>left</td>
+        </tr>
+    </tbody>
+</table>
+<h4 class="mt20">示例</h4>
+<ul class="none menu" id="menu_<%=viewId%>" mx-click="hideActiveMenu()">
+    <li mx-click="showMenuItem()">示例菜单1</li>
+    <li mx-click="showMenuItem()">示例菜单2</li>
+    <li mx-click="showMenuItem()">示例菜单3</li>
+    <li mx-click="showMenuItem()">示例菜单4</li>
+    <li mx-click="showMenuItem()">示例菜单5</li>
+    <li mx-click="showMenuItem()">示例菜单6</li>
+</ul>
+<table class="table table-striped w900">
+    <thead>
+        <tr>
+            <th><input type="checkbox" linkage-name="example1" /></th>
+            <%for(var i=0;i<5;i++){%>
+            <th>示例字段<%=i%></th>
+            <%}%>
+        </tr>
+    </thead>
+    <tbody>
+        <%for(var i=0;i<10;i++){%>
+        <tr>
+            <td><input type="checkbox" linkage-parent-name="example1" value="ex1_<%=i%>" /></td>
+            <%for(var j=0;j<4;j++){%>
+            <td>示例字段内容<%=j%></td>
+            <%}%>
+            <td>
+                <a href="#!/index" mx-view="app/gallery/mx-popmenu/index" view-related="#menu_<%=viewId%>" mx-click="storeActiveMenu({index:<%=i%>})">
+                    更多
+                </a>
+            </td>
+        </tr>
+        <%}%>
+    </tbody>
+</table>

@@ -1,18 +1,173 @@
-<div class="wrapper">
-    <div id="d1_<%=viewId%>" mx-view="coms/dropdown/index?width=200&list=<%@list%>" class="dropdown">
+<h3>下拉框组件</h3>
+<h4>配置项</h4>
+<table class="table table-striped w900">
+    <thead>
+        <tr>
+            <th>参数名称</th>
+            <th>参数类型</th>
+            <th>参数说明</th>
+            <th>默认值</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>list</td>
+            <td>array</td>
+            <td>列表数组，可为简单数组或[1,2,3]或对象数组，如[{id:1,text:'a'}]</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>textKey</td>
+            <td>string</td>
+            <td>当列表中的项为对象时，渲染text时读取的key</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>valueKey</td>
+            <td>string</td>
+            <td>当列表中的项为对象时，渲染value时读取的key</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>searchbox</td>
+            <td>boolean</td>
+            <td>是否包含搜索框</td>
+            <td>false</td>
+        </tr>
+        <tr>
+            <td>disabled</td>
+            <td>boolean</td>
+            <td>是否禁用</td>
+            <td>false</td>
+        </tr>
+        <tr>
+            <td>width</td>
+            <td>number</td>
+            <td>下拉框宽度</td>
+            <td>120</td>
+        </tr>
+    </tbody>
+</table>
+
+<h4 class="mt10">事件</h4>
+<h5>change</h5>
+<table class="table table-striped w900">
+    <thead>
+        <tr>
+            <th>参数名称</th>
+            <th>参数类型</th>
+            <th>参数说明</th>
+            <th>默认值</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>item</td>
+            <td>object</td>
+            <td>选中对象</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>keys</td>
+            <td>object</td>
+            <td>包含textKey与valueKey的对象</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>value</td>
+            <td>string</td>
+            <td>选中值</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>text</td>
+            <td>string</td>
+            <td>选中文本</td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+<h4 class="mt10">演示</h4>
+<div class="clearfix">
+    <div mx-view="app/gallery/mx-dropdown/index"
+        view-searchbox="true"
+        view-emptyText="普通列表带搜索"
+        view-width="200"
+        mx-change="showValue()">
+        <item value="a1">text 1</item>
+        <item value="a2">text 2</item>
+        <item value="a3">text 3</item>
+        <item value="a4">text 4</item>
+        <item value="a5">text 5</item>
+        <item value="a6">text 6</item>
+        <item value="a7">text 7</item>
+        <item value="a8">text 8</item>
+        <item value="a9">text 9</item>
+        <item value="a10">very long text very long text very long text very long text</item>
+        <item value="a11">text 11</item>
+        <item value="a12">text 12</item>
+        <item value="a13">text 13</item>
+        <item value="a14">text 14</item>
+        <item value="a15">text 15</item>
+        <item value="a16">text 16</item>
+        <item value="a17">text 17</item>
+        <item value="a18">text 18</item>
     </div>
-    <div id="d2_<%=viewId%>" class="dropdown" mx-view="coms/dropdown/index?list=<%@list%>&selected=<%@d2Id%>&search=true&height=100" mx-change="d2Change()" mx-keys="d2Id">
+    <div class="ml10" mx-view="app/gallery/mx-dropdown/index"
+        view-emptyText="分组"
+        view-width="200"
+        mx-change="showValue()">
+        <item group="true">分组1</item>
+        <item value="a1">text 1</item>
+        <item value="a2">text 2</item>
+        <item value="a3">text 3</item>
+        <item value="a4">text 4</item>
+        <item group="true">分组2</item>
+        <item value="a5">text 5</item>
+        <item value="a6">text 6</item>
+        <item value="a7">text 7</item>
+        <item value="a8">text 8</item>
+        <item group="true">分组3</item>
+        <item value="a9">text 9</item>
+        <item value="a10">very long text very long text very long text very long text</item>
+        <item value="a11">text 11</item>
+        <item value="a12">text 12</item>
+        <item value="a13">text 13</item>
+        <item value="a14">text 14</item>
+        <item group="true">分组4</item>
+        <item value="a15">text 15</item>
+        <item value="a16">text 16</item>
+        <item value="a17">text 17</item>
+        <item value="a18">text 18</item>
     </div>
-    <button mx-click="changeService()" class="btn btn-size25">切换数据源</button>
-    <div id="d3_<%=viewId%>" class="dropdown bottom" mx-view="coms/dropdown/index?list=<%@list%>">
-    </div>
-    <div id="d4_<%=viewId%>" class="dropdown" mx-view="coms/dropdown/index?list=<%@big%>&search=true">
-    </div>
-    <div class="dropdown" mx-view="coms/dropdown/index?list=<%@list%>&selected=<%@d2Id%>" mx-keys="d2Id">
-    </div>
-    <br />
-    <div class="dropdown" id="p_<%=viewId%>" mx-view="coms/dropdown/index?list=<%@provinces%>&selected=" mx-change="pChg()">
-    </div>
-    <div class="dropdown" mx-view="coms/dropdown/index?list=<%@cities%>" mx-keys="cities">
+    <div class="ml10" mx-view="app/gallery/mx-dropdown/index"
+        view-emptyText="禁用"
+        view-width="200"
+        view-disabled="true"
+        mx-change="showValue()">
+        <item value="a1">text 1</item>
     </div>
 </div>
+<div class="mt20">
+    <div mx-view="app/gallery/mx-dropdown/index"
+        view-searchbox="true"
+        view-emptyText="请选择省份"
+        view-width="240"
+        view-list="<%@provinces%>"
+        view-textKey="text"
+        view-valueKey="id"
+        mx-change="showValue({p:true})">
+    </div>
+    <div mx-view="app/gallery/mx-dropdown/index"
+        view-searchbox="true"
+        view-width="240"
+        view-list="<%@cities%>"
+        view-textKey="text"
+        view-valueKey="id"
+        mx-change="showValue()"
+        class="ml10">
+    </div>
+</div>
+
+
+<div class="mb300"></div>

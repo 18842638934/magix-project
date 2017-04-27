@@ -1,30 +1,20 @@
 /*
-    author:xinglie.lkf@taobao.com
+    author:xinglie.lkf@alibaba-inc.com
  */
-var Magix = require('magix');
+let Magix = require('magix');
+Magix.applyStyle('@tree.css');
+let Service = require('@app/services/service');
 module.exports = Magix.View.extend({
     tmpl: '@tree.html',
-    tmplData: '@tree.html:data',
-    render: function() {
-        var me = this;
+    mixins: [Service],
+    render() {
+        let me = this;
         me.request().all(['list', 'code'], function(err, bag, code) {
-            console.time('test');
-            me.$updater.set({
+            me.updater.digest({
                 id: me.id,
                 list1: bag.get('data', []),
                 list2: code.get('data', [])
-            }).digest();
-            console.timeEnd('test');
+            });
         });
-    },
-    '$doc<click>': function(e) {
-        //console.log(e);
-    },
-    '$div[class="a"]<click>':function(e){
-        //console.log('a',e);
-        //e.stopPropagation();
-    },
-    '$div<click>': function(e) {
-        console.log('common',e,e.currentTarget);
     }
 });

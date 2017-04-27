@@ -1,70 +1,29 @@
 /*
-    author:xinglie.lkf@taobao.com
+    author:xinglie.lkf@alibaba-inc.com
  */
-var Magix = require('magix');
-var Datepicker = require('@coms/calendar/datepicker');
-var Rangepicker = require('@coms/calendar/rangepicker');
+let Magix = require('magix');
+Magix.applyStyle('@calendar.css');
+let GTip = require('@app/mixins/gtip');
 module.exports = Magix.View.extend({
     tmpl: '@calendar.html',
-    tmplData: '@calendar.html:data',
-    render: function() {
-        var me = this;
-        me.$updater.set({
-            id: me.id,
-            min: '2015-02-12',
-            max: '2030-08-09',
-            selected: '2016/7/21'
-        }).digest();
+    mixins: [GTip],
+    render() {
+        let me = this;
+        me.updater.digest();
     },
-    'showCal<click>': function(e) {
-        //console.log(e);
-        var ipt = e.current;
-        Datepicker.show(this, {
-            ownerNodeId: ipt.id || (ipt.id = Magix.guid('cal_')),
-            dock: e.params.dock,
-            selected: ipt.value,
-            picked: function(e) {
-                console.log(e);
-                ipt.value = e.date;
-            }
-        });
+    'showDate<change>' (e) {
+        this.gtipRT('选中的日期：' + e.date);
     },
-    'showCal1<click>': function(e) {
-        e.preventDefault();
-        var ipt = e.current;
-        Datepicker.show(this, {
-            ownerNodeId: ipt.id || (ipt.id = Magix.guid('cal_')),
-            dock: e.params.dock,
-            selected: ipt.innerHTML,
-            picked: function(e) {
-                ipt.innerHTML = e.date;
-            }
-        });
+    'showIptDate<change>' (e) {
+        this.gtipRT('选中的日期：' + e.eventTarget.value);
     },
-    'showRangeCal<click>': function(e) {
-        e.preventDefault();
-        var ipt = e.current;
-        var dates = ipt.value.split('~');
-        var quickDateKeys = [
-            'today',
-            'yesterday',
-            'lastestThisMonth',
-            'lastest7',
-            'lastest15',
-            'lastest30',
-            'preMonth',
-            'passedThisMonth',
-            'passed30'
-        ];
-        dates = Rangepicker.getRangeDescription(dates[0], dates[1], quickDateKeys);
-        Rangepicker.show(this, {
-            ownerNodeId: ipt.id || (ipt.id = Magix.guid('rng_')),
-            dock: e.params.dock,
-            dates: dates,
-            quickDates: quickDateKeys,
-            picked: function(e) {
-                ipt.value = e.startStr + '~' + e.endStr;
-            }
-        });
+    'showRngDate<change>' (e) {
+        let dates = e.dates;
+        let msg = '选中的日期：';
+        if (dates.quickDateText) {
+            msg += '快捷日期:' + dates.quickDateText + '。';
+        }
+        msg += '范围(' + dates.startStr + '~' + dates.endStr + ')';
+        this.gtipRT(msg);
     }
 });

@@ -1,0 +1,36 @@
+/*
+* 表格
+* @ name:        table.css V1.0.0
+* @ author:      一丝
+* @ update:      2014-1-8 19:34:24;
+*/
+.table{
+    width:100%;
+    border:solid 1px #ccc;
+}
+/**
+* 只显示水平边框
+* .table
+*/
+.table th{
+  border: 0 none;
+  border-bottom: 2px solid #ccc;
+  font-weight: bold;
+}
+
+.table td{
+  border: 0 none;
+  border-top: 1px solid #ddd;
+}
+
+/**
+* 隔行换色
+* .table-striped
+*/
+.table-striped tbody tr:nth-child(odd) td {
+  background-color: #fafafa;
+}
+
+.table tfoot td{
+    padding: 0;
+}

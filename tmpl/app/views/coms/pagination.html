@@ -1,2 +1,76 @@
-<div id="p1_<%=id%>" style="margin:50px;" mx-view="coms/pagination/index?size=10&total=300&index=9&step=11">
+<h3>分页组件</h3>
+<h4>配置项</h4>
+<table class="table table-striped w900">
+    <thead>
+        <tr>
+            <th>参数名称</th>
+            <th>参数类型</th>
+            <th>参数说明</th>
+            <th>默认值</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>total</td>
+            <td>number</td>
+            <td>总数</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>page</td>
+            <td>number</td>
+            <td>当前第几页</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>size</td>
+            <td>number</td>
+            <td>每页多少条</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>step</td>
+            <td>number</td>
+            <td>页码过多时，中间显示多少条页码</td>
+            <td>7</td>
+        </tr>
+    </tbody>
+</table>
+<h4 class="mt10">事件</h4>
+<h5>change</h5>
+<table class="table table-striped w900">
+    <thead>
+        <tr>
+            <th>参数名称</th>
+            <th>参数类型</th>
+            <th>参数说明</th>
+            <th>默认值</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>state</td>
+            <td>object</td>
+            <td>包含page与size的对象</td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+<h4 class="mt10">演示</h4>
+<div mx-view="app/gallery/mx-pagination/index"
+    view-total="2000"
+    view-page="1" mx-change="pageChange()">
+</div>
+<h5 class="mt5">step=3</h5>
+<div mx-view="app/gallery/mx-pagination/index"
+    view-total="2000"
+    view-step="3"
+    view-page="15" mx-change="pageChange()">
+</div>
+<h5 class="mt5">step=11</h5>
+<div mx-view="app/gallery/mx-pagination/index"
+    view-total="2000"
+    view-step="11"
+    view-size="50"
+    view-page="30" mx-change="pageChange()">
 </div>

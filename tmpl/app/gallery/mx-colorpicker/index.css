@@ -1,0 +1,96 @@
+.cnt{
+  padding:10px;
+  background-color: #fff;
+  display: inline-block;
+  border: 1px solid #CCC;
+  border-radius: 5px;
+  overflow-y: hidden;
+  z-index: 10;
+}
+
+.shortcuts ul {
+  width: 225px;
+}
+.shortcuts ul {
+  *zoom: 1;
+}
+.shortcuts ul:before,
+.shortcuts ul:after {
+  display: table;
+  content: "";
+}
+.shortcuts ul:after {
+  clear: both;
+}
+.shortcuts li {
+  border: 1px solid #000;
+  float: left;
+  width: 15px;
+  height: 15px;
+  margin: -1px 0px 0 -1px;
+  display: inline;
+  position: relative;
+}
+.shortcuts li.selected:before {
+  content: '√';
+  display: inherit;
+  position: absolute;
+  left: 2px;
+  top: -12px;
+}
+.body{
+  margin:10px 0;
+  height: 200px
+}
+.cpicker-wrapper{
+  position: relative;
+  float:left;
+}
+.cpicker{
+  width:196px;
+  height:196px;
+}
+.cpicker-indicator{
+  position: absolute;
+  width:10px;
+  height:10px;
+  border-radius:5px;
+  border:3px #888 solid;
+  cursor: default;
+}
+.slide-wrapper{
+  position: relative;
+  float:left;
+  margin-left:10px;
+}
+.slide{
+  width:20px;
+  height:196px;
+}
+.slide-indicator{
+  position: absolute;
+  left:4px;
+  top:-8px;
+  border: 8px solid transparent;
+  border-right-color: #888;
+  width:0;
+  height:0;
+  cursor: default;
+}
+.foot{
+  height: 25px;
+}
+.foot input{
+  width: 99px;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+.bgcolor{
+  width: 50px;
+  height: 23px;
+  line-height: 23px;
+  display: inline-block;
+  margin-right: 10px;
+  vertical-align: middle;
+  border: 1px solid #ddd;
+}

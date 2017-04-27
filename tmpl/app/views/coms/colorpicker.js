@@ -1,25 +1,17 @@
 /*
-    author:xinglie.lkf@taobao.com
+    author:xinglie.lkf@alibaba-inc.com
  */
-var Magix = require('magix');
-var Colorpicker = require('@coms/colorpicker/index');
+let Magix = require('magix');
+Magix.applyStyle('@colorpicker.css');
+let GTip = require('@app/mixins/gtip');
 module.exports = Magix.View.extend({
     tmpl: '@colorpicker.html',
-    tmplData: '@colorpicker.html:data',
-    render: function() {
-        var me = this;
-        me.$updater.digest();
+    mixins: [GTip],
+    render() {
+        let me = this;
+        me.updater.digest();
     },
-    'showPicker<click>': function(e) {
-        e.preventDefault();
-        var ipt = e.current;
-        Colorpicker.show(this, {
-            ownerNodeId: ipt.id || (ipt.id = Magix.guid('cp_')),
-            dock: e.params.dock,
-            color: ipt.innerHTML,
-            picked: function(e) {
-                ipt.innerHTML = e.color;
-            }
-        });
+    'show<pick>' (e) {
+        this.gtipRT('选择的颜色：' + e.color);
     }
 });

@@ -1,0 +1,99 @@
+.wrapper{
+    background-color: white;
+    display: inline-block;
+    border: 1px solid #CCC;
+    padding: 0;
+    border-radius: 5px;
+    overflow-y: hidden;
+    z-index: 10;
+}
+.gray{
+    color: #777;
+}
+.header{
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+}
+.minus,
+.plus {
+    color: #CCC;
+    display: inline-block;
+    padding: 6px 7px;
+    line-height: 100%;
+    vertical-align: top;
+}
+.minus {
+    float: left;
+}
+.plus {
+    float: right;
+}
+.minus:hover, .minus:focus,
+.plus:hover, .plus:focus {
+    color: #6363e6;
+    text-decoration: none;
+}
+.title {
+    display: inline-block;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 4px;
+    height: 22px;
+    line-height: 1;
+    font-size: 12px;
+}
+.f12{
+    font-size: 12px;
+}
+.title:hover{
+    background-color: #EEE;
+}
+.body{
+    width: 258px;
+}
+.weeks{
+    color: #999;
+    background-color: #FAFAFA;
+    padding: 0 10px;
+}
+.days{
+    padding: 10px;
+}
+.week{
+    color:#999;
+}
+
+.ym{
+    height: 95px;
+    display: inline-block;
+    padding: 5px 0;
+    width:64px;
+    cursor: pointer;
+    line-height: 95px;
+    text-align: center;
+    border-radius: 5px;
+    font-size:16px;
+}
+.ym:hover,.day:hover{
+    background: #eee;
+}
+.week,.day{
+    display: inline-block;
+    padding: 5px 0;
+    width:30px;
+    margin: 3px 2px 0 2px;
+    float: left;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.selected,.selected:hover{
+    color:#fff;
+    background-color: #6363e6;
+}
+.notallowed,.notallowed:hover{
+    color:#eee;
+    cursor:not-allowed;
+    background: #fff;
+}

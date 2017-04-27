@@ -1,0 +1,71 @@
+<h3>checkbox联动mixin</h3>
+<h4>配置</h4>
+<table class="table table-striped w900">
+    <thead>
+        <tr>
+            <th>参数名称</th>
+            <th>参数说明</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>linkage-name</td>
+            <td>控制全选\取消的checkbox名称</td>
+        </tr>
+        <tr>
+            <td>linkage-parent-name</td>
+            <td>需要联动的子checkbox</td>
+        </tr>
+    </tbody>
+</table>
+<h4 class="mt20">示例1</h4>
+<table class="table table-striped w900">
+    <thead>
+        <tr>
+            <th><input type="checkbox" linkage-name="example1" /></th>
+            <%for(var i=0;i<5;i++){%>
+            <th>示例字段<%=i%></th>
+            <%}%>
+        </tr>
+    </thead>
+    <tbody>
+        <%for(var i=0;i<10;i++){%>
+        <tr>
+            <td><input type="checkbox" linkage-parent-name="example1" value="ex1_<%=i%>" /></td>
+            <%for(var j=0;j<5;j++){%>
+            <td>示例字段内容<%=j%></td>
+            <%}%>
+        </tr>
+        <%}%>
+    </tbody>
+</table>
+<div class="w900 clearfix">
+    <button class="fr mt5 btn btn-brand" mx-click="showEx1()">显示示例1选中的checkbox</button>
+</div>
+<h4 class="mt20">示例2</h4>
+<table class="table table-striped w900">
+    <thead>
+        <tr>
+            <th><input type="checkbox" linkage-name="example2" /></th>
+            <%for(var i=0;i<5;i++){%>
+            <th>示例字段<%=i%></th>
+            <%}%>
+        </tr>
+    </thead>
+    <tbody>
+        <%for(var i=0;i<10;i++){%>
+        <tr>
+            <td><input type="checkbox" linkage-parent-name="example2" value="ex2_<%=i%>" /></td>
+            <%for(var j=0;j<5;j++){%>
+            <td>示例字段内容<%=j%></td>
+            <%}%>
+        </tr>
+        <%}%>
+    </tbody>
+</table>
+<div class="w900 clearfix">
+    <button class="fr mt5 btn btn-brand" mx-click="showEx2()">显示示例2选中的checkbox</button>
+</div>
+<div class="w900 mt10 clearfix">
+    <button class="fr mt5 btn btn-brand" mx-click="show()">显示当前页面选中的checkbox</button>
+</div>

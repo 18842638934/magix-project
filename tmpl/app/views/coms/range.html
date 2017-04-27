@@ -1,0 +1,49 @@
+<h3>Range组件</h3>
+<h4>配置项</h4>
+<table class="table table-striped w900">
+    <thead>
+        <tr>
+            <th>参数名称</th>
+            <th>参数类型</th>
+            <th>参数说明</th>
+            <th>默认值</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>value</td>
+            <td>number</td>
+            <td>0-1之间的一个初始值</td>
+            <td>0</td>
+        </tr>
+    </tbody>
+</table>
+<h4 class="mt10">事件</h4>
+<h5>change</h5>
+<table class="table table-striped w900">
+    <thead>
+        <tr>
+            <th>参数名称</th>
+            <th>参数类型</th>
+            <th>参数说明</th>
+            <th>默认值</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>value</td>
+            <td>number</td>
+            <td>0-1之间的值</td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+<h4 class="mt10">演示</h4>
+<div>
+    <div mx-view="app/gallery/mx-range/index" mx-change="showValue()" class="ib"></div>
+    <div class="ib ml10"><%=ratio%></div>
+</div>
+<div>
+    <div mx-view="app/gallery/mx-range/index" view-value="<%@r1%>" mx-change="syncAge()" class="ib"></div>
+    <div class="ib ml10"><%=age%></div>
+</div>

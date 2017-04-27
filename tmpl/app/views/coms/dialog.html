@@ -1,5 +1,131 @@
-<div style="margin:50px;">
-    <button mx-click="alert()" class="btn btn-size30" style="margin-left:20px">alert</button>
-    <button mx-click="confirm()" class="btn btn-size30" style="margin-left:20px">confirm</button>
-    <button mx-click="view()" class="btn btn-size30" style="margin-left:20px">view</button>
+<h3>弹出框组件</h3>
+<h4>alert</h4>
+<table class="table table-striped w900">
+    <thead>
+        <tr>
+            <th>参数名称</th>
+            <th>参数类型</th>
+            <th>参数说明</th>
+            <th>默认值</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>content</td>
+            <td>string</td>
+            <td>提示内容</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>enterCallback</td>
+            <td>function</td>
+            <td>点击确定时的回调</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>title</td>
+            <td>string</td>
+            <td>弹出框标题</td>
+            <td>提示</td>
+        </tr>
+    </tbody>
+</table>
+<h4 class="mt10">alert演示</h4>
+<div class="clearfix">
+    <button class="btn fl" mx-click="alert()">普通提示</button>
+    <button class="btn fl ml10" mx-click="alertCallback()">点击确定时的处理</button>
+    <button class="btn fl ml10" mx-click="alertTitle();">修改标题</button>
+</div>
+
+<h4 class="mt20">confirm</h4>
+<table class="table table-striped w900">
+    <thead>
+        <tr>
+            <th>参数名称</th>
+            <th>参数类型</th>
+            <th>参数说明</th>
+            <th>默认值</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>content</td>
+            <td>string</td>
+            <td>提示内容</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>enterCallback</td>
+            <td>function</td>
+            <td>点击确定时的回调</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>cancelCallback</td>
+            <td>function</td>
+            <td>点击取消时的回调</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>title</td>
+            <td>string</td>
+            <td>弹出框标题</td>
+            <td>提示</td>
+        </tr>
+    </tbody>
+</table>
+<h4 class="mt10">comfirm演示</h4>
+<div class="clearfix">
+    <button class="btn fl" mx-click="confirm()">普通提示</button>
+    <button class="btn fl ml10" mx-click="confirmCallback()">点击确定时的处理</button>
+    <button class="btn fl ml10" mx-click="confirmCancelCallback()">点击取消时的处理</button>
+    <button class="btn fl ml10" mx-click="confirmTitle();">修改标题</button>
+</div>
+
+<h4 class="mt20">加载自定义view</h4>
+<table class="table table-striped w900">
+    <thead>
+        <tr>
+            <th>参数名称</th>
+            <th>参数类型</th>
+            <th>参数说明</th>
+            <th>默认值</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>view</td>
+            <td>string</td>
+            <td>view路径，如`app/views/agreement`</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>width</td>
+            <td>number</td>
+            <td>弹出框宽度</td>
+            <td>500</td>
+        </tr>
+        <tr>
+            <td>left</td>
+            <td>number</td>
+            <td>弹出框距页面左侧距离</td>
+            <td>默认水平居中</td>
+        </tr>
+        <tr>
+            <td>top</td>
+            <td>number</td>
+            <td>弹出框距页面项部距离</td>
+            <td>100</td>
+        </tr>
+        <tr>
+            <td>closable</td>
+            <td>boolean</td>
+            <td>右上是否有关闭按钮</td>
+            <td>true</td>
+        </tr>
+    </tbody>
+</table>
+<h4 class="mt10">加载自定义view演示</h4>
+<div class="clearfix">
+    <button class="btn fl" mx-click="agreement()">使用协议</button>
 </div>

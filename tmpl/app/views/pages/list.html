@@ -1,0 +1,88 @@
+<h4>列表页面</h4>
+<div class="mb5 mt5 clearfix">
+    <div class="fl"
+        mx-view="app/gallery/mx-dropdown/index"
+        view-searchbox="true"
+        view-emptyText="过滤条件"
+        view-width="140"
+        mx-change="showValue()">
+        <item value="a1">text 1</item>
+        <item value="a2">text 2</item>
+        <item value="a3">text 3</item>
+        <item value="a4">text 4</item>
+        <item value="a5">text 5</item>
+        <item value="a6">text 6</item>
+        <item value="a7">text 7</item>
+        <item value="a8">text 8</item>
+        <item value="a9">text 9</item>
+        <item value="a10">very long text very long text very long text very long text</item>
+        <item value="a11">text 11</item>
+        <item value="a12">text 12</item>
+        <item value="a13">text 13</item>
+        <item value="a14">text 14</item>
+        <item value="a15">text 15</item>
+        <item value="a16">text 16</item>
+        <item value="a17">text 17</item>
+        <item value="a18">text 18</item>
+    </div>
+    <div class="fl ml10"
+        mx-view="app/gallery/mx-dropdown/index"
+        view-searchbox="true"
+        view-emptyText="过滤条件"
+        view-width="180"
+        mx-change="showValue()">
+        <item value="a1">text 1</item>
+        <item value="a2">text 2</item>
+        <item value="a3">text 3</item>
+        <item value="a4">text 4</item>
+        <item value="a5">text 5</item>
+        <item value="a6">text 6</item>
+        <item value="a7">text 7</item>
+        <item value="a8">text 8</item>
+        <item value="a9">text 9</item>
+        <item value="a10">very long text very long text very long text very long text</item>
+        <item value="a11">text 11</item>
+        <item value="a12">text 12</item>
+        <item value="a13">text 13</item>
+        <item value="a14">text 14</item>
+        <item value="a15">text 15</item>
+        <item value="a16">text 16</item>
+        <item value="a17">text 17</item>
+        <item value="a18">text 18</item>
+    </div>
+    <div class="fr">
+        <input type="text" class="input" placeholder="搜索关键字" />
+    </div>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th><input type="checkbox" linkage-name="example1" /></th>
+            <%for(var i=0;i<headers.length;i++){%>
+            <th><%=headers[i]%></th>
+            <%}%>
+        </tr>
+    </thead>
+    <tbody>
+        <%for(var i=0;i<list.length;i++){%>
+        <tr>
+            <td><input type="checkbox" linkage-parent-name="example1" value="<%=list[i].id%>" /></td>
+            <%for(var j=0;j<headers.length;j++){%>
+            <td><%=list[i]['f'+j]%></td>
+            <%}%>
+        </tr>
+        <%}%>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="6"
+                mx-view="app/gallery/mx-pagination/index"
+                view-total="<%@total%>"
+                view-step="3"
+                view-page="<%@page%>"
+                view-size="<%@size%>"
+                mx-change="changePage()">
+            </td>
+        </tr>
+    </tfoot>
+</table>

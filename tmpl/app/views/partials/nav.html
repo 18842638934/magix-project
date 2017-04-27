@@ -1,0 +1,77 @@
+<div class="main unselectable " mx-mouseout="hideSubs()" mx-mouseover="stopHide()" id="main_<%=viewId%>" mx-contextmenu="preventHide()">
+    <ul>
+        <li class="menu-item clearfix" data-key="index" mx-mouseover="startShowSubs()" mx-mousemove="showSubs()">
+            <a class="menu clearfix" href="#!/index"   hidefocus="true">
+                <span class="menu-icon iconfont">&#xe69c;</span>
+                <span class="menu-text">首页</span>
+            </a>
+        </li>
+        <%for(var i=0,menu;i<menus.length;i++){%>
+        <%menu=menus[i]%>
+            <li class="menu-item clearfix" data-key="<%=menu.key%>"
+                mx-mouseover="startShowSubs({key:'<%=menu.key%>'})"
+                mx-mousemove="showSubs({key:'<%=menu.key%>'})">
+
+                <a class="menu"  href="#!<%=menu.url%>"
+                    hidefocus="true"  >
+                    <span class="menu-icon iconfont"><%! menu.icon%></span>
+                    <span class="menu-text"><%=menu.text%></span>
+                </a>
+                <span class="menu-icon-open iconfont"></span>
+            </li>
+        <%}%>
+    </ul>
+</div>
+
+
+<div class="unselectable scrollable subs<%if(!showSub){%> none<%}%>" id="subs_<%=viewId%>" mx-mouseout="hideSubs()" mx-mouseover="stopHide()" mx-contextmenu="preventHide()">
+    <%if(subs){%>
+        <ul>
+        <%for(var j=0,subMenu;j<subs.length;j++){%>
+        <%subMenu=subs[j]%>
+        <%if(subMenu.subs&&subMenu.subs.length){%>
+            <li class="sub-item">
+                <div class="sub-title cp"<%if(subMenu.canFolder){%> mx-click="toggleSubMenus({key:'<%=subMenu.key%>'})"<%}%>>
+                    <%=subMenu.text%>
+                    <%if(subMenu.canFolder){%>
+                    <i class="iconfont sub-trigger">
+                        <%if(subMenu.folderExpand){%>
+                            &#xe786;
+                        <%}else{%>
+                            &#xe692;
+                        <%}%>
+                    </i>
+                    <%}%>
+                </div>
+                <ul
+                    class="sub-child-list"
+                    <%if(subMenu.canFolder&&!subMenu.folderExpand){%>
+                        style="display:none"
+                    <%}%>
+                    <%if(subMenu.canFolder){%>
+                        data-toggle-menu="true"
+                    <%}%>
+                >
+                <%for(var x=0,item;x<subMenu.subs.length;x++){%>
+                <%item=subMenu.subs[x]%>
+                    <li>
+                        <a <%if(item.url){%>href="#!<%=item.url%>"<%}else{%>href="javascript:;"<%}%> class="sub-child-link">
+                            <i class="iconfont sub-child-icon"><%!item.icon%></i>
+                            <span class="sub-child-text"><%=item.text%></span>
+                        </a>
+                    </li>
+                <%}%>
+                </ul>
+            </li>
+        <%}else{%>
+            <li class="sub-item">
+                <a href="#!<%=subMenu.url%>" class="sub-child-link">
+                    <i class="iconfont sub-child-icon" style="margin-right: 5px;"><%!subMenu.icon%></i>
+                    <%=subMenu.text%>
+                </a>
+            </li>
+        <%}%>
+        <%}%>
+      </ul>
+    <%}%>
+</div>

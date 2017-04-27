@@ -1,0 +1,56 @@
+.owner{
+    height:auto;
+    min-height: 32px;
+    padding:2px 7px;
+    position: relative;
+}
+.ipt{
+    height: auto;
+    cursor: text;
+}
+.placeholder{
+    position: absolute;
+    left:10px;
+    top:6px;
+    color:#757575;
+    user-select:none;
+}
+.item{
+    position: relative;
+    display: inline-block;
+    margin: 1px;
+    cursor: pointer;
+    background-color: #eee;
+    border-radius: 4px;
+}
+.ghost{
+    width:1px;
+    visibility: hidden;
+}
+.item-name{
+    float: left;
+    border-right: 1px solid #fff;
+    display: inline-block;
+    padding: 2px 4px;
+    max-width:200px;
+    overflow: hidden;
+}
+.item-delete{
+    width: 20px;
+    font-weight: bolder;
+    text-align: center;
+    color: #999;
+    display: inline-block;
+    padding: 2px 4px;
+}
+.trigger{
+    border: none;
+    outline: none;
+    height: 18px;
+    padding: 0;
+    width:20px;
+    margin: 1px;
+    position: relative;
+    z-index: 1;
+    background: transparent;
+}

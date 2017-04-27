@@ -1,12 +1,12 @@
 /*
-    author:xinglie.lkf@taobao.com
+    author:xinglie.lkf@alibaba-inc.com
  */
-var Magix = require('magix');
+let Magix = require('magix');
+Magix.applyStyle('@popover.css');
 module.exports = Magix.View.extend({
     tmpl: '@popover.html',
-    tmplData: '@popover.html:data',
-    render: function() {
-        var me = this;
-        me.$updater.digest();
+    render() {
+        let me = this;
+        me.updater.digest();
     }
 });

@@ -1,30 +1,51 @@
 /*
-    author:xinglie.lkf@taobao.com
+    author:xinglie.lkf@alibaba-inc.com
  */
-var Magix = require('magix');
-var Dialog = require('../../../coms/dialog/index');
+let Magix = require('magix');
+let Dialog = require('@app/mixins/dialog');
+let GTip = require('@app/mixins/gtip');
+Magix.applyStyle('@dialog.css');
 module.exports = Magix.View.extend({
     tmpl: '@dialog.html',
-    tmplData: '@dialog.html:data',
-    render: function() {
-        var me = this;
-        me.$updater.digest();
+    mixins: [Dialog, GTip],
+    render() {
+        let me = this;
+        me.updater.digest();
     },
-    'alert<click>': function() {
-        Dialog.alert(this, 'test');
+    'alert<click>' (e) {
+        this.alert(e.eventTarget.innerHTML);
     },
-    'confirm<click>': function() {
-        Dialog.confirm(this, 'test');
-    },
-    'view<click>': function() {
-        Dialog.msgbox(this, {
-            title: '提示信息view',
-            view: 'app/views/coms/popover',
-            dock: 'left',
-            left: 200,
-            top: 200,
-            height: 400,
-            width: 600
+    'alertCallback<click>' (e) {
+        this.alert(e.eventTarget.innerHTML, () => {
+            this.gtipRT('确定按钮被点击');
         });
+    },
+    'alertTitle<click>' (e) {
+        this.alert(e.eventTarget.innerHTML, null, '这是提示标题');
+    },
+    'confirm<click>' (e) {
+        this.confirm(e.eventTarget.innerHTML);
+    },
+    'confirmCallback<click>' (e) {
+        this.confirm(e.eventTarget.innerHTML, () => {
+            this.gtipRT('确定按钮被点击');
+        });
+    },
+    'confirmCancelCallback<click>' (e) {
+        this.confirm(e.eventTarget.innerHTML, () => {
+            this.gtipRT('确定按钮被点击');
+        }, () => {
+            this.gtipRT('取消按钮被点击');
+        });
+    },
+    'confirmTitle<click>' (e) {
+        this.confirm(e.eventTarget.innerHTML, () => {
+            this.gtipRT('确定按钮被点击');
+        }, () => {
+            this.gtipRT('取消按钮被点击');
+        }, '这是提示标题');
+    },
+    'agreement<click>' () {
+        this.mxDialog('@../partials/agreement');
     }
 });

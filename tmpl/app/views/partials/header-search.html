@@ -1,0 +1,15 @@
+<div class="search-container" id="gsearch_<%=viewId%>">
+    <span class="iconfont search-icon">&#xe608;</span>
+    <span class="iconfont clear-icon none" title="清除输入" mx-click="clear()">&#xe68c;</span>
+    <input type="text" class="search-field" mx-input="search()" mx-keyup="search()" mx-paste="search()" mx-focusin="search()" id="sipt_<%=viewId%>" placeholder="搜索..." />
+    <div id="gsearch_result_<%=viewId%>" class="search-result<%if(!searchList||!searchList.length){%> none<%}%>">
+        <%if(searchList&&searchList.length){%>
+        <ul mx-mouseout="out()" mx-mousemove="move()" class="search-ul">
+            <%for(var i=0;i<searchList.length;i++){%>
+            <%var item=searchList[i]%>
+                <li data-idx="<%=i%>" id="sg_<%!viewId%>_<%!i%>"><a href="#!<%=item.url%>" class="search-link ellipsis" mx-click="hide()" title="<%=item.pathText.join('>')%>"><%=item.pathText[0]%><%for(var j=1;j<item.pathText.length;j++){%><%var text=item.pathText[j]%>&gt;<%!text.replace(searchKeyRegInfo.regexp,searchKeyRegInfo.replacement).replace(/\)\(/g,'').replace(/\(/g,'<b>').replace(/\)/g,'</b>')%><%}%></a></li>
+            <%}%>
+        </ul>
+        <%}%>
+    </div>
+</div>

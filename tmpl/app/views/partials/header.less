@@ -1,0 +1,224 @@
+
+.header-top {/*clearfix*/
+    height: 50px;
+    background-color: #6363e6;
+    color: rgba(255,255,255,0.6);
+    z-index: 400;
+    position:relative;
+    width:100%;
+    left:0;
+    top:0;
+    right:0
+}
+.header-brand {
+    float: left;
+    height: 50px;
+    width: 160px;
+    transition: width ease-out 0.3s;
+    background-color: #595cd2;
+    color: #fff;
+    overflow: hidden;
+
+    &:hover,
+    &:active,
+    &:focus {
+        color: #fff;
+    }
+}
+.brand-logo {
+    width: 50px;
+    font-size: 28px;
+    float: left;
+    height: 50px;
+    line-height: 50px;
+    margin-left: 23px;
+    text-align: center;
+    transition: margin-left ease-out 0.3s;
+}
+.brand-text {
+    width: 80px;
+    font-size: 20px;
+    position: relative;
+    float: left;
+    height: 50px;
+    line-height: 50px;
+    top: 1px;
+    left: -5px;
+    transition: width ease-out 0.3s, font-size ease-out 0.3s;
+}
+
+// 关闭状态
+.header-new-close {
+    .header-brand {
+        width: 50px;
+    }
+    .header-top-main {
+        margin-left: 50px;
+    }
+    .header-trigger {
+        left: 38px;
+        &:before {
+            left: -4px;
+            content: "\e789";
+        }
+    }
+
+
+    .brand-logo {
+        margin-left: 0;
+    }
+    .brand-text {
+        width: 0;
+        font-size: 0;
+        overflow: hidden;
+    }
+}
+.header-top-main {/*cf*/
+    margin-left: 160px;
+    padding: 0 15px 0 0;
+    position: relative;
+    z-index: 50;
+}
+.header-trigger {
+    position: absolute;
+    left: 148px;
+    top: 100%;
+    width: 12px;
+    height: 24px;
+    line-height: 24px;
+    background-color: #595cd2;
+    font-size: 20px;
+    color: #fff;
+    border-radius: 0 0 0 4px;
+    cursor: pointer;
+    transition: left ease-out 0.3s;
+
+    &:before {
+        content: "\e787";
+        position: relative;
+        left: -4px;
+    }
+}
+.header-top-content {/*cf*/
+    position: relative;
+    transition: width ease-out 0.3s;
+}
+.menu {
+    float: right;
+}
+.menu-item {
+    float: left;
+    position: relative;
+    padding: 0 10px;
+}
+.menu-link,
+.menu-icon {
+    float: left;
+    height: 50px;
+    line-height: 50px;
+    color: #fff;
+    padding-right: 10px;
+    font-size: 12px;
+    cursor: pointer;
+
+    &:focus,
+    &:hover {
+        color: #fff;
+    }
+}
+.menu-icon {
+    padding-right: 3px;
+    font-size: 22px;
+}
+.submenu-container {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 140px;
+    display: none;
+    /*display: block;*/
+    z-index: 8;
+
+    padding: 8px 0 0 0
+}
+.submenu {
+    box-shadow: 0 3px 3px #eee;
+    list-style: none;
+    margin: 0;
+    border: 1px solid #e6e6e6;
+    border-radius: 4px;
+    position: relative;
+    background-color: #fff;
+}
+.submenu:before {
+    content: "";
+    position: absolute;
+    top: -7px;
+    right: 14px;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-top: 0;
+    border-bottom: 6px solid #e6e6e6;
+}
+.submenu:after {
+    content: "";
+    position: absolute;
+    top: -6px;
+    right: 14px;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-top: 0;
+    border-bottom: 6px solid #fff;
+}
+
+.menu-item:hover .submenu-container {
+    display: block;
+}
+.submenu-divider {
+    border-top: 1px dashed #e6e6e6;
+}
+.submenu-link:hover {
+    background-color: #fafafa;
+}
+.submenu-link {
+    color: #666;
+    display: block;
+    padding-left: 7px;
+    margin: 6px 10px;
+    height: 26px;
+    line-height: 26px;
+    border-radius: 4px;
+    white-space: nowrap;
+    &:hover {
+        color: #fff;
+        background-color: #8383eb;
+    }
+}
+
+
+
+.crumb {
+    float: left;
+    margin-left: 17px;
+    width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.crumb-icon {
+    font-size: 22px;
+    height: 50px;
+    line-height: 50px;
+    float: left;
+    margin: 0 6px 0 10px;
+    color: #a1a1f0;
+}
+.crumb-content {
+    display: block;
+    height: 50px;
+    line-height: 50px;
+    color: #b9b9f9;
+}
+

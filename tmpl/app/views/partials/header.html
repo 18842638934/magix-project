@@ -1,24 +1,44 @@
 
-<div class="clearfix header">
-    <div class="bp-logo">
-        <h3>Magix Project</h3>
+<div class="header-top" id="header_<%=viewId%>">
+    <a href="#!/index" class="header-brand">
+        <span class="brand-logo iconfont">&#xe67b;</span>
+        <span class="brand-text">Magix</span>
+    </a>
+    <span class="header-trigger iconfont" mx-click="triggerNav()"></span>
+
+    <div class="header-top-main">
+        <div class="header-top-content">
+            <!-- 面包屑 -->
+            <div class="crumb">
+                <%if(bcs){%>
+                <span class="iconfont crumb-icon">&#xe601;</span>
+                <span class="crumb-content"><%=bcs%></span>
+                <%}%>
+            </div>
+
+            <!-- 右侧信息菜单 -->
+            <ul class="menu">
+                <li class="menu-item">
+                    <span class="menu-icon iconfont ">&#xe621;</span>
+                    <a href="javascript:;" class="menu-link"><%=userName%></a>
+                    <div class="submenu-container">
+                        <ul class="submenu">
+                            <li>
+                                <a href="javascript:;" mx-click="changePassword()" class="submenu-link">修改密码</a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" mx-click="logout()" class="submenu-link">退出</a>
+                            </li>
+                            <li class="submenu-divider"></li>
+                            <li>
+                                <a href="javascript:;" mx-click="showAgreement()" class="submenu-link">查看使用协议</a>
+                            </li>
+                        </ul >
+                    </div>
+                </li>
+            </ul>
+            <!--搜索-->
+            <div mx-view="@./header-search"></div>
+        </div>
     </div>
-    <div class="top-nav">
-        <ul>
-            <li>
-                <a href="#!/home/index" hidefocus="true">首页</a>
-            </li>
-            <li>
-                <a href="#!/coms/index" hidefocus="true">组件</a>
-            </li>
-            <li>
-                <a href="#!/demos/index" hidefocus="true">经验</a>
-            </li>
-        </ul>
-  </div>
-  <div class="top-handle">
-    <a href="javascript:;">行列(xinglie.lkf)</a>,
-    <a href="javascript:;">退出</a>
-  </div>
 </div>
-<div class="sidebar" mx-view="@./header-sidebar" id="sidebar_<%=viewId%>"></div>

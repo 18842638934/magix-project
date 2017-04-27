@@ -1,0 +1,97 @@
+<h3>checkbox翻页保存状态mixin</h3>
+<p class="desc">该mixin通常与checkbox-linkage配合使用，所以配置也是使用的checkbox-linkage的配置</p>
+<p>在示例中勾选一些checkbox，然后翻页再翻回来，你会发现之前选中的checkbox还会自动选上</p>
+<h4>配置</h4>
+<table class="table table-striped w900">
+    <thead>
+        <tr>
+            <th>参数名称</th>
+            <th>参数说明</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>linkage-name</td>
+            <td>控制全选\取消的checkbox名称</td>
+        </tr>
+        <tr>
+            <td>linkage-parent-name</td>
+            <td>需要联动的子checkbox</td>
+        </tr>
+    </tbody>
+</table>
+<h4 class="mt20">示例1</h4>
+<table class="table table-striped w900">
+    <thead>
+        <tr>
+            <th><input type="checkbox" linkage-name="example1" /></th>
+            <%for(var i=0;i<headers.length;i++){%>
+            <th><%=headers[i]%></th>
+            <%}%>
+        </tr>
+    </thead>
+    <tbody>
+        <%for(var i=0;i<list1.length;i++){%>
+        <tr>
+            <td><input type="checkbox" linkage-parent-name="example1" value="<%=list1[i].id%>" /></td>
+            <%for(var j=0;j<headers.length;j++){%>
+            <td><%=list1[i]['f'+j]%></td>
+            <%}%>
+        </tr>
+        <%}%>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="6"
+                mx-view="app/gallery/mx-pagination/index"
+                view-total="<%@100%>"
+                view-step="3"
+                view-page="<%@list1Page%>"
+                view-size="<%@list1Size%>"
+                mx-change="chageList1()">
+            </td>
+        </tr>
+    </tfoot>
+</table>
+<div class="w900 clearfix">
+    <button class="fr mt5 btn btn-brand" mx-click="showEx1()">显示示例1选中的checkbox</button>
+</div>
+<h4 class="mt20">示例2</h4>
+<table class="table table-striped w900">
+    <thead>
+        <tr>
+            <th><input type="checkbox" linkage-name="example2" /></th>
+            <%for(var i=0;i<headers.length;i++){%>
+            <th><%=headers[i]%></th>
+            <%}%>
+        </tr>
+    </thead>
+    <tbody>
+        <%for(var i=0;i<list1.length;i++){%>
+        <tr>
+            <td><input type="checkbox" linkage-parent-name="example2" value="<%=list2[i].id%>" /></td>
+            <%for(var j=0;j<headers.length;j++){%>
+            <td><%=list2[i]['f'+j]%></td>
+            <%}%>
+        </tr>
+        <%}%>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="6"
+                mx-view="app/gallery/mx-pagination/index"
+                view-total="<%@100%>"
+                view-step="3"
+                view-page="<%@list2Page%>"
+                view-size="<%@list2Size%>"
+                mx-change="chageList2()">
+            </td>
+        </tr>
+    </tfoot>
+</table>
+<div class="w900 clearfix">
+    <button class="fr mt5 btn btn-brand" mx-click="showEx2()">显示示例2选中的checkbox</button>
+</div>
+<div class="w900 mt10 clearfix">
+    <button class="fr mt5 btn btn-brand" mx-click="show()">显示当前页面选中的checkbox</button>
+</div>

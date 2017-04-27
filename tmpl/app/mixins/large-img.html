@@ -1,0 +1,10 @@
+<div class="mask anim-mask" id="mask_<%=viewId%>" mx-click="close()" data-spm-click="gostr=/alimama.13;locaid=d273ccd5a"></div>
+<div class="scroll-cnt" mx-click="close()" data-spm-click="gostr=/alimama.13;locaid=df4d25e18">
+    <div class="body anim-body" data-spm-protocol="i" id="body_<%=viewId%>" style="left:<%=left%>px;top:<%=top%>px;">
+        <%if(video){%>
+            <video style="max-width:<%=maxWidth%>px" src="<%=url%>" autoplay="autoplay" loop="loop" controls="controls"></video>
+        <%}else{%>
+            <img style="max-width:<%=maxWidth%>px" src="<%=url%>" />
+        <%}%>
+    </div>
+</div>

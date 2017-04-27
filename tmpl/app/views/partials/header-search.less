@@ -1,0 +1,107 @@
+.search-result {
+    box-shadow: 0 3px 3px #eee;
+    list-style: none;
+    margin: 0;
+    border: 1px solid #e6e6e6;
+    border-radius: 4px;
+    position: relative;
+    background-color: #fff;
+}
+.search-result:before {
+    content: "";
+    position: absolute;
+    top: -7px;
+    right: 14px;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-top: 0;
+    border-bottom: 6px solid #e6e6e6;
+}
+.search-result:after {
+    content: "";
+    position: absolute;
+    top: -6px;
+    right: 14px;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-top: 0;
+    border-bottom: 6px solid #fff;
+}
+.search-link {
+    color: #666;
+    display: block;
+    padding-left: 7px;
+    margin: 6px 10px;
+    height: 26px;
+    line-height: 26px;
+    border-radius: 4px;
+    white-space: nowrap;
+    &:hover {
+        color: #fff;
+        background-color: #8383eb;
+    }
+}
+.search-container {
+    float: right;
+    margin-right: 89px;
+    position: relative;
+}
+.search-icon,.clear-icon {
+    position: absolute;
+    top: 19px;
+    left: 15px;
+    color: #a1a1f0;
+    cursor: pointer;
+}
+.clear-icon{
+    left:auto;
+    right:10px;
+    font-size:14px;
+}
+.search-field {
+    width: 260px;
+    height: 30px;
+    border-radius: 30px;
+    border: 0;
+    line-height: 30px;
+    padding-left: 40px;
+    background-color: #5a5ad1;
+    margin-top: 10px;
+    color: #e0e0fa !important;
+    transition: border-radius ease-out 0.3s;
+
+    &::-webkit-input-placeholder{
+        color: #b9b9f9;
+    }
+    &:-moz-placeholder {
+        color: #b9b9f9;
+    }
+}
+.search-field:focus{
+    border-radius:4px;
+}
+.search-result{
+    position:absolute;
+    top:58px;
+    width:258px;
+    left:2px;
+}
+.search-ul{
+    max-height:326px;
+    overflow:auto;
+}
+
+.search-link:hover{
+    color: #666;
+    background-color:#fff;
+}
+.search-item-on .search-link{
+    color: #fff;
+    background-color: #8383eb;
+}
+.search-result:after,.search-result:before{
+    left:14px;
+    right:auto;
+}

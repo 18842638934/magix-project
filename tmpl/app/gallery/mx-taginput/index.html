@@ -1,0 +1,23 @@
+<div class="ipt" mx-click="focus()" id="ipt_<%=viewId%>">
+    <%if(!items.length&&placeholder){%>
+    <div class="placeholder"><%=placeholder%></div>
+    <%}%>
+    <%if(items.length){%>
+    <%for(var i=0;i<items.length;i++){%>
+    <%var one=items[i];%>
+    <div class="item" mx-click="stop()">
+        <div class="item-name ellipsis"><%=textKey?one[textKey]:one%></div>
+        <div class="item-delete" mx-click="delete({idx:<%!i%>})">
+            x
+        </div>
+    </div>
+    <%}%>
+    <%}else{%>
+    <div class="item ghost" mx-click="stop()">
+        <div class="item-delete" mx-click="delete({idx:<%!i%>})">
+            x
+        </div>
+    </div>
+    <%}%>
+    <input mx-keydown="check()" mx-input="check()" mx-paste="check()" mx-view="@./suggest?list=<%@list%>&map=<%@map%>&textKey=<%@textKey%>&valueKey=<%@valueKey%>&relateIds=ipt_<%=viewId%>&offsetLeft=-11&scrollTop=<%@scrollTop%>" class="trigger" autocomplete="off" mx-pick="add()" mx-click="stop()" />
+</div>

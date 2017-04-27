@@ -1,4 +1,80 @@
-<div style="margin:20px">
-    <button class="btn" mx-click="showPicker({dock:'left'})">测试</button>
-    <button class="btn" style="float:right" mx-click="showPicker({dock:'right'})">测试2</button>
+<h3>颜色选择组件</h3>
+<h4>颜色组件</h4>
+<table class="table table-striped w900">
+    <thead>
+        <tr>
+            <th>参数名称</th>
+            <th>参数类型</th>
+            <th>参数说明</th>
+            <th>默认值</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>color</td>
+            <td>string</td>
+            <td>16进制的字符6位字符串，包含#符号</td>
+            <td>#ffffff</td>
+        </tr>
+    </tbody>
+</table>
+<h4 class="mt10">事件</h4>
+<h5>pick</h5>
+<table class="table table-striped w900">
+    <thead>
+        <tr>
+            <th>参数名称</th>
+            <th>参数类型</th>
+            <th>参数说明</th>
+            <th>默认值</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>color</td>
+            <td>string</td>
+            <td>选中的颜色</td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+<h4 class="mt10">演示</h4>
+
+<div mx-view="app/gallery/mx-colorpicker/index" view-color="#594d9c" mx-pick="show()"></div>
+
+<h4 class="mt20">颜色选择组件</h4>
+<table class="table table-striped w900">
+    <thead>
+        <tr>
+            <th>参数名称</th>
+            <th>参数类型</th>
+            <th>参数说明</th>
+            <th>默认值</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>color</td>
+            <td>string</td>
+            <td>16进制的字符6位字符串，包含#符号</td>
+            <td>#ffffff</td>
+        </tr>
+        <tr>
+            <td>placement</td>
+            <td>string</td>
+            <td>选择器在目标的方位，仅top与bottom</td>
+            <td>bottom</td>
+        </tr>
+        <tr>
+            <td>align</td>
+            <td>string</td>
+            <td>选择器与目标的对齐方式，仅left与right</td>
+            <td>left</td>
+        </tr>
+    </tbody>
+</table>
+<h4 class="mt10">演示</h4>
+<div class="clearfix">
+    <input mx-change="showIptDate()" class="input" mx-view="app/gallery/mx-colorpicker/picker" view-placement="top"/>
+    <input mx-change="showIptDate()" class="input ml10" mx-view="app/gallery/mx-colorpicker/picker" view-align="right"/>
 </div>

@@ -7,8 +7,13 @@
     "gulp": "",
     "gulp-watch": "",
     "gulp-uglify": "",
-    "gulp-cssnano": "",
-    "magix-combine": "1.1.13",
+    "magix-combine": "3.0.0",
     "del": ""
+  },
+  "private": true,
+  "scripts": {
+    "start": "gulp combine",
+    "watch": "gulp watch",
+    "build": "gulp build"
   }
 }

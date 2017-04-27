@@ -1,0 +1,20 @@
+.gtip{
+    border:solid 1px #ccc;
+    background-color: #fff;
+    padding:8px 20px;
+    position: fixed;
+    z-index: 450;
+    border-radius: 4px;
+    width: 300px;
+    height:65px;
+    overflow: hidden;
+    word-break: break-all;
+    transition: all 0.3s;
+    opacity: 0;
+}
+.fadein{
+    opacity: 1;
+}
+.fadeout{
+    opacity: 0;
+}

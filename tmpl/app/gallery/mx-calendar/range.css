@@ -1,0 +1,55 @@
+.wrapper{
+    border: 1px solid #e6e6e6;
+    padding: 15px 0;
+    border-radius: 4px;
+    font-size: 12px;
+    background-color: #fff;
+    width: 250px;
+}
+.shortcuts-wrapper{
+    padding: 0 10px;
+    margin-bottom: 15px;
+}
+.shortcuts{
+    width: 240px;
+}
+.st{
+    height: 24px;
+    border-radius: 4px;
+    margin: 0 10px 10px 0;
+    width: 70px;
+    padding: 4px;
+    float: left;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+}
+.st:hover{
+    background: #eee;
+}
+.selected,.selected:hover{
+    color: #fff;
+    background: #6363e6;
+}
+.range{
+    padding: 0 10px;
+    margin-bottom: 15px;
+}
+.ipt{
+    background-color: #f0f0f0;
+    border: 0;
+    height: 24px;
+    width: 110px;
+    text-align: center;
+    display: inline-block;
+    color: #333;
+    border-radius: 4px;
+    box-sizing: border-box;
+    padding: 6px 9px;
+}
+.footer{
+    border-top: 1px solid #e6e6e6;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+}

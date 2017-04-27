@@ -1,14 +1,17 @@
 /*
-    author:xinglie.lkf@taobao.com
+    author:xinglie.lkf@alibaba-inc.com
  */
-var Magix = require('magix');
+let Magix = require('magix');
+Magix.applyStyle('@pagination.css');
+let GTip = require('@app/mixins/gtip');
 module.exports = Magix.View.extend({
     tmpl: '@pagination.html',
-    tmplData: '@pagination.html:data',
-    render: function() {
-        var me = this;
-        me.$updater.set({
-            id: me.id
-        }).digest();
+    mixins: [GTip],
+    render() {
+        let me = this;
+        me.updater.digest();
+    },
+    'pageChange<change>' (e) {
+        this.gtipRT(JSON.stringify(e.state));
     }
 });

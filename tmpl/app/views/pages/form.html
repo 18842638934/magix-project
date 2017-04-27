@@ -1,0 +1,80 @@
+<form mx-view="app/gallery/mx-validation/index" id="form_<%=viewId%>">
+        <div class="form-line clearfix">
+            <label class="line-label">
+                <i class="line-required">*</i> 必填校验：
+            </label>
+            <div class="fl">
+                <input class="input" type="text" validator-required="true" value="<%:rValue%>" />
+            </div>
+        </div>
+        <div class="form-line clearfix">
+            <label class="line-label">
+                Taginput：
+            </label>
+            <div class="fl">
+                <div class="input"
+                    mx-view="app/gallery/mx-taginput/index"
+                    view-list="<%@list2%>"
+                    view-placeholder="请选择分类"
+                    view-textKey="text"
+                    view-valueKey="id"
+                    validator-required="true"
+                    mx-change="showSelected()"
+                    <%:tags%>
+                ></div>
+            </div>
+        </div>
+        <div class="form-line clearfix">
+            <label class="line-label">
+                下拉框：
+            </label>
+            <div class="fl">
+                <div mx-view="app/gallery/mx-dropdown/index"
+                    view-emptyText="下拉框"
+                    view-width="340"
+                    mx-change="showValue()"
+                    validator-required="true"
+                    <%:dropdwon%>>
+                    <item value="a1">text 1</item>
+                </div>
+            </div>
+        </div>
+        <div class="form-line clearfix">
+            <label class="line-label">
+                日历：
+            </label>
+            <div class="fl">
+                <input class="input" type="text" validator-required="true" mx-view="app/gallery/mx-calendar/datepicker" <%:date%> />
+            </div>
+        </div>
+        <div class="form-line clearfix">
+            <label class="line-label">
+                颜色：
+            </label>
+            <div class="fl">
+                <input class="input" type="text" validator-required="true" mx-view="app/gallery/mx-colorpicker/picker" <%:color%> />
+            </div>
+            <div class="fl ml5" style="cursor: help;" mx-view="app/gallery/mx-popover/index"
+        view-content="提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容">?</div>
+        </div>
+        <div class="form-line clearfix">
+            <label class="line-label">
+                范围：
+            </label>
+            <div class="fl">
+                <div mx-view="app/gallery/mx-range/index" view-value="<%@r1%>" mx-change="syncAge()" class="ib"></div>
+                <div class="ib ml10"><%=age%></div>
+            </div>
+        </div>
+        <div class="form-line clearfix">
+            <label class="line-label">
+                上传：
+            </label>
+            <div class="fl">
+                <a href="javascript:;"
+                    class="btn btn-brand"
+                    mx-view="app/gallery/mx-uploader/index"
+                    view-action="unfound/path">上传文件</a>
+            </div>
+        </div>
+    </form>

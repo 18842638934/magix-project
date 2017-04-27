@@ -1,12 +1,11 @@
 /*
-    author:xinglie.lkf@taobao.com
+    author:xinglie.lkf@alibaba-inc.com
  */
-var Magix = require('magix');
+let Magix = require('magix');
 module.exports = Magix.View.extend({
     tmpl: '@inputmask.html',
-    tmplData: '@inputmask.html:data',
-    render: function() {
-        var me = this;
-        me.$updater.digest();
+    render() {
+        let me = this;
+        me.updater.digest();
     }
 });
