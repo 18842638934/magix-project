@@ -1,0 +1,1 @@
+define("app/mixins/echarts",["$","magix"],function(i,t,n){var r=i("$"),e=i("magix");n.exports={renderECharts:function(i,t){i=r(i);var n=window.echarts.init(i[0]);return n.setOption(t),this.capture(e.guid("chart"),{destroy:function(){n.dispose()}},!0),n}}});
