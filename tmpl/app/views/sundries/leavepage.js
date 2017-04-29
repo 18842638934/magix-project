@@ -5,6 +5,7 @@ let Magix = require('magix');
 Magix.applyStyle('@leavepage.css');
 let Form = require('@app/mixins/form');
 let Dialog = require('@app/mixins/dialog');
+let GTip = require('@app/mixins/gtip');
 let list2 = [{
     id: 1,
     text: '分类1'
@@ -53,9 +54,25 @@ let list2 = [{
 }];
 module.exports = Magix.View.extend({
     tmpl: '@leavepage.html',
-    mixins: [Form, Dialog],
-    leaveConfirm(msg, forward, backward) {
-        this.confirm(msg, forward, backward);
+    mixins: [Form, Dialog, GTip],
+    leaveConfirm(msg, resolve, reject) {
+        let me = this;
+        me.mxDialog('@./savedlg', {
+            body: msg,
+            cancelCallback: reject,
+            enterCallback(save) {
+                if (save) {
+                    me.gtipRT('数据保存中...');
+                    setTimeout(resolve, 1500);
+                } else {
+                    resolve();
+                }
+            }
+        });
+        // me.confirm(msg, () => {
+        //     console.log('xxxx');
+        //     setTimeout(resolve,5000);
+        // }, reject);
     },
     init() {
         this.leaveTip('页面有变化且未保存，确认离开吗？', () => {

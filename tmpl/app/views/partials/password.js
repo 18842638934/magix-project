@@ -2,7 +2,6 @@
     author:xinglie.lkf@alibaba-inc.com
  */
 let Magix = require('magix');
-Magix.applyStyle('@password.css');
 let Form = require('@app/mixins/form');
 let Dialog = require('@app/mixins/dialog');
 module.exports = Magix.View.extend({

@@ -56,7 +56,7 @@ module.exports = Magix.View.extend({
     },
     fireLeave(e) {
         let vf = Magix.Vframe.get('cnt_' + this.id);
-        vf.invoke('fire', ['viewunload', e]);
+        vf.invoke('fire', ['unload', e]);
     },
     'close<click>' () {
         $('#' + this.id).trigger('dlg_close');
@@ -91,12 +91,12 @@ module.exports = Magix.View.extend({
                     prevent() {
                         suspend = 1;
                     },
-                    forward() {
+                    resolve() {
                         e.p = 1;
                         suspend = 0;
                         resume();
                     },
-                    backward() {
+                    reject() {
                         e.p = 1;
                         suspend = 0;
                     }

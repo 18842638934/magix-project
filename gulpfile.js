@@ -13,7 +13,7 @@ var ts = require('typescript');
 combineTool.config({
     tmplFolder: tmplFolder,
     srcFolder: srcFolder,
-    cssSelectorPrefix: 'p',
+    cssSelectorPrefix: 'pabcd',
     compressCss: false,
     compressCssSelectorNames: true,
     md5CssSelectorLen: 3,
@@ -53,7 +53,7 @@ gulp.task('combine', ['cleanSrc'], function() {
         console.log('gulpfile:', ex);
         process.exit();
     });
-    //combineTool.processFile('tmpl/app/li-test.js').catch(function(ex){
+    //combineTool.processFile('tmpl/app/views/partials/password.js').catch(function(ex){
     //   console.log('ex',ex);
     //});
 });

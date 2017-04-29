@@ -59,8 +59,8 @@ module.exports = Magix.View.extend({
             return this.updater.altered();
         });
     },
-    leaveConfirm(msg, forward, backward) {
-        this.confirm(msg, forward, backward);
+    leaveConfirm(msg, resolve, reject) {
+        this.confirm(msg, resolve, reject);
     },
     render() {
         let me = this;

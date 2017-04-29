@@ -242,9 +242,11 @@ module.exports = Magix.View.extend({
         this.$node.toggleClass('@nav.less:nav-close');
     },
     '$doc<navslidend>' () {
+        console.log('update triangle');
         Triangle.update(this.$node);
     },
     '$win<resize>' () {
+        console.log('update triangle');
         Triangle.update(this.$node);
     }
 });

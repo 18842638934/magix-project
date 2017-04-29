@@ -19,5 +19,20 @@
         </div>
     </div>
     <%}%>
-    <input mx-keydown="check()" mx-input="check()" mx-paste="check()" mx-view="@./suggest?list=<%@list%>&map=<%@map%>&textKey=<%@textKey%>&valueKey=<%@valueKey%>&relateIds=ipt_<%=viewId%>&offsetLeft=-11&scrollTop=<%@scrollTop%>" class="trigger" autocomplete="off" mx-pick="add()" mx-click="stop()" />
+    <input
+        mx-keydown="check()"
+        mx-input="check()"
+        mx-paste="check()"
+        mx-pick="add()"
+        mx-click="stop()"
+        mx-view="@./suggest"
+        view-list="<%@list%>"
+        view-map="<%@map%>"
+        view-textKey="<%@textKey%>"
+        view-valueKey="<%@valueKey%>"
+        view-relateIds="ipt_<%!viewId%>"
+        view-offsetLeft="-11"
+        view-scrollTop="<%@scrollTop%>"
+        class="trigger"
+        autocomplete="off"/>
 </div>

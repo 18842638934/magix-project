@@ -54,6 +54,7 @@ module.exports = Magix.View.extend({
     render() {
         let me = this;
         me.updater.digest({
+            viewId: me.id,
             list2,
             age: 5
         });

@@ -877,7 +877,7 @@ Magix.Event = Event;
     var Router_Bind = function() {
         var lastHash = Router_Parse().srcHash;
         var newHash, suspend;
-        $(G_WINDOW).on('hashchange', function(e, loc, forward) {
+        $(G_WINDOW).on('hashchange', function(e, loc, resolve) {
             if (suspend) {
                 Router_UpdateHash(lastHash);
                 return;
@@ -885,18 +885,18 @@ Magix.Event = Event;
             loc = Router_Parse();
             newHash = loc.srcHash;
             if (newHash != lastHash) {
-                forward = function() {
+                resolve = function() {
                     e.p = 1;
                     suspend = G_EMPTY;
                     Router_UpdateHash(lastHash = newHash);
                     Router_Diff();
                 };
                 e = {
-                    backward: function() {
+                    reject: function() {
                         e.p = 1;
                         suspend = G_EMPTY;
                     },
-                    forward: forward,
+                    resolve: resolve,
                     prevent: function() {
                         suspend = 1;
                         Router_UpdateHash(lastHash);
@@ -904,7 +904,7 @@ Magix.Event = Event;
                 };
                 Router.fire('change', e);
                 if (!suspend && !e.p) {
-                    forward();
+                    resolve();
                 }
             }
         });
@@ -2867,18 +2867,18 @@ G_Mix(G_Mix(ViewProto, Event), {
                 v = 'a';
             }
             if (changeListener[flag]) {
-                e.backward();
+                e.reject();
             } else if (fn()) {
                 changeListener[v] = 1;
                 me.leaveConfirm(msg, function() {
                     changeListener[v] = 0;
-                    e.forward();
+                    e.resolve();
                 }, function() {
                     changeListener[v] = 0;
-                    e.backward();
+                    e.reject();
                 });
             } else {
-                e.forward();
+                e.resolve();
             }
         };
         var unloadListener = function(e) {
@@ -2892,7 +2892,7 @@ G_Mix(G_Mix(ViewProto, Event), {
             Router.off('change', changeListener);
             Router.off('pageunload', unloadListener);
         });
-        me.on('viewunload', changeListener);
+        me.on('unload', changeListener);
     },
 
 

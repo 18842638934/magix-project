@@ -1,4 +1,4 @@
-.input{
+.input,.textarea{
     display: inline-block;
     height: 32px;
     vertical-align: middle;
@@ -17,13 +17,16 @@
         color: #999;
     }
 }
-.input:hover{
+.input:hover,.textarea:hover{
     border-color: #ccc;
     color: #333;
 }
-.input:focus{
+.input:focus,.textarea:focus{
     border-color: #6363e6;
     color: #333;
+}
+.textarea{
+    height: auto;
 }
 .form-line{
     margin: 10px 0;
