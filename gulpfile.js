@@ -83,7 +83,7 @@ gulp.task('build', ['cleanBuild', 'cleanSrc'], function() {
         gulp.src(srcFolder + '/**/*.js')
             .pipe(uglify({
                 compress: {
-                    drop_console: true,
+                    //drop_console: true,
                     drop_debugger: true
                 }
             }))

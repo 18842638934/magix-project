@@ -161,6 +161,10 @@ let Menus = [{
         text: '弹框关闭提醒',
         icon: '&#xe665;',
         url: '/sundries/leavedlg'
+    },{
+        text: '流控处理',
+        icon: '&#xe629;',
+        url: '/sundries/preservice'
     }]
 }/*, {
     text: '数据报告',

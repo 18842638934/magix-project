@@ -877,9 +877,29 @@ Magix.Event = Event;
     var Router_Bind = function() {
         var lastHash = Router_Parse().srcHash;
         var newHash, suspend;
+        var isCheck;
+        var toHash=function(hash,resume){
+            isCheck=true;
+            history.go(1);
+            var checker=function(){
+                var h=Router_Parse().srcHash;
+                if(h==hash){
+                    isCheck=false;
+                    if(resume)resume();
+                }else{
+                    history.go(-1);
+                    setTimeout(checker,200);
+                }
+            };
+            setTimeout(checker,200);
+        };
         $(G_WINDOW).on('hashchange', function(e, loc, resolve) {
+            // if(isCheck){
+            //     return;
+            // }
             if (suspend) {
-                Router_UpdateHash(lastHash);
+                //toHash(lastHash);
+                //Router_UpdateHash(lastHash);
                 return;
             }
             loc = Router_Parse();
@@ -888,18 +908,20 @@ Magix.Event = Event;
                 resolve = function() {
                     e.p = 1;
                     suspend = G_EMPTY;
+                    //toHash(lastHash=newHash,Router_Diff);
                     Router_UpdateHash(lastHash = newHash);
                     Router_Diff();
                 };
                 e = {
                     reject: function() {
                         e.p = 1;
-                        suspend = G_EMPTY;
+                        suspend = G_EMPTY;Router_UpdateHash(lastHash);
                     },
                     resolve: resolve,
                     prevent: function() {
                         suspend = 1;
-                        Router_UpdateHash(lastHash);
+                        //toHash(lastHash);
+                        //Router_UpdateHash(lastHash);
                     }
                 };
                 Router.fire('change', e);
@@ -2859,7 +2881,6 @@ G_Mix(G_Mix(ViewProto, Event), {
     leaveTip: function(msg, fn) {
         var me = this;
         var changeListener = function(e) {
-            e.prevent();
             var flag = 'a', // a for router change
                 v = 'b'; // b for viewunload change
             if (e.type != 'change') {
@@ -2867,8 +2888,10 @@ G_Mix(G_Mix(ViewProto, Event), {
                 v = 'a';
             }
             if (changeListener[flag]) {
+            e.prevent();
                 e.reject();
             } else if (fn()) {
+            e.prevent();
                 changeListener[v] = 1;
                 me.leaveConfirm(msg, function() {
                     changeListener[v] = 0;

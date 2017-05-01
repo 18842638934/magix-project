@@ -3,22 +3,40 @@
  */
 let Magix = require('magix');
 let $ = require('$');
-let Service = Magix.Service.extend(function(bag, callback) {
-    $.ajax({
-        url: bag.get('url') + '?r=' + Magix.guid(),
-        complete: function(xhr, text) {
-            if (text == 'error') {
-                callback({
-                    msg: xhr.statusText
-                });
-            } else {
-                //console.log(xhr.responseText);
-                bag.set('data', $.parseJSON(xhr.responseText));
-                callback();
-            }
+'@./preservice.js';
+let sync = (bag, callback) => {
+    if (PreService.intervene()) {
+        PreService.addService(sync, bag, callback);
+    } else {
+        let ctrl = bag.get('ctrl'); //模拟处理
+        if (!ctrl) {
+            bag.set('url', './tmpl/apis/list2.json');
+        } else {
+            bag.set('ctrl', '');
         }
-    });
-});
+        $.ajax({
+            url: bag.get('url') + '?r=' + Magix.guid(),
+            complete(xhr, text) {
+                if (text == 'error') {
+                    callback({
+                        msg: xhr.statusText
+                    });
+                } else {
+                    let data = $.parseJSON(xhr.responseText);
+                    if (data.action) {
+                        console.log('need', data.action);
+                        PreService.addService(sync, bag, callback);
+                        PreService.addTask(data.action);
+                    } else {
+                        bag.set('data', data);
+                        callback();
+                    }
+                }
+            }
+        });
+    }
+};
+let Service = Magix.Service.extend(sync);
 '@./project.js';
 Magix.mix(Service, {
     ctor() {
@@ -56,8 +74,8 @@ Magix.mix(Service, {
     save(models, callback) {
         let me = this;
         let key = JSON.stringify(models);
-        me.lock(key, function() {
-            me.request(key + '_request').save(models, function() {
+        me.lock(key, () => {
+            me.request(key + '_request').save(models, () => {
                 me.unlock(key);
                 callback.apply(me, arguments);
             });
@@ -68,7 +86,7 @@ Magix.mix(Service, {
      * @param  {String} key 锁定的key
      * @param  {Function} fn 回调方法
      */
-    lock: function(key, fn) {
+    lock(key, fn) {
         let me = this;
         if (!me.$locker) me.$locker = {};
         let locker = me.$locker;
@@ -81,7 +99,7 @@ Magix.mix(Service, {
      * 解锁
      * @param  {String} key 锁定的key
      */
-    unlock: function(key) {
+    unlock(key) {
         let locker = this.$locker;
         if (locker) {
             delete locker[key];

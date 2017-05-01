@@ -10,8 +10,7 @@ Service.add([{
     cache: TenMins
 }, {
     name: 'list1',
-    url: './tmpl/apis/list1.json',
-    cache: TenMins
+    url: './tmpl/apis/list1.json'
 }, {
     name: 'list404',
     url: './tmpl/apis/list404.json'
