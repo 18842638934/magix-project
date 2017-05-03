@@ -2,7 +2,7 @@
     author:xinglie.lkf@alibaba-inc.com
  */
 let Magix = require('magix');
-Magix.applyStyle('@validation.css');
+Magix.applyStyle('@validation.less');
 let $ = require('$');
 let Dialog = require('@app/mixins/dialog');
 module.exports = Magix.View.extend({
