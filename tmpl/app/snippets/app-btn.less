@@ -1,3 +1,5 @@
+@import "./base";
+
 .btn {
   display: inline-block;
   margin-bottom: 0;
@@ -7,13 +9,13 @@
   touch-action: manipulation;
   cursor: pointer;
   background-image: none;
-  background-color: #e6e6e6;
+  background-color: @color-bg;
   white-space: nowrap;
-  padding: 6px 20px;
+  padding: 10px 14px;
   font-size: 12px;
-  line-height: 1.42857143;
+  line-height: 1;
   border: 0;
-  color:#333;
+  color: @color-primary;
   border-radius: 4px;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -25,14 +27,13 @@
   outline: none;
 }
 .btn:hover{
-  color: #333;
-  background-color: #ccc;
+  background-color: @color-bg-hover;
 }
 .btn-brand{
-    background-color: #6363e6;
+    background-color: @color-brand;
     color:#fff;
 }
 .btn-brand:hover{
-    background-color: #5a5ad1;
-    color:#fff;
+    background-color: @color-brand-hover;
+    color: #fff;
 }

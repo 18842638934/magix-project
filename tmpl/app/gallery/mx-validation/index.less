@@ -1,8 +1,10 @@
+@import "../../snippets/base";
+
 .pr{
     position: relative;
 }
 .fail{
-    border-color: #a62a22!important;
+    border-color: @color-error;
 }
 .msg,.msg-outer{
     display: none;
@@ -14,8 +16,10 @@
     white-space: nowrap;
     word-wrap: normal;
     z-index: 1;
+    color: @color-secondary;
 }
 .msg-outer{
     line-height: 22px;
-    border:solid 1px #e6e6e6;
+    border: 1px solid @color-border;
+
 }

@@ -4,7 +4,7 @@
 let Magix = require('magix');
 let $ = require('$');
 let Vframe = Magix.Vframe;
-Magix.applyStyle('@index.css');
+Magix.applyStyle('@index.less');
 let ByteLen = (str) => {
     return str.replace(/[^\x00-\xff]/g, 'xl').length;
 };
@@ -117,8 +117,8 @@ let UI = {
         }
         if (!msgNode.length) {
             node.wrap('<div class="@scoped.style:ib" />');
-            node.parent().addClass('@index.css:pr');
-            node.before('<div class="@index.css:msg" id="' + msgId + '"/>');
+            node.parent().addClass('@index.less:pr');
+            node.before('<div class="@index.less:msg" id="' + msgId + '"/>');
             msgNode = $('#' + msgId);
         }
         msgNode.html(message).show();
@@ -126,7 +126,7 @@ let UI = {
         let type = node.attr('validator-message-type');
         let left, otop = offset.top;
         if (type == 'outer') {
-            msgNode.addClass('@index.css:msg-outer');
+            msgNode.addClass('@index.less:msg-outer');
             let placement = node.attr('validator-message-placement');
             switch (placement) {
                 case 'top':
@@ -169,10 +169,10 @@ let UI = {
     },
     ctrl(node, attr) {
         if (attr) {
-            node.addClass('@index.css:fail');
+            node.addClass('@index.less:fail');
             UI.msg(node, node.attr('validator-' + attr + '-message'));
         } else {
-            node.removeClass('@index.css:fail');
+            node.removeClass('@index.less:fail');
             UI.msg(node);
         }
     }
@@ -229,7 +229,7 @@ module.exports = Magix.View.extend({
         });
         return result;
     },
-    '$div[class="@index.css:msg"]<click>' (e) {
+    '$div[class="@index.less:msg"]<click>' (e) {
         let node = $(e.eventTarget);
         let type = node.attr('validator-message-type');
         if (type != 'outer') {

@@ -7,13 +7,13 @@ var gulp = require('gulp');
 var watch = require('gulp-watch');
 var fs = require('fs');
 var del = require('del');
-var combineTool = require('../magix-combine/index');
+var combineTool = require('magix-combine');
 var ts = require('typescript');
 
 combineTool.config({
     tmplFolder: tmplFolder,
     srcFolder: srcFolder,
-    cssSelectorPrefix: 'pabcd',
+    cssSelectorPrefix: 'p',
     compressCss: false,
     compressCssSelectorNames: true,
     md5CssSelectorLen: 3,
