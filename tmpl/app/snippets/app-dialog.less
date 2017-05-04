@@ -1,7 +1,9 @@
+@import "./base";
+
 .dialog-header {
-    min-height: 16.42857143px;
     padding: 15px;
-    border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid @color-border;
+    color: @color-primary;
 
     .dialog-title {
         margin: 0;
@@ -14,5 +16,5 @@
 .dialog-footer {
     padding: 15px;
     text-align: right;
-    border-top: 1px solid #e5e5e5;
+    border-top: 1px solid @color-border;
 }
