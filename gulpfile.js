@@ -1,7 +1,7 @@
 var tmplFolder = 'tmpl'; //template folder
 var srcFolder = 'src'; //source folder
 var buildFolder = 'build'; //build folder
-
+var pkg = require('./package.json');
 
 var gulp = require('gulp');
 var watch = require('gulp-watch');
@@ -43,10 +43,28 @@ combineTool.config({
     }
 });
 
+gulp.task('updateVer', () => {
+    let file = './tmpl/app/views/index.html';
+    let content = fs.readFileSync(file) + '';
+    content = content.replace(/Magix\s+Project\([^)]+/, 'Magix Project(' + pkg.version);
+    content = content.replace(/magix\-combine\([^)]+/, 'magix-combine(' + pkg.dependencies['magix-combine']);
+    let temp = fs.readFileSync('./tmpl/app/snippets/magix.js') + '';
+    let tempVer = temp.substring(0, 300).match(/\/\*!([^\s]+)\s+Licensed/);
+    if (tempVer) {
+        content = content.replace(/Magix\([^)]+/, 'Magix(' + tempVer[1]);
+    }
+    temp = fs.readFileSync('./tmpl/app/snippets/jquery.js') + '';
+    tempVer = temp.substring(0, 300).match(/Library\s+v([^\r\n]+)/);
+    if (tempVer) {
+        content = content.replace(/jQuery\([^)]+/, 'jQuery(' + tempVer[1]);
+    }
+    fs.writeFileSync(file, content);
+});
+
 gulp.task('cleanSrc', function() {
     return del(srcFolder);
 });
-gulp.task('combine', ['cleanSrc'], function() {
+gulp.task('combine', ['cleanSrc', 'updateVer'], function() {
     return combineTool.combine().then(function() {
         console.log('complete');
     }).catch(function(ex) {
@@ -75,7 +93,7 @@ var uglify = require('gulp-uglify');
 gulp.task('cleanBuild', function() {
     return del(buildFolder);
 });
-gulp.task('build', ['cleanBuild', 'cleanSrc'], function() {
+gulp.task('build', ['cleanBuild', 'cleanSrc', 'updateVer'], function() {
     combineTool.config({
         compressCss: true
     });
