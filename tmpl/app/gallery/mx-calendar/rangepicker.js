@@ -32,7 +32,6 @@ let Rangepicker = Magix.View.extend({
             end = today;
         }
         me.$shortcuts = extra.shortcuts != 'false';
-        me.$linkage = extra.linkage != 'false';
         me.$max = extra.max;
         me.$min = extra.min;
         me.$placement = extra.placement;
@@ -80,15 +79,6 @@ let Rangepicker = Magix.View.extend({
         let me = this;
         let id = 'rpcnt_' + me.id;
         $(me.wrapEvent(Wrapper)).attr('id', id).insertAfter(me.$ownerNode);
-        me.owner.mountVframe(id, '@./range', {
-            min: me.$min,
-            max: me.$max,
-            dates: me.$dates,
-            linkage: me.$linkage,
-            quickDates: me.$quickDates,
-            placement: me.$placement,
-            align: me.$align
-        });
         if (me.$fill) {
             me.fill();
         }
@@ -99,6 +89,17 @@ let Rangepicker = Magix.View.extend({
             let node = $('#rpcnt_' + me.id),
                 ref = me.$ownerNode;
             me.$shown = true;
+            if (!me.$rendered) {
+                me.$rendered = true;
+                me.owner.mountVframe('rpcnt_' + me.id, '@./range', {
+                    min: me.$min,
+                    max: me.$max,
+                    dates: me.$dates,
+                    quickDates: me.$quickDates,
+                    placement: me.$placement,
+                    align: me.$align
+                });
+            }
             Monitor.add(me);
             node.show();
             let offset = ref.offset();

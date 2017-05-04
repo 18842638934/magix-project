@@ -28,6 +28,7 @@ module.exports = Magix.View.extend({
         let me = this;
         me.updater.digest({
             provinces: Provinces,
+            html:'<img src="adfasdf" />\'!()*@',
             cities: [{id:'',text:'请选择城市'}]
         });
     },

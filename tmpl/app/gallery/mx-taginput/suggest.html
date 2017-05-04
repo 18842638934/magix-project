@@ -1,8 +1,10 @@
-<ul class="suggest" style="width:<%=width%>px" mx-mouseout="out()" mx-mousemove="move()">
+<ul class="suggest" style="width:<%=width%>px;" mx-mouseout="out()" mx-mousemove="move()">
+    <%if(rList){%>
     <%for(var i=0,one;i<list.length;i++){%>
     <%one=list[i]%>
     <li class="item" data-idx="<%!i%>" mx-click="pick({key:'<%=valueKey?one[valueKey]:one%>'})" id="sg_<%!viewId%>_<%!i%>">
         <%=textKey?one[textKey]:one%>
     </li>
+    <%}%>
     <%}%>
 </ul>

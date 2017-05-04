@@ -36,11 +36,9 @@ module.exports = Magix.View.extend({
         let me = this;
         let id = 'dpcnt_' + me.id;
         $(me.wrapEvent(Wrapper)).attr('id', id).insertAfter(me.$ownerNode);
-        me.owner.mountVframe(id, '@./index');
         if (!me.$extra.selected) {
             me.$extra.selected = me.$ownerNode.val();
         }
-        me.update(me.$extra);
     },
     show() {
         let me = this;
@@ -49,6 +47,11 @@ module.exports = Magix.View.extend({
                 ref = me.$ownerNode;
             me.$shown = true;
             Monitor.add(me);
+            if (!me.$rendered) {
+                me.$rendered = true;
+                me.owner.mountVframe('dpcnt_' + me.id, '@./index');
+                me.update(me.$extra);
+            }
             node.show();
             let offset = ref.offset();
             let left, top;

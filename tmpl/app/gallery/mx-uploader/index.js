@@ -22,18 +22,19 @@ let Iframe = Uploader.extend({
             form.append(input);
             form = form[0];
         }
-        $('<iframe name="' + id + '" id="' + id + '" style="display:none;"></iframe>').insertAfter(form).on('load', () => {
+        $('<iframe name="' + id + '" id="' + id + '" style="display:none;"></iframe>').insertAfter(form).on('load', (e) => {
             if (!me.$oust) {
-                let iframe = event.target;
+                let iframe = e.target;
                 let $body = $(iframe.contentWindow.document.body);
                 $body.find('script').remove();
                 let response = $.trim($body.text());
                 $(iframe).remove();
                 $('#' + id + '_temp').remove();
                 try {
+                    /*jshint evil:true*/
                     callback(null, new Function('return ' + response)());
-                } catch (e) {
-                    callback(e);
+                } catch (ex) {
+                    callback(ex);
                 }
             }
         }).on('error', (e) => {

@@ -31,11 +31,8 @@ module.exports = Magix.View.extend({
     render() {
         let me = this;
         let id = 'cpcnt_' + me.id;
-        let color = me.$color || me.$ownerNode.val();
+        me.$color = me.$color || me.$ownerNode.val();
         $(me.wrapEvent(Wrapper)).attr('id', id).insertAfter(me.$ownerNode);
-        me.owner.mountVframe(id, '@./index', {
-            color
-        });
     },
     show() {
         let me = this;
@@ -43,6 +40,12 @@ module.exports = Magix.View.extend({
             let node = $('#cpcnt_' + me.id),
                 ref = me.$ownerNode;
             me.$shown = true;
+            if (!me.$rendered) {
+                me.$rendered = true;
+                me.owner.mountVframe('cpcnt_' + me.id, '@./index', {
+                    color: me.$color
+                });
+            }
             Monitor.add(me);
             node.show();
             let offset = ref.offset();

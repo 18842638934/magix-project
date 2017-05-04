@@ -7,6 +7,7 @@
     <span class="iconfont down">&#xe692;</span>
 </div>
 <div class="dropdown-menu-wrapper" style="width:<%=(width+28)%>px">
+    <%if(rList){%>
     <% if (searchbox) { %>
     <div class="searchbox">
         <label>
@@ -36,4 +37,5 @@
         <% } %>
         <% } %>
     </ul>
+    <%}%>
 </div>

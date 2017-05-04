@@ -20,8 +20,8 @@
 body, dl, dd,
 ul, ol,
 h1, h2, h3, h4, h5, h6, pre,
-form, fieldset, legend, input, textarea, optgroup,
-p, blockquote, figure, hr, menu, dir,
+form, fieldset, legend, input, textarea,
+p, figure, hr, menu, dir,
 thead, tbody, tfoot, th, td {
   margin: 0;
   padding: 0;
@@ -151,13 +151,13 @@ h6 {
 * 修正「abbr」元素在 Firefox 外其他浏览器没有下划线的问题
 * 添加问号光标，明确语义
 */
-abbr,
+/*abbr,
 acronym {
-  border-bottom: 1px dotted;
+  border-bottom: 1px dotted;*/
   /* 1 */
-  cursor: help;
+  /*cursor: help;*/
   /* 2 */
-}
+/*}*/
 
 /**
 * Firefox3+，Safari4/5 和 Chrome 中统一设置为粗体
@@ -170,9 +170,9 @@ strong {
 /**
 * 修正 Safari5 和 Chrome 中没有样式的问题
 */
-dfn {
+/*dfn {
   font-style: italic;
-}
+}*/
 
 /**
 * 修正 Firefox 和其他浏览器之间的差异
@@ -200,13 +200,13 @@ mark {
 * Windows 7开始自带的 Consolas
 * Mac上自带的Monaco，Osaka-Mono
 */
-code,
+/*code,
 kbd,
 pre,
 samp {
   font-family: monaco, menlo, consolas, 'courier new', courier, monospace;
 }
-
+*/
 /**
 * 增强所有浏览器中 pre 标签中文本的可读性
 * 1. IE 6-7 不支持 pre-wrap
@@ -449,21 +449,21 @@ input[type="radio"] {
 * 1. 修正 Safari 5 和 Chrome 中「appearance」被设置为「searchfield」的问题
 * 2. 修正 Safari 5 和 Chrome 中「box-sizing」被设置为 「border-box」的问题
 */
-input[type="search"] {
-  -webkit-appearance: textfield;
+/*input[type="search"] {
+  -webkit-appearance: textfield;*/
   /* 1 */
-  -webkit-box-sizing: content-box;
+/*  -webkit-box-sizing: content-box;
           box-sizing: content-box;
 }
-
+*/
 /**
 * 1.移除 OS X 中 Safari5 和 Chrome 搜索框内侧的左边距
 * 2.如果需要隐藏清除按钮需要加上
  input[type="search"]::-webkit-search-cancel-button
 */
-input[type="search"]::-webkit-search-decoration {
+/*input[type="search"]::-webkit-search-decoration {
   -webkit-appearance: none;
-}
+}*/
 
 /**
 * 移除 Firefox 3+ 的内边距
@@ -480,10 +480,10 @@ input::-moz-focus-inner {
 * @demo: http://jsfiddle.net/FFXEc/
 * 动画演示：http://gtms04.alicdn.com/tps/i4/T18kd8FCtaXXc_FhcF-330-350.gif
 */
-input[type="number"]::-webkit-inner-spin-button,
+/*input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   height: auto;
-}
+}*/
 
 /**
 * 1. 移除 IE6-11 中默认的垂直滚动条
@@ -500,10 +500,10 @@ textarea {
 * 修正 Chrome 30- option 中文字无法显示的问题
 * http://jsbin.com/avujas/1/edit
 */
-select:disabled option:checked,
+/*select:disabled option:checked,
 option:disabled:checked {
   color: #d2d2d2;
-}
+}*/
 
 /**
 * 修正 Safari 3+, Chrome 1+ Placeholder 居中问题
@@ -533,12 +533,12 @@ label {
 * 统一 select 样式, Firefox 中有 padding:1px 0
 * http://jsbin.com/avujas/1/edit
 */
-select[size],
+/*select[size],
 select[multiple],
 select[size][multiple] {
   border: 1px solid #aaa;
   padding: 0;
-}
+}*/
 
 /* ==========================================================================
  HTML5 元素
@@ -546,7 +546,7 @@ select[size][multiple] {
 /**
 * 修正未定义为「block」的元素
 */
-article,
+/*article,
 aside,
 details,
 figcaption,
@@ -560,7 +560,7 @@ section,
 summary {
   display: block;
 }
-
+*/
 /**
 * 1. 修正未定义为「inline-block」的元素
 * 2. 修正 Chrome、Firefox、Opera 中 「progress」元素 vertical-align 默认值不一致
@@ -579,28 +579,28 @@ progress {
 * 1.防止现代浏览器将没有「controls」属性的 「audio」元素显示出来
 * 2.去掉 iOS 5 中多余的高度
 */
-audio:not([controls]) {
+/*audio:not([controls]) {
   display: none;
   /* 1 */
-  height: 0;
+  /*height: 0;*/
   /* 2 */
-}
+/*}*/
 
 /**
 * 修复 IE 7/8/9，Firefox 3 和 Safari 4 中 「hidden」属性不起作用的问题
 * 在IE、Safari、Firefox 22- 中隐藏「template」元素
 */
-[hidden], template {
+/*[hidden], template {
   display: none;
 }
-
+*/
 /**
 * 为可拖动元素添加拖动的光标
 * http://jsbin.com/apavod/1/edit
 */
-[draggable] {
+/*[draggable] {
   cursor: move;
 }
-
+*/
 
 /*# sourceMappingURL=neat.css.map */

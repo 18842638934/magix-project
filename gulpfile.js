@@ -7,7 +7,7 @@ var gulp = require('gulp');
 var watch = require('gulp-watch');
 var fs = require('fs');
 var del = require('del');
-var combineTool = require('magix-combine');
+var combineTool = require('../magix-combine/index');
 var ts = require('typescript');
 
 combineTool.config({
@@ -53,7 +53,7 @@ gulp.task('combine', ['cleanSrc'], function() {
         console.log('gulpfile:', ex);
         process.exit();
     });
-    //combineTool.processFile('tmpl/app/views/partials/password.js').catch(function(ex){
+    //combineTool.processFile('tmpl/app/gallery/mx-taginput/index.js').catch(function(ex){
     //   console.log('ex',ex);
     //});
 });

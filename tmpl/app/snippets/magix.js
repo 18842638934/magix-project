@@ -1,12 +1,12 @@
 '#snippet';
 '#exclude(define,before)';
-/*!3.2.3 Licensed MIT*/
+/*!3.2.5 Licensed MIT*/
 /*
 author:xinglie.lkf@alibaba-inc.com;kooboy_li@163.com
 loader:cmd
-enables:magix,event,vframe,body,view,tmpl,updater,share,core,autoEndUpdate,linkage,style,viewInit,service,router,resource,configIni,nodeAttachVframe,viewMerge,tiprouter,updaterSetState,viewProtoMixins,base
+enables:magix,event,vframe,body,view,tmpl,updater,share,core,autoEndUpdate,linkage,style,viewInit,service,router,resource,configIni,nodeAttachVframe,viewMerge,tipRouter,updaterSetState,viewProtoMixins,base
 
-optionals:cnum,ceach,edgeRouter,collectView,forceEdgeRouter,serviceCombine,mxInit
+optionals:cnum,ceach,tipLockUrlRouter,edgeRouter,collectView,forceEdgeRouter,serviceCombine,mxInit
 */
 /*
     author:xinglie.lkf@taobao.com
@@ -874,32 +874,30 @@ Magix.Event = Event;
         }
     };
 
+    /*
+    var isCheck;
+    var toHash=function(hash,resume){
+        isCheck=true;
+        history.go(1);
+        var checker=function(){
+            var h=Router_Parse().srcHash;
+            if(h==hash){
+                isCheck=false;
+                if(resume)resume();
+            }else{
+                history.go(-1);
+                setTimeout(checker,200);
+            }
+        };
+        setTimeout(checker,200);
+    };
+     */
     var Router_Bind = function() {
         var lastHash = Router_Parse().srcHash;
         var newHash, suspend;
-        var isCheck;
-        var toHash=function(hash,resume){
-            isCheck=true;
-            history.go(1);
-            var checker=function(){
-                var h=Router_Parse().srcHash;
-                if(h==hash){
-                    isCheck=false;
-                    if(resume)resume();
-                }else{
-                    history.go(-1);
-                    setTimeout(checker,200);
-                }
-            };
-            setTimeout(checker,200);
-        };
         $(G_WINDOW).on('hashchange', function(e, loc, resolve) {
-            // if(isCheck){
-            //     return;
-            // }
             if (suspend) {
-                //toHash(lastHash);
-                //Router_UpdateHash(lastHash);
+
                 return;
             }
             loc = Router_Parse();
@@ -908,20 +906,21 @@ Magix.Event = Event;
                 resolve = function() {
                     e.p = 1;
                     suspend = G_EMPTY;
-                    //toHash(lastHash=newHash,Router_Diff);
                     Router_UpdateHash(lastHash = newHash);
                     Router_Diff();
                 };
                 e = {
                     reject: function() {
                         e.p = 1;
-                        suspend = G_EMPTY;Router_UpdateHash(lastHash);
+                        suspend = G_EMPTY;
+
+                        Router_UpdateHash(lastHash);
+
                     },
                     resolve: resolve,
                     prevent: function() {
                         suspend = 1;
-                        //toHash(lastHash);
-                        //Router_UpdateHash(lastHash);
+
                     }
                 };
                 Router.fire('change', e);
@@ -1844,6 +1843,7 @@ var Body_DOMEventProcessor = function(e) {
                     fn = view[name];
                     if (fn) {
                         //e.current = current;
+                        //e.currentTarget = current;
                         e.eventTarget = current;
                         e.params = match.p;
                         G_ToTry(fn, e, view);
@@ -1903,7 +1903,7 @@ var Tmpl_Compiler = function(text) {
 
   // If a variable is not specified, place data values in local scope.
   //source = "with($mx){\n" + source + "}\n";
-  source = "var $t,$p='',$em={'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;','\\'':'&#x27;','`':'&#x60;'},$er=/[&<>\"'`]/g,$ef=function(m){return $em[m]},$e=function(v){return (''+v).replace($er,$ef)},$i=function(){return '" + G_SPLITER + "'+$g++},$s;\n" + source + "return $p;\n";
+  source = "var $t,$p='',$em={'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;','\\'':'&#x27;','`':'&#x60;'},$er=/[&<>\"'`]/g,$ef=function(m){return $em[m]},$e=function(v){return (''+v).replace($er,$ef)},$i=function(){return '" + G_SPLITER + "'+$g++},$s,$eum={'!':'%21','\\'':'%27','(':'%28',')':'%29','*':'%2A'},$euf=function(m){return $eum[m]},$eur=/[!')(*]/g,$eu=function(v){return encodeURIComponent(v).replace($eur,$euf)};\n" + source + "return $p;\n";
   /*jshint evil: true*/
   return Function("$g", "$$", source);
 };
@@ -2434,6 +2434,7 @@ var View_Prepare = function(oView) {
                 }
             }
         }
+        console.log(prop);
         View_WrapRender(prop);
         prop.$eo = eventsObject;
         prop.$el = eventsList;
@@ -2867,7 +2868,7 @@ G_Mix(G_Mix(ViewProto, Event), {
      * @param  {String} msg 提示消息
      * @param  {Function} fn 是否提示的回调
      * @beta
-     * @module tiprouter
+     * @module tipRouter
      * @example
      * var Magix = require('magix');
      * module.exports = Magix.View.extend({
@@ -2888,10 +2889,10 @@ G_Mix(G_Mix(ViewProto, Event), {
                 v = 'a';
             }
             if (changeListener[flag]) {
-            e.prevent();
+                e.prevent();
                 e.reject();
             } else if (fn()) {
-            e.prevent();
+                e.prevent();
                 changeListener[v] = 1;
                 me.leaveConfirm(msg, function() {
                     changeListener[v] = 0;

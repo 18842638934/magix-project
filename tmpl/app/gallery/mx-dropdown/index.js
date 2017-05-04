@@ -57,6 +57,12 @@ module.exports = Magix.View.extend({
     show() {
         let me = this;
         if (!me.$oNode.hasClass('@index.css:open')) {
+            let data = me.updater.get();
+            if (!data.rList) {
+                me.updater.digest({
+                    rList: true
+                });
+            }
             me.$oNode.addClass('@index.css:open').trigger('focusin');
             let listNode = $('#list_' + me.id);
             let active = listNode.find('.@index.css:active');
@@ -201,7 +207,7 @@ module.exports = Magix.View.extend({
         let toggle = $('#toggle_' + me.id);
         if (me.$oNode.hasClass('@index.css:open')) {
             me.hide();
-        } else if (!toggle.hasClass('@index.css:disabled')) {
+        } else if (!toggle.hasClass('@index.css:notallowed')) {
             me.show();
         }
     },
