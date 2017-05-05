@@ -123,8 +123,7 @@ module.exports = Magix.View.extend({
     show() {
         let me = this;
         let updater = me.updater;
-        let list = updater.get('list');
-        if (!me.$shown && list.length) {
+        if (!me.$shown) {
             me.$shown = true;
             let rList = updater.get('rList');
             if (!rList) {
@@ -138,6 +137,7 @@ module.exports = Magix.View.extend({
                 left: offset.left + me.$offsetLeft,
                 top: offset.top + me.$oNode.outerHeight() + 10
             });
+            me.$oNode.trigger('showList');
         }
     },
     normal() {
@@ -171,6 +171,7 @@ module.exports = Magix.View.extend({
             me.$shown = false;
             Monitor.remove(me);
             me.$rNode.hide();
+            me.$oNode.trigger('hideList');
         }
     },
     'pick<click>' (e) {

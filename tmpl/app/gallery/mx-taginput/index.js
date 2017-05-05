@@ -118,7 +118,17 @@ module.exports = Magix.View.extend({
             items: updater.get('items')
         });
     },
-    'check<keydown,input,paste>' (e) {
+    focus() {
+        let me = this;
+        clearTimeout(me.$hTimer);
+        me.$holdFocusEvent = true;
+        me.$trigger.focus();
+        me.$hTimer = setTimeout(me.wrapAsync(() => {
+            delete me.$holdFocusEvent;
+        }), 20);
+    },
+    'check<keydown,input,paste,keyup>' (e) {
+        e.stopPropagation();
         let me = this;
         let val = e.eventTarget.value;
         if (me.$val !== val) {
@@ -138,7 +148,7 @@ module.exports = Magix.View.extend({
                         idx: idx
                     }
                 });
-                me.$trigger.focus();
+                me.focus();
             }
         }
     },
@@ -160,7 +170,7 @@ module.exports = Magix.View.extend({
             list: me.getSuggest()
         });
         me.updateTrigger();
-        me.$trigger.focus();
+        me.focus();
         me.triggerEvent();
     },
     'focus<click>' () {
@@ -184,7 +194,15 @@ module.exports = Magix.View.extend({
         me.updateTrigger();
         me.triggerEvent();
     },
-    'stop<click>' (e) {
+    'stop<change,focusin,focusout>' (e) {
         e.stopPropagation();
+    },
+    'toggleList<showList,hideList>' (e) {
+        let me = this;
+        if (!me.$holdFocusEvent) {
+            $('#' + this.id).trigger({
+                type: e.type == 'showList' ? 'focusin' : 'focusout'
+            });
+        }
     }
 });

@@ -57,12 +57,12 @@ module.exports = Magix.View.extend({
             text: '分类15'
         }];
         me.updater.digest({
+            viewId: me.id,
             list1,
             list2
         });
     },
     'showSelected<change>' (e) {
-        console.log(e);
         this.gtipRT('选中的ids:' + e.ids);
     }
 });
