@@ -122,8 +122,16 @@ module.exports = Magix.View.extend({
     },
     show() {
         let me = this;
-        if (!me.$shown) {
+        let updater = me.updater;
+        let list = updater.get('list');
+        if (!me.$shown && list.length) {
             me.$shown = true;
+            let rList = updater.get('rList');
+            if (!rList) {
+                updater.digest({
+                    rList: true
+                });
+            }
             Monitor.add(me);
             let offset = me.$oNode.position();
             me.$rNode.show().css({

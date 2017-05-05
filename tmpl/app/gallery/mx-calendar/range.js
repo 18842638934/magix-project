@@ -94,7 +94,6 @@ let Range = Magix.View.extend({
     tmpl: '@range.html',
     init(ops) {
         let me = this;
-        me.$linkage = ops.linkage;
         me.$min = ops.min;
         me.$max = ops.max;
         me.$dates = ops.dates;
@@ -156,11 +155,7 @@ let Range = Magix.View.extend({
             placement: me.$placement,
             align: me.$align
         };
-        if (params.first) {
-            if (me.$linkage) {
-                dparams.max = $('#end_' + me.id).data('hidden');
-            }
-        } else {
+        if (!params.first) {
             dparams.min = $('#start_' + me.id).data('hidden');
         }
         if (node.vframe) {

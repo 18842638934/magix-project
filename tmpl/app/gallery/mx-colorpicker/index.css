@@ -31,7 +31,7 @@
   display: inline;
   position: relative;
 }
-.shortcuts li.selected:before {
+.selected:before {
   content: '√';
   display: inherit;
   position: absolute;
