@@ -1,19 +1,24 @@
+@import "../../snippets/base";
+
 .wrapper{
-    background-color: white;
+    background-color: #fff;
     display: inline-block;
-    border: 1px solid #CCC;
+    border: 1px solid @color-border;
     padding: 0;
     border-radius: 5px;
     overflow-y: hidden;
     z-index: 10;
+    color: @color-primary;
+    text-align: center;
+    font-size: 12px;
 }
 .gray{
     color: #777;
 }
 .header{
-    text-align: center;
     height: 30px;
     line-height: 30px;
+    padding: 1px;
 }
 .minus,
 .plus {
@@ -31,7 +36,7 @@
 }
 .minus:hover, .minus:focus,
 .plus:hover, .plus:focus {
-    color: #6363e6;
+    color: @color-brand;
     text-decoration: none;
 }
 .title {
@@ -39,9 +44,7 @@
     cursor: pointer;
     padding: 5px 10px;
     border-radius: 4px;
-    height: 22px;
     line-height: 1;
-    font-size: 12px;
 }
 .f12{
     font-size: 12px;
@@ -50,7 +53,7 @@
     background-color: #EEE;
 }
 .body{
-    width: 258px;
+    width: 245px;
 }
 .weeks{
     color: #999;
@@ -65,13 +68,12 @@
 }
 
 .ym{
-    height: 95px;
+    height: 64px;
     display: inline-block;
     padding: 5px 0;
-    width:64px;
+    width:80px;
     cursor: pointer;
-    line-height: 95px;
-    text-align: center;
+    line-height: 64px;
     border-radius: 5px;
     font-size:16px;
 }
@@ -79,18 +81,17 @@
     background: #eee;
 }
 .week,.day{
-    display: inline-block;
-    padding: 5px 0;
-    width:30px;
-    margin: 3px 2px 0 2px;
+    width:28px;
+    height: 28px;
+    line-height: 28px;
+    margin: 3px 2px;
     float: left;
-    text-align: center;
-    border-radius: 5px;
+    border-radius: 4px;
     cursor: pointer;
 }
 .selected,.selected:hover{
     color:#fff;
-    background-color: #6363e6;
+    background-color: @color-brand;
 }
 .notallowed,.notallowed:hover{
     color:#eee;

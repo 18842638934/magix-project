@@ -2,7 +2,7 @@
     author:xinglie.lkf@taobao.com
  */
 let Magix = require('magix');
-Magix.applyStyle('@index.css');
+Magix.applyStyle('@index.less');
 let $ = require('$');
 let GetNumOfDays = (year, month) => {
     return 32 - new Date(year, month - 1, 32).getDate();
@@ -380,8 +380,8 @@ module.exports = Magix.View.extend({
     },
     'choose<click>' (e) {
         let me = this;
-        $('#days_' + me.id + ' span').removeClass('@index.css:selected');
-        $(e.eventTarget).addClass('@index.css:selected');
+        $('#days_' + me.id + ' span').removeClass('@index.less:selected');
+        $(e.eventTarget).addClass('@index.less:selected');
         let data = me.updater;
         me.updateSelected(e.params.date);
         if (e.params.toMonth != data.get('month')) {
