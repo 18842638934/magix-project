@@ -1,3 +1,5 @@
+@import "./base";
+
 // Box sizing
 .box-sizing(@boxmodel) {
   -webkit-box-sizing: @boxmodel;
@@ -5,12 +7,15 @@
           box-sizing: @boxmodel;
 }
 
-* {
+html {
   .box-sizing(border-box);
+}
+* {
+  .box-sizing(inherit);
 }
 *:before,
 *:after {
-  .box-sizing(border-box);
+  .box-sizing(inherit);
 }
 
 input:focus,textarea:focus,a:focus,button:focus{
@@ -18,10 +23,10 @@ input:focus,textarea:focus,a:focus,button:focus{
   resize:none;
 }
 a {
-    color: #6363e6;
+    color: @color-brand;
     text-decoration: none;
     &:hover, &:focus {
-        color: #5A5AD1;
+        color: @color-brand-hover;
     }
     &:hover, &:focus, &:active, &:visited {
         outline: 0;
@@ -39,6 +44,6 @@ label{
   visibility: hidden;
 }
 label.disabled{
-    color: #999;
+    color: @color-disabled;
     cursor: not-allowed;
 }

@@ -5,7 +5,21 @@
 @color-secondary: #666;
 
 @color-border: #e6e6e6;
+@color-border-hover: #ccc;
 @color-bg: #eaeaea;
 @color-bg-hover: #ccc;
 
 @color-error: #a62a22;
+@color-disabled: #999;
+
+
+.clearfix() {
+    &:before,
+    &:after {
+        content: " "; // 1
+        display: table; // 2
+    }
+    &:after {
+        clear: both;
+    }
+}
