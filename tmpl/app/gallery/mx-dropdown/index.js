@@ -4,7 +4,7 @@
 let Magix = require('magix');
 let $ = require('$');
 let Monitor = require('../mx-monitor/index');
-Magix.applyStyle('@index.css');
+Magix.applyStyle('@index.less');
 module.exports = Magix.View.extend({
     tmpl: '@index.html',
     init(extra) {
@@ -26,7 +26,7 @@ module.exports = Magix.View.extend({
         me.$oNode = node;
         let updater = me.updater;
         let data = updater.get();
-        node.addClass('@index.css:dropdown');
+        node.addClass('@index.less:dropdown');
         if (!data.list) {
             let list = [];
             let group;
@@ -49,23 +49,23 @@ module.exports = Magix.View.extend({
     },
     hide() {
         let me = this;
-        if (me.$oNode.hasClass('@index.css:open')) {
-            me.$oNode.removeClass('@index.css:open').trigger('focusout');
+        if (me.$oNode.hasClass('@index.less:open')) {
+            me.$oNode.removeClass('@index.less:open').trigger('focusout');
             Monitor.remove(me);
         }
     },
     show() {
         let me = this;
-        if (!me.$oNode.hasClass('@index.css:open')) {
+        if (!me.$oNode.hasClass('@index.less:open')) {
             let data = me.updater.get();
             if (!data.rList) {
                 me.updater.digest({
                     rList: true
                 });
             }
-            me.$oNode.addClass('@index.css:open').trigger('focusin');
+            me.$oNode.addClass('@index.less:open').trigger('focusin');
             let listNode = $('#list_' + me.id);
-            let active = listNode.find('.@index.css:active');
+            let active = listNode.find('.@index.less:active');
             let pos = active.position();
             let height = listNode.height();
             let stop = listNode.prop('scrollTop');
@@ -205,9 +205,9 @@ module.exports = Magix.View.extend({
     'toggle<click>' () {
         let me = this;
         let toggle = $('#toggle_' + me.id);
-        if (me.$oNode.hasClass('@index.css:open')) {
+        if (me.$oNode.hasClass('@index.less:open')) {
             me.hide();
-        } else if (!toggle.hasClass('@index.css:notallowed')) {
+        } else if (!toggle.hasClass('@index.less:notallowed')) {
             me.show();
         }
     },
