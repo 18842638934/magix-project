@@ -1,18 +1,19 @@
 
 <div id="toggle_<%=viewId%>" class="dropdown-toggle <%= disabled ? 'notallowed' : '' %>" mx-click="toggle()" title="<%=selectedText%>">
-    <span class="dropdown-toggle-label ellipsis" style="width:<%=(width-14)%>px">
+    <span class="dropdown-toggle-label">
         <%= selectedText %>
     </span>
     <span class="iconfont up">&#xe786;</span>
     <span class="iconfont down">&#xe692;</span>
 </div>
-<div class="dropdown-menu-wrapper" style="width:<%=(width+28)%>px">
+
+<div class="dropdown-menu-wrapper">
     <%if(rList){%>
     <% if (searchbox) { %>
     <div class="searchbox">
-        <label>
+        <label class="searchbox-wrapper">
             <span class="iconfont search-icon">&#xe608;</span>
-            <input mx-keyup="search()" mx-paste="search()" type="text" placeholder="搜索关键词" mx-change="stop()" class="input search-input" style="width:<%=(width+8)%>px" />
+            <input mx-keyup="search()" mx-paste="search()" type="text" placeholder="搜索关键词" mx-change="stop()" class="input  search-input"  />
         </label>
     </div>
     <% } %>
@@ -28,7 +29,7 @@
                 <%= item[textKey] %>
             </li>
         <% }else{ %>
-        <li title="<%= text %>">
+        <li title="<%= text %>" class="dropdown-item">
             <%var equal=(value+'')===(selected+'')%>
             <a href="javascript:;" class="item-link ellipsis <%= equal ? 'active' : '' %>" mx-click="select({path:'<%~item%>'})">
                 <%= text %>
