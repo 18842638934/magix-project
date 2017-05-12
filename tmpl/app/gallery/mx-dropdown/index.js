@@ -11,8 +11,6 @@ module.exports = Magix.View.extend({
         let me = this;
         Monitor.setup();
         me.on('destroy', Monitor.teardown);
-        if (!extra.width) extra.width = 120;
-        extra.width = (extra.width | 0) - 30;
         extra.viewId = me.id;
         me.updater.set(extra);
     },

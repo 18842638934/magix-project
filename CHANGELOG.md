@@ -1,3 +1,8 @@
+## 3.2.3
+1. 升级uploader，增加xhr上传
+2. 升级dropdown样式
+3. 升级magix-combine依赖
+
 ## 3.2.2
 1. 升级magix 3.3.0，解决事件问题
 2. 增强taginput，使行为更像原生的input

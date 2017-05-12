@@ -1,14 +1,14 @@
 {
   "name": "magix-project",
   "description": "magix project",
-  "version": "3.2.2",
+  "version": "3.2.3",
   "author": "xinglie <xinglie.lkf@taobao.com>",
   "dependencies": {
     "del": "^2.2.2",
     "gulp": "^3.9.1",
     "gulp-uglify": "^2.1.2",
     "gulp-watch": "^4.3.11",
-    "magix-combine": "3.1.1",
+    "magix-combine": "3.1.2",
     "typescript": "^2.2.2"
   },
   "private": true,

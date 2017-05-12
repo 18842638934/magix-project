@@ -40,12 +40,6 @@
             <td>是否禁用</td>
             <td>false</td>
         </tr>
-        <tr>
-            <td>width</td>
-            <td>number</td>
-            <td>下拉框宽度</td>
-            <td>120</td>
-        </tr>
     </tbody>
 </table>
 
@@ -92,8 +86,7 @@
     <div mx-view="app/gallery/mx-dropdown/index"
         view-searchbox="true"
         view-emptyText="普通列表带搜索普通列表带搜索普通列表带搜索"
-        view-width="200"
-        mx-change="showValue()">
+        mx-change="showValue()" style="width:200px;">
         <item value="a1">text 1</item>
         <item value="a2">text 2</item>
         <item value="a3">text 3</item>
@@ -115,7 +108,6 @@
     </div>
     <div class="ml10" mx-view="app/gallery/mx-dropdown/index"
         view-emptyText="分组"
-        view-width="200"
         style="width: 300px;"
         mx-change="showValue()">
         <item group="true">分组1</item>
@@ -143,7 +135,6 @@
     </div>
     <div class="ml10" mx-view="app/gallery/mx-dropdown/index"
         view-emptyText="禁用"
-        view-width="200"
         view-disabled="true"
         mx-change="showValue()">
         <item value="a1">text 1</item>
@@ -153,21 +144,19 @@
     <div mx-view="app/gallery/mx-dropdown/index"
         view-searchbox="true"
         view-emptyText="请选择省份"
-        view-width="240"
         view-list="<%@provinces%>"
         view-textKey="text"
         view-valueKey="id"
         view-abc="<%!html%>"
-        mx-change="showValue({p:true})">
+        mx-change="showValue({p:true})" style="width:240px;">
     </div>
     <div mx-view="app/gallery/mx-dropdown/index"
         view-searchbox="true"
-        view-width="240"
         view-list="<%@cities%>"
         view-textKey="text"
         view-valueKey="id"
         mx-change="showValue()"
-        class="ml10">
+        class="ml10" style="width:240px;">
     </div>
 </div>
 

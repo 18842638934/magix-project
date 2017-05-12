@@ -1,0 +1,1 @@
+define("app/mixins/optimal-img",function(t,e,a){var i,n=document.createElement("canvas");try{i=0===n.toDataURL("image/webp").indexOf("data:image/webp")}catch(t){}a.exports={ctor:function(){this.updater.set({optimalImg:function(t,e){e||(e=60);var a=t+"_q"+e;return i&&(a+="_.webp"),a}})}}});
