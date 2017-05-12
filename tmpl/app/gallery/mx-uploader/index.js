@@ -11,7 +11,7 @@ let Uploader = Magix.Base.extend({
     }
 });
 let Iframe = Uploader.extend({
-    send(input, data, callback) {
+    send(input, data, callback, progress) {
         let form = input.form;
         let me = this;
         let id = Magix.guid('up');
@@ -22,8 +22,29 @@ let Iframe = Uploader.extend({
             form.append(input);
             form = form[0];
         }
+        let p = 0;
+        let total = 2000;
+        if (input.files) {
+            total = 0;
+            for (let i = 0; i < input.files.length; i++) {
+                total += input.files[i].size;
+            }
+            total /= 1000;
+            if (total < 2000) {
+                total = 2000;
+            }
+        }
+        let base = 1000 / total;
+        let mockTimer = setInterval(() => {
+            if (p < 1) {
+                progress(p);
+                p += base + Math.random() * 20 * base;
+            }
+        }, 50);
         $('<iframe name="' + id + '" id="' + id + '" style="display:none;"></iframe>').insertAfter(form).on('load', (e) => {
+            clearInterval(mockTimer);
             if (!me.$oust) {
+                progress(1);
                 let iframe = e.target;
                 let $body = $(iframe.contentWindow.document.body);
                 $body.find('script').remove();
@@ -38,6 +59,7 @@ let Iframe = Uploader.extend({
                 }
             }
         }).on('error', (e) => {
+            clearInterval(mockTimer);
             if (!me.$oust) {
                 $('#' + id + '_temp').remove();
                 callback(e);
@@ -51,6 +73,42 @@ let Iframe = Uploader.extend({
         form.submit();
     }
 });
+let XHR = Uploader.extend({
+    send(input, data, callback, progress) {
+        let fd = new FormData();
+        let me = this;
+        let files = input.files;
+        for (let i = 0; i < files.length; i++) {
+            fd.append(data.get('name'), files[i]);
+        }
+        let xhr = new XMLHttpRequest();
+        xhr.open('post', data.get('action'), true);
+        xhr.onload = () => {
+            if (!me.$oust) {
+                try {
+                    /*jshint evil:true*/
+                    callback(null, new Function('return ' + xhr.responseText)());
+                } catch (ex) {
+                    callback(ex);
+                }
+            }
+        };
+        xhr.onerror = (e) => {
+            if (!me.$oust) {
+                e.message = 'network error';
+                callback(e);
+            }
+        };
+        xhr.upload.onprogress = (e) => {
+            if (e.lengthComputable) {
+                progress(e.loaded / e.total);
+            } else {
+                progress(0);
+            }
+        };
+        xhr.send(fd);
+    }
+});
 module.exports = Magix.View.extend({
     init(extra) {
         let me = this;
@@ -60,7 +118,13 @@ module.exports = Magix.View.extend({
             multiple: extra.multiple,
             accept: extra.accept
         });
-        me.capture('transport', new Iframe());
+        let Transport;
+        if (window.FormData) {
+            Transport = XHR;
+        } else {
+            Transport = Iframe;
+        }
+        me.capture('transport', new Transport());
     },
     add() {
         let me = this;
@@ -103,6 +167,11 @@ module.exports = Magix.View.extend({
                     response: response
                 });
             }
+        }, (percent) => {
+            node.trigger({
+                type: 'progress',
+                percent: percent
+            });
         });
         me.add();
     }

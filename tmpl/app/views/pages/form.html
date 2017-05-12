@@ -4,7 +4,8 @@
                 <i class="line-required">*</i> 必填校验：
             </label>
             <div class="fl">
-                <input class="input" type="text" validator-required="true" value="<%:rValue%>" />
+                <input class="input" type="text" validator-required="true" value="<%:[input,change] rValue {refresh}%>" />
+                <span class="ml10 ib">同步测试：<%=rValue%></span>
             </div>
         </div>
         <div class="form-line clearfix">
@@ -54,7 +55,7 @@
             <div class="fl">
                 <input class="input" type="text" validator-required="true" mx-view="app/gallery/mx-colorpicker/picker" <%:color%> />
             </div>
-            <div class="fl ml5" style="cursor: help;" mx-view="app/gallery/mx-popover/index"
+            <div class="fl ml5 ib" style="cursor: help;" mx-view="app/gallery/mx-popover/index"
         view-content="提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容提示内容">?</div>
         </div>
         <div class="form-line clearfix">

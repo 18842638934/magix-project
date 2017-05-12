@@ -46,7 +46,7 @@
 .body{
     position: absolute;
     z-index: 4902;
-    margin-bottom: 50px;
+    padding-bottom: 50px;
     min-height: 60px;
 }
 .anim-body{

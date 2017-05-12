@@ -1,5 +1,5 @@
 <h3>Uploader组件</h3>
-<p>目前仅实现了iframe上传，xhr上传需要再开发</p>
+<p>使用xhr或iframe上传，组件会自动判断用哪种方式</p>
 <h4>配置项</h4>
 <table class="table table-striped w900">
     <thead>
@@ -76,14 +76,34 @@
         </tr>
     </tbody>
 </table>
+<h5>progress</h5>
+<table class="table table-striped w900">
+    <thead>
+        <tr>
+            <th>参数名称</th>
+            <th>参数类型</th>
+            <th>参数说明</th>
+            <th>默认值</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>percent</td>
+            <td>number</td>
+            <td>上传进度百分比</td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
 <h4 class="mt10">演示</h4>
 <div class="clearfix">
     <button
         class="btn btn-brand"
         mx-view="app/gallery/mx-uploader/index"
-        view-action="unfound/path"
+        view-action="./"
         view-name="file1"
         view-multiple="true"
         mx-error="showError()"
+        mx-progress="showProgress()"
     >上传文件</button>
 </div>

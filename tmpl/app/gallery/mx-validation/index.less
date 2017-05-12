@@ -4,7 +4,7 @@
     position: relative;
 }
 .fail,.fail:hover{
-    border-color: @color-error;
+    border-color: @color-error!important;
 }
 .msg,.msg-outer{
     display: none;
@@ -16,10 +16,10 @@
     white-space: nowrap;
     word-wrap: normal;
     z-index: 1;
+    pointer-events: none;
     color: @color-secondary;
 }
 .msg-outer{
     line-height: 22px;
     border: 1px solid @color-border;
-
 }

@@ -234,10 +234,10 @@ module.exports = Magix.View.extend({
         let type = node.attr('validator-message-type');
         if (type != 'outer') {
             let id = e.eventTarget.id;
-            node = Magix.node(id.replace(/_msg$/, ''));
-            if (node && node.tagName == 'INPUT') {
-                node.select();
-                node.focus();
+            let oNode = Magix.node(id.replace(/_msg$/, ''));
+            if (oNode && oNode.tagName == 'INPUT') {
+                oNode.select();
+                oNode.focus();
             }
         }
     },

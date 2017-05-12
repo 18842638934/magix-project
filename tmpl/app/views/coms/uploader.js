@@ -14,5 +14,8 @@ module.exports = Magix.View.extend({
     'showError<error>' (e) {
         this.gtipRT(e.error);
         console.log(e.error);
+    },
+    'showProgress<progress>'(e){
+        console.log(e.percent);
     }
 });

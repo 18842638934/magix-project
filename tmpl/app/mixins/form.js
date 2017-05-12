@@ -10,7 +10,7 @@ module.exports = {
         }
         return r;
     },
-    'syncValue<change>' (e) {
+    'syncValue<change,input>' (e) {
         let me = this;
         let params = e.params;
         let updater = me.updater;

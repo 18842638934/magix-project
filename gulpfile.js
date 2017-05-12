@@ -71,7 +71,7 @@ gulp.task('combine', ['cleanSrc', 'updateVer'], function() {
         console.log('gulpfile:', ex);
         process.exit();
     });
-    //combineTool.processFile('tmpl/app/gallery/mx-taginput/index.js').catch(function(ex){
+    //combineTool.processFile('tmpl/app/views/coms/gtip.js').catch(function(ex){
     //   console.log('ex',ex);
     //});
 });
