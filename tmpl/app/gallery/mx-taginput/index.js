@@ -3,7 +3,7 @@
     author:xinglie.lkf@alibaba-inc.com
  */
 let Magix = require('magix');
-Magix.applyStyle('@index.css');
+Magix.applyStyle('@index.less');
 let $ = require('$');
 let INPUT_MIN_WIDTH = 20;
 
@@ -55,7 +55,7 @@ module.exports = Magix.View.extend({
             viewId: me.id
         });
         let rNode = $('#' + coreId);
-        rNode.addClass('@index.css:owner');
+        rNode.addClass('@index.less:owner');
         me.$rNode = rNode;
         me.updateTrigger();
     },
@@ -133,7 +133,7 @@ module.exports = Magix.View.extend({
         let val = e.eventTarget.value;
         if (me.$val !== val) {
             me.$val = val;
-            let holder = me.$rNode.find('.@index.css:placeholder');
+            let holder = me.$rNode.find('.@index.less:placeholder');
             if (val) {
                 holder.hide();
             } else {

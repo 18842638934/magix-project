@@ -3,7 +3,7 @@
  */
 let Magix = require('magix');
 let $ = require('$');
-Magix.applyStyle('@index.css');
+Magix.applyStyle('@index.less');
 module.exports = Magix.View.extend({
     tmpl: '@index.html',
     init(extra) {

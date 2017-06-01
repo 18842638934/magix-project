@@ -3,7 +3,7 @@
         <span class="vbtm">
             当前第 <b><%= offsetStart %> - <%= offsetEnd %></b> 条，共 <b><%= total %></b> 条，每页展现
         </span>
-        <div class="ml10 mr10" style="width:80px"
+        <div class="ml10 mr10" style="width:80px; top: 5px;"
             mx-view="@../mx-dropdown/index"
             view-list="<%@[10,20,30,40,50,100]%>"
             view-selected="<%@size%>" mx-change="changeSize()"

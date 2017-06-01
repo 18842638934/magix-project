@@ -5,7 +5,7 @@
 let Magix = require('magix');
 let $ = require('$');
 let Monitor = require('../mx-monitor/index');
-Magix.applyStyle('@suggest.css');
+Magix.applyStyle('@suggest.less');
 module.exports = Magix.View.extend({
     tmpl: '@suggest.html',
     init(extra) {
@@ -143,12 +143,12 @@ module.exports = Magix.View.extend({
     normal() {
         let me = this;
         let node = $('#sg_' + me.id + '_' + me.$idx);
-        node.removeClass('@suggest.css:active');
+        node.removeClass('@suggest.less:active');
     },
     highlight(ignore) {
         let me = this;
         let node = $('#sg_' + me.id + '_' + me.$idx);
-        node.addClass('@suggest.css:active');
+        node.addClass('@suggest.less:active');
         if (!ignore && node.length) {
             me.$ignore = 1; //如果是上下按键引起的滚动，则在move时忽略
             let height = node.outerHeight();

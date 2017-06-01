@@ -1,5 +1,8 @@
+@import "../../snippets/base";
+
+
 .wrapper{
-    background-color: #fafafa;
+    background-color: @color-bg;
     padding-top: 12px;
 }
 .vbtm{
@@ -27,26 +30,23 @@
     font-size:12px;
 }
 .num a{
-    position: relative;
-    float: left;
-    padding: 6px 12px;
     margin: 0 3px;
     text-decoration: none;
     z-index: 3;
     border-radius: 4px;
-    min-width: 32px;
-    height: 32px;
-    padding-left: 0;
-    padding-right: 0;
     text-align: center;
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    display: block;
 }
 .num a:hover{
-    background-color: #5a5ad1;
+    background-color: @color-brand-hover;
     color: #fff
 }
 .active a{
     color: #fff;
-    background-color: #6363e6;
+    background-color: @color-brand;
 }
 .notallowed a,.notallowed a:hover{
     color:#999;
