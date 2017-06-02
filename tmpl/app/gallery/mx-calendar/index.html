@@ -2,11 +2,11 @@
     <div id="years_<%=id%>" class="clearfix" style="display:none">
         <div class="header">
             <a href="javascript:;" class="minus" mx-click="changeYear({range:true})">
-                <span class="iconfont f12">&#xe61e;</span>
+                <span class="iconfont">&#xe61e;</span>
             </a>
             <h4 class="title"><%=startYear%>-<%=endYear%></h4>
             <a href="javascript:;" class="plus" mx-click="changeYear({range:true,next:true})">
-                <span class="iconfont f12">&#xe61b;</span>
+                <span class="iconfont">&#xe61b;</span>
             </a>
         </div>
         <div class="body">
@@ -21,11 +21,11 @@
     <div id="months_<%=id%>" class="clearfix" style="display: none;">
         <div class="header">
             <a href="javascript:;" class="minus" mx-click="changeYear()">
-                <span class="iconfont f12">&#xe61e;</span>
+                <span class="iconfont">&#xe61e;</span>
             </a>
             <h4 mx-click="showYears()" class="title"><%=year%></h4>
             <a href="javascript:;" class="plus" mx-click="changeYear({next:true})">
-                <span class="iconfont f12">&#xe61b;</span>
+                <span class="iconfont">&#xe61b;</span>
             </a>
         </div>
         <div class="body">
@@ -38,11 +38,11 @@
     <div id="days_<%=id%>" class="clearfix">
         <div class="header">
             <a href="javascript:;" class="minus" mx-click="changeMonth()">
-                <span class="iconfont f12">&#xe61e;</span>
+                <span class="iconfont">&#xe61e;</span>
             </a>
             <h4 mx-click="showMonths()" class="title"><%=year%>-<%=month<10?'0'+month:month%></h4>
             <a href="javascript:;" class="plus" mx-click="changeMonth({next:true})">
-                <span class="iconfont f12">&#xe61b;</span>
+                <span class="iconfont">&#xe61b;</span>
             </a>
         </div>
         <div class="body">

@@ -58,7 +58,7 @@
 .day:first-child{
     border-top: none;
 }
-.day .label{
+.label{
     vertical-align: middle;
     cursor: default;
     padding-left: 30px;

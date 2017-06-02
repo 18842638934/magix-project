@@ -22,6 +22,7 @@ module.exports = Magix.View.extend({
         });
         ownerNode.on('click', click);
         me.$ownerNode = ownerNode;
+        ownerNode.prop('autocomplete', 'off');
     },
     inside(node) {
         let me = this;

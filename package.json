@@ -1,7 +1,7 @@
 {
   "name": "magix-project",
   "description": "magix project",
-  "version": "3.2.3",
+  "version": "3.2.4",
   "author": "xinglie <xinglie.lkf@taobao.com>",
   "dependencies": {
     "del": "^2.2.2",
@@ -9,12 +9,12 @@
     "gulp-uglify": "^2.1.2",
     "gulp-watch": "^4.3.11",
     "magix-combine": "3.1.2",
-    "typescript": "^2.2.2"
+    "typescript": "^2.3.2"
   },
   "private": true,
   "scripts": {
-    "start": "gulp combine",
-    "watch": "gulp watch",
-    "build": "gulp build"
+    "combine": "npm install;gulp combine",
+    "watch": "npm install;gulp watch",
+    "build": "npm install;gulp build"
   }
 }

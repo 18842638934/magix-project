@@ -7,9 +7,8 @@ var gulp = require('gulp');
 var watch = require('gulp-watch');
 var fs = require('fs');
 var del = require('del');
-var combineTool = require('magix-combine');
+var combineTool = require('../magix-combine/index');
 var ts = require('typescript');
-
 combineTool.config({
     tmplFolder: tmplFolder,
     srcFolder: srcFolder,
@@ -65,6 +64,8 @@ gulp.task('cleanSrc', function() {
     return del(srcFolder);
 });
 gulp.task('combine', ['cleanSrc', 'updateVer'], function() {
+    //debugger;
+    //return combineTool.processFile('./tmpl/app/views/coms/popmenu.js')
     return combineTool.combine().then(function() {
         console.log('complete');
     }).catch(function(ex) {

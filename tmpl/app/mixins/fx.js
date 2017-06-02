@@ -1,40 +1,25 @@
 /*
     author:xinglie.lkf@taobao.com
  */
+
 let Magix = require('magix');
-let Cache = {};
-let Runner = function(interval) {
-    let me = this;
-    me.$i = interval;
-    me.$q = [];
-};
-Magix.mix(Runner.prototype, {
-    run() {
-        let me = this;
-        if (!me.$t) {
-            me.$t = setInterval(() => {
-                let q = me.$q;
-                for (let i = 0, o; i < q.length; i++) {
-                    o = q[i];
-                    if (o.r) {
-                        q.splice(i--, 1);
-                    } else {
-                        Magix.toTry(o.f);
-                    }
-                }
-                if (!q.length) {
-                    clearInterval(me.$t);
-                    delete me.$t;
-                }
-            }, me.$i);
-        }
-    },
-    add(fn) {
+let setRAF = window.requestAnimationFrame || ((fn) => {
+    return setTimeout(fn, 16);
+});
+let cancelRAF = window.cancelAnimationFrame || clearTimeout;
+let Now = Date.now || (() => {
+    return new Date().getTime();
+});
+let Runner = {
+    $q: [],
+    add(interval, fn) {
         let me = this;
         me.$q.push({
-            f: fn
+            i: interval || 15,
+            f: fn,
+            n: Now()
         });
-        me.run();
+        me.work();
     },
     remove(fn) {
         let me = this;
@@ -46,19 +31,39 @@ Magix.mix(Runner.prototype, {
                 break;
             }
         }
+    },
+    work() {
+        let me = this;
+        if (!me.$t) {
+            let run = () => {
+                let q = me.$q;
+                for (let i = 0, o, now; i < q.length; i++) {
+                    o = q[i];
+                    if (o.r) {
+                        q.splice(i--, 1);
+                    } else {
+                        now = Now();
+                        if (now - o.n >= o.i) {
+                            o.n = now;
+                            Magix.toTry(o.f);
+                        }
+                    }
+                }
+                if (!q.length) {
+                    cancelRAF(me.$t);
+                    delete me.$t;
+                } else {
+                    me.$t = setRAF(run);
+                }
+            };
+            me.$t = setRAF(run);
+        }
     }
-});
-Runner.get = (i) => {
-    let entity = Cache[i];
-    if (!entity) {
-        entity = new Runner(i);
-        Cache[i] = entity;
-    }
-    return entity;
 };
-let DALG = (t) => t;
+
+let DALG = t => t;
 let FX = Magix.Base.extend({
-    ctor(alg, interval) {
+    ctor(interval, alg) {
         let me = this;
         if (!me.$alg || alg) {
             alg = alg || DALG;
@@ -66,8 +71,8 @@ let FX = Magix.Base.extend({
                 return (from + (to - from) * alg(me.$current / me.$duration));
             };
         }
-        me.$timer = Runner.get(interval || 13);
         me.$q = [];
+        me.$i = interval;
     },
     run(time, callback) {
         let me = this;
@@ -87,7 +92,7 @@ let FX = Magix.Base.extend({
         if (item) {
             me.$duration = item.time;
             me.$f = item.f;
-            me.$now = Date.now();
+            me.$now = Now();
             if (!me.$tfn) {
                 me.$tfn = (end) => {
                     me.$current = Date.now() - me.$now;
@@ -103,7 +108,7 @@ let FX = Magix.Base.extend({
                         me.work();
                     }
                 };
-                me.$timer.add(me.$tfn);
+                Runner.add(me.$i, me.$tfn);
             }
         } else {
             me.stop();
@@ -112,7 +117,7 @@ let FX = Magix.Base.extend({
     stop() {
         let me = this;
         if (me.$tfn) {
-            me.$timer.remove(me.$tfn);
+            Runner.remove(me.$tfn);
             delete me.$tfn;
             me.fire('stop');
         }
@@ -130,4 +135,4 @@ module.exports = {
         this.capture(Magix.guid('fx_'), fx, true);
         return fx;
     }
-}
+};
