@@ -8,11 +8,14 @@ let sync = (bag, callback) => {
     if (PreService.intervene()) {
         PreService.addService(sync, bag, callback);
     } else {
-        let ctrl = bag.get('ctrl'); //模拟处理
-        if (!ctrl) {
-            bag.set('url', './tmpl/apis/list2.json');
-        } else {
-            bag.set('ctrl', '');
+        let mock = bag.get('mock');
+        if (mock) {
+            let ctrl = bag.get('ctrl'); //模拟处理
+            if (!ctrl) {
+                bag.set('url', './tmpl/apis/list2.json');
+            } else {
+                bag.set('ctrl', '');
+            }
         }
         $.ajax({
             url: bag.get('url') + '?r=' + Magix.guid(),

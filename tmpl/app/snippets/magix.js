@@ -1,6 +1,5 @@
-//'#snippet';
 //'#exclude(define,before)';
-/*!3.3.1 Licensed MIT*/
+/*!3.3.2 Licensed MIT*/
 /*
 author:xinglie.lkf@alibaba-inc.com;kooboy_li@163.com
 loader:cmd
@@ -277,7 +276,7 @@ G_Mix(G_Cache[G_PROTOTYPE], {
             r.v = G_EMPTY;
             delete c[k];
             if (m) {
-                G_ToTry(m, r.o, r);
+                G_ToTry(m, r.o);
             }
         }
     },
@@ -1279,7 +1278,7 @@ var Vframe_UpdateTag;
 var Vframe_Update = function(vframe, view) {
     if (vframe && vframe.$g != Vframe_UpdateTag && (view = vframe.$v) && view.$s > 0) { //存在view时才进行广播，对于加载中的可在加载完成后通过调用view.location拿到对应的G_WINDOW.location.href对象，对于销毁的也不需要广播
 
-        var isChanged = View_IsObsveChanged(view);
+        var isChanged = View_IsObserveChanged(view);
         /**
          * 事件对象
          * @type {Object}
@@ -1706,7 +1705,7 @@ G_Mix(G_Mix(Vframe[G_PROTOTYPE], Event), {
         } else {
             o = list[key = G_SPLITER + name];
             if (o) {
-                o.r = G_Type(args) == G_Type(o.a); //参数一样，则忽略上次的
+                o.r = args == o.a; //参数一样，则忽略上次的
             }
             o = {
                 n: name,
@@ -2376,7 +2375,7 @@ var View_DestroyAllResources = function(me, lastly) {
 var View_DestroyResource = function(cache, key, callDestroy, old) {
     var o = cache[key],
         fn, res;
-    if (o != old) {
+    if (o && o != old) {
         //var processed=false;
         res = o.e; //entity
         fn = res.destroy;
@@ -2501,7 +2500,7 @@ var View_IsParamsChanged = function(params, ps, r) {
     }
     return r;
 };
-var View_IsObsveChanged = function(view) {
+var View_IsObserveChanged = function(view) {
     var loc = view.$l;
     var res;
     if (loc.f) {

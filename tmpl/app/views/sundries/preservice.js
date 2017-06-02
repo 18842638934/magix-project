@@ -18,10 +18,12 @@ module.exports = Magix.View.extend({
     'preservice<click>' (e) {
         this.fetch([{
             name: 'list1',
-            ctrl: 'login1'
+            ctrl: 'login1',
+            mock: true
         }, {
             name: 'list1',
-            ctrl: 'login2'
+            ctrl: 'login2',
+            mock: true
         }], (e, bag1, bag2) => {
             console.log('获取到数据', e, bag1, bag2);
         });

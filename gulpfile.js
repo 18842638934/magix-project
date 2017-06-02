@@ -7,7 +7,7 @@ var gulp = require('gulp');
 var watch = require('gulp-watch');
 var fs = require('fs');
 var del = require('del');
-var combineTool = require('../magix-combine/index');
+var combineTool = require('magix-combine');
 var ts = require('typescript');
 combineTool.config({
     tmplFolder: tmplFolder,
@@ -64,17 +64,16 @@ gulp.task('cleanSrc', function() {
     return del(srcFolder);
 });
 gulp.task('combine', ['cleanSrc', 'updateVer'], function() {
-    //debugger;
-    //return combineTool.processFile('./tmpl/app/views/coms/popmenu.js')
+    // combineTool.processFile('./tmpl/app/views/default.js').catch((ex)=>{
+    //     console.log(ex);
+    // });
+    // return;
     return combineTool.combine().then(function() {
         console.log('complete');
     }).catch(function(ex) {
         console.log('gulpfile:', ex);
         process.exit();
     });
-    //combineTool.processFile('tmpl/app/views/coms/gtip.js').catch(function(ex){
-    //   console.log('ex',ex);
-    //});
 });
 
 gulp.task('watch', ['combine'], function() {
