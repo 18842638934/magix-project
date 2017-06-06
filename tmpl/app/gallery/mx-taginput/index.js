@@ -56,6 +56,7 @@ module.exports = Magix.View.extend({
         });
         let rNode = $('#' + coreId);
         rNode.addClass('@index.less:owner');
+        // rNode.addClass('@index.less:owner-focus');
         me.$rNode = rNode;
         me.updateTrigger();
     },

@@ -71,6 +71,21 @@
         <div class="fl">
             <input placeholder="请输入内容" class="input" type="text" validator-required="true" />
         </div>
+
+
+        <label class="line-label">
+            Taginput：
+        </label>
+        <div class="fl">
+            <div class="input"
+                mx-view="app/gallery/mx-taginput/index"
+                view-list="<%@list1%>"
+                view-placeholder="请选择分类"
+                validator-required="true"
+                mx-change="showSelected()"
+            ></div>
+        </div>
+
     </div>
     <div class="form-line clearfix">
         <label class="line-label">
@@ -85,6 +100,8 @@
                 mx-change="showSelected()"
             ></div>
         </div>
+
+
     </div>
     <div class="form-line clearfix">
         <label class="line-label">
