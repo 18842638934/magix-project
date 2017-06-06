@@ -1,0 +1,1 @@
+define("app/services/project",function(s,e,i){i.exports=function(s){s.add([{name:"list",url:"./tmpl/apis/list.json",cache:6e5},{name:"list1",url:"./tmpl/apis/list1.json"},{name:"list404",url:"./tmpl/apis/list404.json"},{name:"code",url:"./tmpl/apis/code.json",cache:6e5}])}});

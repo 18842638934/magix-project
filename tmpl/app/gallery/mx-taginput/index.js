@@ -56,6 +56,7 @@ module.exports = Magix.View.extend({
         });
         let rNode = $('#' + coreId);
         rNode.addClass('@index.less:owner');
+        // rNode.addClass('@index.less:owner-focus');
         me.$rNode = rNode;
         me.updateTrigger();
     },
@@ -196,6 +197,12 @@ module.exports = Magix.View.extend({
     },
     'stop<change,focusin,focusout>' (e) {
         e.stopPropagation();
+        let rNode = this.$rNode;
+        if (e.type == 'focusin') {
+            rNode.addClass('@scoped.style:input-focus');
+        } else if (e.type == 'focusout') {
+            rNode.removeClass('@scoped.style:input-focus');
+        }
     },
     'toggleList<showList,hideList>' (e) {
         let me = this;

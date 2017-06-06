@@ -22,7 +22,13 @@
 .input:hover,.textarea:hover{
     border-color: @color-border-hover;
 }
-.input:focus,.textarea:focus{
+.input:focus,
+.input-focus,
+.textarea:focus,
+.textarea-focus {
+    border-color: @color-brand;
+}
+.input-focus:hover{
     border-color: @color-brand;
 }
 .textarea{
