@@ -1,5 +1,3 @@
-'#snippet';
-'top@header-search.js';
 /*
     author:xinglie.lkf@taobao.com
  */

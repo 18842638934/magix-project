@@ -1,4 +1,3 @@
-'#snippet';
 /*
     author:xinglie.lkf@alibaba-inc.com
  */
@@ -40,11 +39,11 @@ let Menus = [{
     }, {
         text: '其它组件',
         canFolder: true,
-        subs: [ {
+        subs: [{
             text: '全局提示',
             icon: '&#xe660;',
             url: '/coms/gtip'
-        },{
+        }, {
             text: '小时选择',
             icon: '&#xe62f;',
             url: '/coms/hourpicker'
@@ -56,7 +55,7 @@ let Menus = [{
             text: 'taginput',
             icon: '&#xe60a;',
             url: '/coms/taginput'
-        },{
+        }, {
             text: '上传组件',
             icon: '&#xe62f;',
             url: '/coms/uploader'
@@ -68,7 +67,7 @@ let Menus = [{
             text: 'tree',
             icon: '&#xe60a;',
             url: '/coms/tree'
-        },{
+        }, {
             text: '颜色选择',
             icon: '&#xe62f;',
             url: '/coms/colorpicker'
@@ -161,7 +160,7 @@ let Menus = [{
         text: '弹框关闭提醒',
         icon: '&#xe665;',
         url: '/sundries/leavedlg'
-    },{
+    }, {
         text: '流控处理',
         icon: '&#xe629;',
         url: '/sundries/preservice'
@@ -430,7 +429,7 @@ let UrlsMap = {};
 let UrlsToMainMap = {};
 let MenusMap = {};
 let SubsMap = {};
-let InitMenus = function() {
+let InitMenus = () => {
     if (InitMenus.$inited) return;
     InitMenus.$inited = 1;
     for (let i = Menus.length - 1, menu; i >= 0; i--) {

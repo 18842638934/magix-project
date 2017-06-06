@@ -1,4 +1,3 @@
-'#snippets';
 let Magix = require('magix');
 let $ = require('$');
 Magix.applyStyle('@nav.less');

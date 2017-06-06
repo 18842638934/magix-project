@@ -3,7 +3,8 @@
  */
 let Magix = require('magix');
 let $ = require('$');
-'@./preservice.js';
+let PreService = require('./preservice');
+let ProjectAPI = require('./project');
 let sync = (bag, callback) => {
     if (PreService.intervene()) {
         PreService.addService(sync, bag, callback);
@@ -40,7 +41,7 @@ let sync = (bag, callback) => {
     }
 };
 let Service = Magix.Service.extend(sync);
-'@./project.js';
+ProjectAPI(Service);
 Magix.mix(Service, {
     ctor() {
         let me = this;

@@ -1,6 +1,4 @@
-'#snippets';
-'#exclude(define)';
-
+let Magix = require('magix');
 let PreService = Magix.Service.extend((bag, callback) => {
 
 });
@@ -70,3 +68,5 @@ Magix.mix(PreService, {
         return PreService.$run;
     }
 });
+
+module.exports = PreService;

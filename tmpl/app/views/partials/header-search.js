@@ -1,4 +1,3 @@
-'#snippet';
 /*
     author:xinglie.lkf@alibaba-inc.com
  */

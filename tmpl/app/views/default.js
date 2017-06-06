@@ -1,10 +1,6 @@
 /*
     author:xinglie.lkf@taobao.com
  */
-'top@../menu.js';
-'top@./partials/header.js';
-'top@./partials/robot.js';
-'top@./partials/nav.js';
 let Magix = require('magix');
 let Router = Magix.Router;
 module.exports = Magix.View.extend({
