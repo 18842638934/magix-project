@@ -17,8 +17,8 @@
                     mx-view="app/gallery/mx-taginput/index"
                     view-list="<%@list2%>"
                     view-placeholder="请选择分类"
-                    view-textKey="text"
-                    view-valueKey="id"
+                    view-text-key="text"
+                    view-value-key="id"
                     validator-required="true"
                     mx-change="showSelected()"
                     <%:tags%>
@@ -31,7 +31,7 @@
             </label>
             <div class="fl">
                 <div mx-view="app/gallery/mx-dropdown/index"
-                    view-emptyText="下拉框"
+                    view-empty-text="下拉框"
                     view-width="340"
                     mx-change="showValue()"
                     validator-required="true"

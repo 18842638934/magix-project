@@ -1,12 +1,12 @@
 //'#exclude(define,before)';
 //'#snippet'
-/*!3.4.1 Licensed MIT*/
+/*!3.4.3 Licensed MIT*/
 /*
 author:xinglie.lkf@alibaba-inc.com;kooboy_li@163.com
 loader:cmd
-enables:magix,event,vframe,body,view,tmpl,updater,share,core,autoEndUpdate,linkage,style,viewInit,service,router,resource,configIni,nodeAttachVframe,viewMerge,tipRouter,updaterSetState,viewProtoMixins,base
+enables:magix,event,vframe,body,view,tmpl,updater,share,core,autoEndUpdate,linkage,style,viewInit,service,router,resource,configIni,nodeAttachVframe,viewMerge,tipRouter,updaterSetState,viewProtoMixins,base,mxViewAttr
 
-optionals:cnum,ceach,tipLockUrlRouter,edgeRouter,collectView,forceEdgeRouter,serviceCombine,mxViewAttr
+optionals:cnum,ceach,tipLockUrlRouter,edgeRouter,collectView,forceEdgeRouter,serviceCombine,mxInit
 */
 /*
     author:xinglie.lkf@taobao.com
@@ -1174,6 +1174,8 @@ var Router = G_Mix({
 }, Event);
 Magix.Router = Router;
 
+    var G_Trim = $.trim;
+
     var Vframe_RootVframe;
 var Vframe_GlobalAlter;
 var Vframe_NotifyCreated = function(vframe, mId, p) {
@@ -1441,6 +1443,31 @@ G_Mix(G_Mix(Vframe[G_PROTOTYPE], Event), {
                 }
             }
 
+            var attrs = node.attributes;
+            var capitalize = function(_, c) {
+                return c.toUpperCase();
+            };
+            for (var i = attrs.length - 1, attr, name, value; i >= 0; i--) {
+                attr = attrs[i];
+                name = attr.name;
+                value = attr.value;
+                if (name.indexOf('view-') === 0) {
+                    var key = name.slice(5).replace(/-(\w)/g, capitalize);
+                    if (value.slice(0, 3) == '<%@' && value.slice(-2) == '%>') {
+                        try {
+                            var temp = {};
+                            Tmpl(value, temp);
+                            value = temp[G_SPLITER + '1'];
+                        } catch (ignore) {
+                            if (parent) {
+                                value = parent.get(G_Trim(value.slice(3, -2)));
+                            }
+                        }
+                    }
+                    params[key] = value;
+                }
+            }
+
 
             G_Mix(params, viewInitParams);
             G_Require(view, function(TView) {
@@ -1456,7 +1483,9 @@ G_Mix(G_Mix(Vframe[G_PROTOTYPE], Event), {
                         id: id
                     }, params);
                     me.$v = view;
+
                     me.$g = Vframe_UpdateTag;
+
 
                     View_DelegateEvents(view);
 
@@ -1928,7 +1957,7 @@ var Tmpl_Compiler = function(text) {
     source += text.slice(index, offset).replace(Tmpl_EscapeSlashRegExp, "\\$&").replace(Tmpl_EscapeBreakReturnRegExp, "\\n");
     index = offset + match.length;
 
-    if (operate == "@") {
+    if (operate == "@") {//$$[$s]=$$.list1;
       source += "'\n$s=$i();\n$p+=$s;\n$$[$s]=" + content + ";\n$p+='";
     } else if (operate == "=") {
       source += "'+\n(($t=(" + content + "))==null?'':$e($t))+\n'";

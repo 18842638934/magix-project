@@ -17,7 +17,6 @@ combineTool.config({
     compressCssSelectorNames: true,
     md5CssSelectorLen: 3,
     bindName: 'syncValue',
-    compileFileExtNames:["js","ts"],
     scopedCss: [
         './tmpl/app/snippets/cube-neat.css',
         './tmpl/app/snippets/app-normalize.less',

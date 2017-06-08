@@ -204,11 +204,11 @@ module.exports = Magix.View.extend({
             rNode.removeClass('@scoped.style:input-focus');
         }
     },
-    'toggleList<showList,hideList>' (e) {
+    'toggleList<showlist,hidelist>' (e) {
         let me = this;
         if (!me.$holdFocusEvent) {
             $('#' + this.id).trigger({
-                type: e.type == 'showList' ? 'focusin' : 'focusout'
+                type: e.type == 'showlist' ? 'focusin' : 'focusout'
             });
         }
     }

@@ -137,7 +137,7 @@ module.exports = Magix.View.extend({
                 left: offset.left + me.$offsetLeft,
                 top: offset.top + me.$oNode.outerHeight() + 10
             });
-            me.$oNode.trigger('showList');
+            me.$oNode.trigger('showlist');
         }
     },
     normal() {
@@ -171,7 +171,7 @@ module.exports = Magix.View.extend({
             me.$shown = false;
             Monitor.remove(me);
             me.$rNode.hide();
-            me.$oNode.trigger('hideList');
+            me.$oNode.trigger('hidelist');
         }
     },
     'pick<click>' (e) {
