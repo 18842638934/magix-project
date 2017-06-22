@@ -52,21 +52,18 @@
 .day{
     border-top: 1px solid #eee;
 }
-.day td{
-    padding: 0 10px;
-}
 .day:first-child{
     border-top: none;
 }
 .label{
     vertical-align: middle;
     cursor: default;
-    padding-left: 30px;
+    padding: 0 10px 0 30px;
 }
 .operation{
     visibility: hidden;
 }
-tr:hover .operation{
+.day:hover .operation{
     visibility: visible;
 }
 .dialog{

@@ -28,15 +28,23 @@ module.exports = Magix.View.extend({
         let me = this;
         me.updater.digest({
             provinces: Provinces,
-            html:'<img src="adfasdf" />\'!()*@',
-            cities: [{id:'',text:'请选择城市'}]
+            pId: '',
+            html: '<img src="adfasdf" />\'!()*@',
+            cities: [{
+                id: '',
+                text: '请选择城市'
+            }]
         });
     },
     'showValue<change>' (e) {
         this.gtipRT('text:' + e.text + ',value:' + e.value);
         if (e.params.p) {
             this.updater.digest({
-                cities: PMap[e.value] || [{id:'',text:'请选择城市'}]
+                pId: e.value,
+                cities: PMap[e.value] || [{
+                    id: '',
+                    text: '请选择城市'
+                }]
             });
         }
     }

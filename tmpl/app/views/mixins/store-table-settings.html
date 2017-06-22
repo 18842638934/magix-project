@@ -1,0 +1,9 @@
+<button class="btn btn-brand mb10" mx-view="app/gallery/mx-popmenu/index" view-related="#menu_<%!viewId%>" view-align="right" id="settings_<%=viewId%>">字段设置</button>
+<div id="menu_<%=viewId%>" class="menu none">
+    <% for(var i=0;i<fields.length;i++){ %>
+    <label>
+        <input type="checkbox" value="<%=fields[i].id%>" <%if(checked.indexOf(fields[i].id)>=0){ %> checked<%}%> /><%= fields[i].name %>
+    </label>
+    <% } %>
+    <button class="btn btn-brand" mx-click="save()">确定</button>
+</div>

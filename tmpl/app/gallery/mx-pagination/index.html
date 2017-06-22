@@ -13,35 +13,35 @@
     <div class="pager">
         <ul>
             <li class="num<%if(page==1){%> notallowed<%}%>">
-                <a href="javascript:;"<%if(page>1){%> mx-click="toPrev()"<%}%>>
+                <a class="num-item" href="javascript:;"<%if(page>1){%> mx-click="toPrev()"<%}%>>
                     <span class="iconfont f12">&#xe61e;</span>
                 </a>
             </li>
             <%if(start>1){%>
             <li class="num">
-                <a href="javascript:;" mx-click="toPage({page:1})">1</a>
+                <a class="num-item" href="javascript:;" mx-click="toPage({page:1})">1</a>
             </li>
             <%}%>
             <%if(start>2){%>
-            <li class="notallowed num"><a href="javascript:;">...</a></li>
+            <li class="notallowed num"><a class="num-item" href="javascript:;">...</a></li>
             <%}%>
             <%for(var i=start;i<=end;i++){%>
             <li class="num<%if(i==page){%> active<%}%>">
-                <a href="javascript:;" mx-click="toPage({page:<%=i%>})"><%=i%></a>
+                <a class="num-item" href="javascript:;" mx-click="toPage({page:<%=i%>})"><%=i%></a>
             </li>
             <%}%>
             <%if(end+2<=pages){%>
             <li class="num notallowed">
-                <a href="javascript:;">...</a>
+                <a class="num-item" href="javascript:;">...</a>
             </li>
             <%}%>
             <%if(end<pages){%>
             <li class="num">
-                <a href="javascript:;" mx-click="toPage({page:<%=pages%>})"><%=pages%></a>
+                <a class="num-item" href="javascript:;" mx-click="toPage({page:<%=pages%>})"><%=pages%></a>
             </li>
             <%}%>
             <li class="num<%if(page==pages){%> notallowed<%}%>">
-                <a href="javascript:;"<%if(page<pages){%> mx-click="toNext()"<%}%>><span class="iconfont f12">&#xe61b;</span></a>
+                <a class="num-item" href="javascript:;"<%if(page<pages){%> mx-click="toNext()"<%}%>><span class="iconfont f12">&#xe61b;</span></a>
             </li>
         </ul>
     </div>

@@ -1,0 +1,23 @@
+<div class="fr" mx-view="@./store-table-settings"></div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th><input type="checkbox" linkage-name="example1" /></th>
+            <th>默认字段</th>
+            <%for(var i=0;i<checked.length;i++){%>
+            <th><%=fieldsMap[checked[i]].name%></th>
+            <%}%>
+        </tr>
+    </thead>
+    <tbody>
+        <%for(var i=0;i<10;i++){%>
+        <tr>
+            <td><input type="checkbox" linkage-parent-name="example1" value="ex1_<%=i%>" /></td>
+            <td>默认字段内容<%=i%></td>
+            <%for(var j=0;j<checked.length;j++){%>
+            <td><%=fieldsMap[checked[j]].name%>内容:<%=content%></td>
+            <%}%>
+        </tr>
+        <%}%>
+    </tbody>
+</table>

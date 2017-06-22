@@ -19,9 +19,21 @@ body,
     overflow:auto;
     padding:25px 20px 0 30px;
     position:relative;
+    -webkit-overflow-scrolling:touch;
 }
 .app-body-detail:after{
   content: ' ';
   height: 30px;
   display: block;
+}
+
+.nav{
+    position: relative;
+    z-index: 399;
+    width: 160px;
+    height:100%;
+    font-size:14px;
+    transition: width ease-out 0.3s;
+    transform:translateZ(0);
+    float:left;
 }

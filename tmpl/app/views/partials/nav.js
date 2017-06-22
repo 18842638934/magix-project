@@ -61,9 +61,9 @@ module.exports = Magix.View.extend({
         });
     },
     render() {
+        //return;
         let me = this;
         let node = $('#' + me.id);
-        node.addClass('@nav.less:nav');
         me.$node = node;
         me.updater.digest({
             viewId: me.id,

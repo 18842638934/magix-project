@@ -11,27 +11,26 @@
     &:after {
         content: "";
     };
-
-    span,
-    &:after,
-    &:before {
-        width: 14px;
-        height: 14px;
-        background-color: @color-bg;
-        border-radius: 100%;
-        display: inline-block;
-        animation: sk-bouncedelay 1s infinite ease-in-out both;
-    }
-
-    &:before {
-            animation-delay: -0.32s;
-    }
-    span {
-        margin: 0 10px;
-            animation-delay: -0.16s;
-    }
 }
 
+.loading-anim,
+.loading:after,
+.loading:before {
+    width: 14px;
+    height: 14px;
+    background-color: @color-bg;
+    border-radius: 100%;
+    display: inline-block;
+    animation: sk-bouncedelay 1s infinite ease-in-out both;
+}
+
+.loading:before {
+        animation-delay: -0.32s;
+}
+.loading-anim {
+    margin: 0 10px;
+        animation-delay: -0.16s;
+}
 
 @keyframes sk-bouncedelay {
   0%, 80%, 100% {

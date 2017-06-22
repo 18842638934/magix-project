@@ -8,21 +8,21 @@
   z-index: 10;
 }
 
-.shortcuts ul {
+.shortcuts {
   width: 225px;
 }
-.shortcuts ul {
+.shortcuts {
   *zoom: 1;
 }
-.shortcuts ul:before,
-.shortcuts ul:after {
+.shortcuts:before,
+.shortcuts:after {
   display: table;
   content: "";
 }
-.shortcuts ul:after {
+.shortcuts:after {
   clear: both;
 }
-.shortcuts li {
+.shortcuts-item {
   border: 1px solid #000;
   float: left;
   width: 15px;
@@ -80,7 +80,7 @@
 .foot{
   height: 25px;
 }
-.foot input{
+.color-value{
   width: 99px;
   margin-right: 5px;
   vertical-align: middle;

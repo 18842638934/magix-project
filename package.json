@@ -10,7 +10,8 @@
     "gulp-watch": "^4.3.11",
     "magix": "^3.4.4",
     "magix-combine": "3.2.2",
-    "typescript": "^2.3.2"
+    "typescript": "^2.3.2",
+    "uglify-js": "^3.0.17"
   },
   "private": true,
   "scripts": {

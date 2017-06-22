@@ -10,7 +10,7 @@
     position: relative;
     background-color: #fff;
 }
-.menu li {
+.menu-item {
     color: #666;
     display: block;
     padding: 0 7px;
@@ -21,7 +21,7 @@
     white-space: nowrap;
     cursor: pointer;
 }
-.menu li:hover {
+.menu-item:hover {
     color: #fff;
     background-color: #8383eb;
 }

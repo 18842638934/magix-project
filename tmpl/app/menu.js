@@ -117,6 +117,10 @@ let Menus = [{
         icon: '&#xe628;',
         url: '/mixins/checkbox-storestate'
     }, {
+        text: '跨view共享数据',
+        icon: '&#xe688;',
+        url: '/mixins/store'
+    }, {
         text: '大屏展示',
         icon: '&#xe688;',
         url: '/mixins/large-img'

@@ -21,7 +21,7 @@ body, dl, dd,
 ul, ol,
 h1, h2, h3, h4, h5, h6, pre,
 form, fieldset, legend, input, textarea,
-p, figure, hr, menu, dir,
+p, figure, hr, /*menu, dir,*/
 thead, tbody, tfoot, th, td {
   margin: 0;
   padding: 0;
@@ -105,7 +105,7 @@ body {
 body,
 button,
 input,
-select,
+/*select,*/
 textarea {
   font-family: 'helvetica neue', arial, 'hiragino sans gb', stheiti, 'wenquanyi micro hei', \5FAE\8F6F\96C5\9ED1, \5B8B\4F53, sans-serif;
   -ms-text-autospace: ideograph-alpha ideograph-numeric ideograph-parenthesis;
@@ -187,10 +187,10 @@ hr {
 * 网页标记，荧光笔
 * 修正 IE6-11 中没有样式的问题
 */
-mark {
+/*mark {
   background-color: #d2e5ff;
   color: #000;
-}
+}*/
 
 /**
 * 统一代码的字体设置
@@ -200,7 +200,7 @@ mark {
 * Windows 7开始自带的 Consolas
 * Mac上自带的Monaco，Osaka-Mono
 */
-/*code,
+/*code
 kbd,
 pre,
 samp {
@@ -288,8 +288,8 @@ th {
 /**
 * 单元格添加边框
 */
-table th,
-table td {
+th,
+td {
   border: 1px solid #ddd;
   padding: 8px 10px;
 }
@@ -297,7 +297,7 @@ table td {
 /**
 * 表头底部边框
 */
-table th {
+th {
   font-weight: inherit;
   border-bottom-width: 2px;
   border-bottom-color: #ccc;
@@ -371,7 +371,7 @@ legend {
 */
 button,
 input,
-select,
+/*select,*/
 textarea {
   font-family: inherit;
   /* 1 */
@@ -398,8 +398,8 @@ button {
 * http://jsbin.com/iqecic/1/edit
 * http://tjvantoll.com/2012/07/10/default-browser-handling-of-the-css-text-transform-property/
 */
-button,
-select {
+button/*,
+select*/ {
   text-transform: none;
 }
 
@@ -567,8 +567,8 @@ summary {
 */
 audio,
 canvas,
-video,
-progress {
+video/*,
+progress*/ {
   display: inline-block;
   /* 1 */
   vertical-align: baseline;

@@ -7,7 +7,7 @@ var gulp = require('gulp');
 var watch = require('gulp-watch');
 var fs = require('fs');
 var del = require('del');
-var combineTool = require('magix-combine');
+var combineTool = require('../magix-combine/index');
 var ts = require('typescript');
 combineTool.config({
     tmplFolder: tmplFolder,
@@ -17,27 +17,41 @@ combineTool.config({
     compressCssSelectorNames: true,
     md5CssSelectorLen: 3,
     bindName: 'syncValue',
+   // compressTmplVariable:true,
     scopedCss: [
         './tmpl/app/snippets/cube-neat.css',
         './tmpl/app/snippets/app-normalize.less',
         './tmpl/app/snippets/app-layout.less',
         './tmpl/app/snippets/app-iconfont.less',
-        './tmpl/app/snippets/app-util.less',
         './tmpl/app/snippets/app-loading.less',
         './tmpl/app/snippets/app-btn.less',
         './tmpl/app/snippets/app-form.less',
         './tmpl/app/snippets/app-dialog.less',
-        './tmpl/app/snippets/app-table.less'
+        './tmpl/app/snippets/app-table.less',
+        './tmpl/app/snippets/app-util.less'
     ],
-    compileBeforeProcessor: function(content, from) {
+    //compileTmplCommand(content) {
+    //    var str = ts.transpileModule(content, {
+    //        compilerOptions: {
+    //            lib: ['es7'],
+    //            target: 'es3',
+    //            module: ts.ModuleKind.None
+    //        }
+    //    });
+    //    //console.log(str);
+    //    str = str.outputText;
+    //    return str;
+    //},
+    compileBeforeProcessor(content, from) {
         //console.log('compile ',from);
         var str = ts.transpileModule(content, {
             compilerOptions: {
+                lib: ['es7'],
+                target: 'es3',
                 module: ts.ModuleKind.None
             }
         });
-        str = str.outputText.replace('"use strict";', '');
-        str = str.replace('exports.__esModule = true;', ''); //这个的，不要～
+        str = str.outputText;
         return str;
     }
 });
@@ -64,10 +78,10 @@ gulp.task('cleanSrc', function() {
     return del(srcFolder);
 });
 gulp.task('combine', ['cleanSrc', 'updateVer'], function() {
-    // combineTool.processFile('./tmpl/app/views/default.js').catch((ex)=>{
-    //     console.log(ex);
-    // });
-    // return;
+     //combineTool.processFile('./tmpl/app/gallery/mx-dropdown/index.js').catch((ex) => {
+     //    console.log(ex);
+     //});
+     //return;
     return combineTool.combine().then(function() {
         console.log('complete');
     }).catch(function(ex) {

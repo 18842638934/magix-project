@@ -32,38 +32,42 @@ module.exports = {
             object = object[temp];
         }
         rootKey = rootKey || key;
-        //需要完善checkbox
         if (node.prop('type') == 'checkbox') {
             let src = object[key];
             let checked = node.prop('checked');
-            value = node.val();
             if (src === true || src === false) {
                 value = checked;
-            } else if (Array.isArray(src)) {
-                if (checked) {
-                    src.push(value);
-                } else {
-                    let idx = src.indexOf(value);
-                    if (idx > -1) {
-                        src.splice(idx, 1);
-                    }
-                }
-                value = src;
-            } else if ($.isPlainObject(src)) {
-                if (checked) {
-                    src[value] = value;
-                } else {
-                    delete src[value];
-                }
-                value = src;
             } else {
-                value = checked ? node.val() : '';
+                value = node.val();
+                if (actions.number) {
+                    value = parseFloat(value);
+                }
+                if ($.isArray(src)) {
+                    if (checked) {
+                        src.push(value);
+                    } else {
+                        let idx = src.indexOf(value);
+                        if (idx > -1) {
+                            src.splice(idx, 1);
+                        }
+                    }
+                    value = src;
+                } else if ($.isPlainObject(src)) {
+                    if (checked) {
+                        src[value] = value;
+                    } else {
+                        delete src[value];
+                    }
+                    value = src;
+                } else {
+                    value = checked ? value : '';
+                }
             }
         } else {
             value = node.val();
-        }
-        if (actions.number) {
-            value = parseFloat(value);
+            if (actions.number) {
+                value = parseFloat(value);
+            }
         }
         if (object) {
             object[key] = value;

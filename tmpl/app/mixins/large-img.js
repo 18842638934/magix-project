@@ -10,6 +10,9 @@ module.exports = Magix.View.extend({
     init(extra) {
         this.$url = extra.url;
         this.$video = extra.video;
+        this.on('destroy', () => {
+            $('#' + this.id).remove();
+        });
     },
     render() {
         let me = this;

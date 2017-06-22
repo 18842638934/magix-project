@@ -1,7 +1,7 @@
-<div class="shortcuts" id="shortcuts_<%=id%>">
-    <ul>
+<div id="shortcuts_<%=id%>">
+    <ul class="shortcuts">
         <%for(var i=0;i<shortcuts.length;i++){%>
-        <li id="sc_<%=shortcuts[i]%>_<%=id%>" style="background:#<%=shortcuts[i]%>" mx-click="pickShortcuts({color:'#<%=shortcuts[i]%>'})"></li>
+        <li class="shortcuts-item" id="sc_<%=shortcuts[i]%>_<%=id%>" style="background:#<%=shortcuts[i]%>" mx-click="pickShortcuts({color:'#<%=shortcuts[i]%>'})"></li>
         <%}%>
     </ul>
 </div>
@@ -17,6 +17,6 @@
 </div>
 <div class="foot">
     <span class="bgcolor" id="bgcolor_<%=id%>"></span>
-    <input class="input" readonly id="val_<%=id%>" />
+    <input class="input color-value" readonly id="val_<%=id%>" />
     <button class="btn btn-brand" type="button" mx-click="enter();">确定</button>
 </div>

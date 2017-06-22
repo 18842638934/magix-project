@@ -8,7 +8,8 @@
 .vbtm{
     vertical-align: text-bottom;
 }
-.statistics,.pager{
+.statistics,
+.pager{
     position: relative;
     min-height: 1px;
     padding-left: 15px;
@@ -30,7 +31,7 @@
 .f12{
     font-size:12px;
 }
-.num a{
+.num-item{
     margin: 0 3px;
     text-decoration: none;
     z-index: 3;
@@ -41,15 +42,16 @@
     line-height: 28px;
     display: block;
 }
-.num a:hover{
+.num-item:hover{
     background-color: @color-brand-hover;
     color: #fff
 }
-.active a{
+.active .num-item{
     color: #fff;
     background-color: @color-brand;
 }
-.notallowed a,.notallowed a:hover{
+.notallowed .num-item,
+.notallowed .num-item:hover{
     color:#999;
     background: transparent;
     cursor: not-allowed;
