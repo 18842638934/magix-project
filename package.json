@@ -1,7 +1,7 @@
 {
   "name": "magix-project",
   "description": "magix project",
-  "version": "3.2.5",
+  "version": "3.2.6",
   "author": "xinglie <xinglie.lkf@taobao.com>",
   "dependencies": {
     "del": "^2.2.2",
@@ -9,7 +9,7 @@
     "gulp-uglify": "^2.1.2",
     "gulp-watch": "^4.3.11",
     "magix": "^3.4.4",
-    "magix-combine": "3.2.2",
+    "magix-combine": "3.2.3",
     "typescript": "^2.3.2",
     "uglify-js": "^3.0.17"
   },

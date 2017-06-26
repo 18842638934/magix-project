@@ -1,4 +1,5 @@
 let Magix = require('magix');
+let G_Slice = [].slice;
 let Store = {
     extend(props) {
         let AppViews = {};
@@ -29,10 +30,12 @@ let Store = {
                             me.digest();
                         });
                     } else {
-                        let r = fn.apply(AppStore, [].slice.call(arguments, 1));
-                        r.then((data) => {
-                            SyncUI(data);
-                        });
+                        let r = fn.apply(AppStore, G_Slice.call(arguments, 1));
+                        if (r) {
+                            r.then((data) => {
+                                SyncUI(data);
+                            });
+                        }
                         if (isLoad) {
                             AppStore.$lp = r;
                         }
@@ -65,16 +68,23 @@ let Store = {
                 me.store = new AppStore(me.updater);
                 let views = AppViews;
                 views[me.id] = me;
-                // let init = AppStore.init;
-                // if (init) {
-                //     let tData = init.apply(AppStore);
-                //     Magix.mix(AppData, tData);
-                //     delete AppStore.init;
-                // }
                 me.updater.set(AppData);
                 me.on('destroy', () => {
                     delete views[me.id];
                 });
+            },
+            dispatch(name) {
+                let fn = AppStore[name];
+                let r;
+                if (fn) {
+                    r = fn.apply(AppStore, G_Slice.call(arguments, 1));
+                    if (r) {
+                        r.then((data) => {
+                            SyncUI(data);
+                        });
+                    }
+                }
+                return r;
             }
         };
     }

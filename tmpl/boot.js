@@ -1,4 +1,4 @@
-'#exclude(define)';
+//#exclude(define);
 '@./app/snippets/sea.js';
 '@./app/snippets/jquery.js';
 define('$', () => {

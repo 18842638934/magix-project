@@ -16,5 +16,11 @@ module.exports = Magix.View.extend({
         this.store.set({
             rnd: Math.random()
         }).dispatch('increase');
+    },
+    'inc1<click>' () {
+        Store.dispatch('increase');
+    },
+    'uts<click>' () {
+        Store.dispatch('test');
     }
 });

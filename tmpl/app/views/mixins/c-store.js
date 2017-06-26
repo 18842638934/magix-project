@@ -2,14 +2,8 @@
     author:xinglie.lkf@alibaba-inc.com
  */
 let Store = require('@app/mixins/store');
-module.exports = Store.extend({
-    // init() {
-    //     console.log('store init');
-    //     return {
-    //         count: 1,
-    //         share: 1
-    //     };
-    // },
+let TableStore = require('./store-table-store');
+let TestStore = Store.extend({
     load() {
         let me = this;
         return new Promise((resolve) => {
@@ -20,15 +14,25 @@ module.exports = Store.extend({
             }, 2000);
         });
     },
-    increase() {
+    increase(type) {
         let count = this.get('count') || 0;
         return Promise.resolve({
-            count: count + 1
+            count: count + 1,
+            type
         });
     },
     share(rnd) {
         return Promise.resolve({
             share: rnd
         });
+    },
+    test() {
+        TableStore.dispatch('save', [1, 2, 3]).then((data) => {
+            console.log(data);
+        });
     }
 });
+setInterval(() => {
+    TestStore.dispatch('increase', 'interval');
+}, 2000);
+module.exports = TestStore;
